@@ -1,0 +1,11 @@
+Implementación de una aplicación social para etiquetado masivo de archivos 
+de audio basada en el concepto de “Juegos con un Propósito” (GWAP).
+En la actualidad los algoritmos de IA conocidos no pueden etiquetar automática
+ y eficientemente material multimedia. La generación de texto para material 
+ multimedia permite: clasificar objetos de aprendizaje, mejorar algoritmos de 
+ recuperación de audio/video, añadir metadata a los archivos multimedia para 
+ mejorar características de accesibilidad.
+Colectar metadata es posible a través de plataformas online, sin embargo,
+ es necesario crear modelos para colectar esta información.
+La aplicación propuesta pretende contribuir con la medición de métricas 
+tales como: throughput, tiempo de juego, contribución por jugador
