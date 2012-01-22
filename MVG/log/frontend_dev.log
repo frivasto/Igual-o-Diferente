@@ -1,0 +1,148 @@
+Jan 21 17:10:14 symfony [info] {sfPatternRouting} Match route "homepage" (/) for / with parameters array (  'module' => 'default',  'action' => 'index',)
+Jan 21 17:10:16 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Jan 21 17:10:16 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Jan 21 17:10:16 symfony [info] {defaultActions} Call "defaultActions->executeIndex()"
+Jan 21 17:10:17 symfony [info] {sfPHPView} Render "C:\symfony-1.4.16\lib/controller/default/templates/indexSuccess.php"
+Jan 21 17:10:17 symfony [info] {sfPHPView} Decorate content with "C:\symfony-1.4.16\lib\controller\default\templates/defaultLayout.php"
+Jan 21 17:10:17 symfony [info] {sfPHPView} Render "C:\symfony-1.4.16\lib\controller\default\templates/defaultLayout.php"
+Jan 21 17:10:17 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Jan 21 17:10:17 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Jan 21 17:10:17 symfony [info] {sfWebDebugLogger} Configuration 953.78 ms (9)
+Jan 21 17:10:17 symfony [info] {sfWebDebugLogger} Factories 2013.38 ms (1)
+Jan 21 17:10:17 symfony [info] {sfWebDebugLogger} Action "default/index" 0.18 ms (1)
+Jan 21 17:10:17 symfony [info] {sfWebDebugLogger} View "Success" for "default/index" 626.17 ms (1)
+Jan 21 17:10:17 symfony [info] {sfWebResponse} Send content (29109 o)
+Jan 21 20:43:17 symfony [info] {myUser} Automatic user logout due to timeout
+Jan 21 20:43:17 symfony [info] {myUser} User is not authenticated
+Jan 21 20:43:17 symfony [err] {sfError404Exception} Empty module and/or action after parsing the URL "/Mesa/" (/).
+Jan 21 20:43:17 symfony [info] {sfWebResponse} Send status "HTTP/1.1 404 Not Found"
+Jan 21 20:43:17 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Jan 21 20:43:17 symfony [info] {sfWebDebugLogger} Configuration 15.67 ms (5)
+Jan 21 20:43:17 symfony [info] {sfWebDebugLogger} Factories 734.51 ms (1)
+Jan 21 20:43:19 symfony [info] {sfPatternRouting} Match route "default" (/:module/:action/*) for /Mesa/new with parameters array (  'module' => 'Mesa',  'action' => 'new',)
+Jan 21 20:43:19 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Jan 21 20:43:19 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Jan 21 20:43:19 symfony [info] {MesaActions} Call "MesaActions->executeNew()"
+Jan 21 20:43:20 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\modules/Mesa/templates/newSuccess.php"
+Jan 21 20:43:20 symfony [info] {sfPartialView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\modules/Mesa/templates/_form.php"
+Jan 21 20:43:21 symfony [info] {Doctrine_Connection_Mysql} exec : SET NAMES 'UTF8' - ()
+Jan 21 20:43:21 symfony [info] {Doctrine_Connection_Mysql} query : SELECT j.id AS j__id, j.token AS j__token, j.user_id AS j__user_id, j.nombre AS j__nombre, j.eliminado AS j__eliminado, j.created_at AS j__created_at, j.updated_at AS j__updated_at FROM jugador j - ()
+Jan 21 20:43:21 symfony [info] {sfPHPView} Decorate content with "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:43:21 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:43:21 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Jan 21 20:43:21 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Jan 21 20:43:21 symfony [info] {sfWebDebugLogger} Configuration 102.21 ms (10)
+Jan 21 20:43:21 symfony [info] {sfWebDebugLogger} Factories 104.37 ms (1)
+Jan 21 20:43:21 symfony [info] {sfWebDebugLogger} Action "Mesa/new" 86.96 ms (1)
+Jan 21 20:43:21 symfony [info] {sfWebDebugLogger} View "Success" for "Mesa/new" 1198.61 ms (1)
+Jan 21 20:43:21 symfony [info] {sfWebDebugLogger} Partial "Mesa/_form" 931.75 ms (1)
+Jan 21 20:43:21 symfony [info] {sfWebDebugLogger} Database (Doctrine) 0.02 ms (2)
+Jan 21 20:43:21 symfony [info] {sfWebResponse} Send content (50024 o)
+Jan 21 20:45:36 symfony [info] {sfPatternRouting} Match route "homepage" (/) for / with parameters array (  'module' => 'Mesa',  'action' => 'new',)
+Jan 21 20:45:36 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Jan 21 20:45:36 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Jan 21 20:45:36 symfony [info] {MesaActions} Call "MesaActions->executeNew()"
+Jan 21 20:45:36 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\modules/Mesa/templates/newSuccess.php"
+Jan 21 20:45:36 symfony [info] {sfPartialView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\modules/Mesa/templates/_form.php"
+Jan 21 20:45:37 symfony [info] {Doctrine_Connection_Mysql} exec : SET NAMES 'UTF8' - ()
+Jan 21 20:45:37 symfony [info] {Doctrine_Connection_Mysql} query : SELECT j.id AS j__id, j.token AS j__token, j.user_id AS j__user_id, j.nombre AS j__nombre, j.eliminado AS j__eliminado, j.created_at AS j__created_at, j.updated_at AS j__updated_at FROM jugador j - ()
+Jan 21 20:45:37 symfony [info] {sfPHPView} Decorate content with "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:45:37 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:45:37 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Jan 21 20:45:37 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Jan 21 20:45:37 symfony [info] {sfWebDebugLogger} Configuration 142.23 ms (10)
+Jan 21 20:45:37 symfony [info] {sfWebDebugLogger} Factories 213.40 ms (1)
+Jan 21 20:45:37 symfony [info] {sfWebDebugLogger} Action "Mesa/new" 89.64 ms (1)
+Jan 21 20:45:37 symfony [info] {sfWebDebugLogger} View "Success" for "Mesa/new" 673.54 ms (1)
+Jan 21 20:45:37 symfony [info] {sfWebDebugLogger} Partial "Mesa/_form" 628.36 ms (1)
+Jan 21 20:45:37 symfony [info] {sfWebDebugLogger} Database (Doctrine) 0.06 ms (2)
+Jan 21 20:45:37 symfony [info] {sfWebResponse} Send content (49978 o)
+Jan 21 20:45:55 symfony [info] {sfPatternRouting} Match route "homepage" (/) for / with parameters array (  'module' => 'Mesa',  'action' => 'index',)
+Jan 21 20:45:56 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Jan 21 20:45:56 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Jan 21 20:45:56 symfony [info] {MesaActions} Call "MesaActions->executeIndex()"
+Jan 21 20:45:56 symfony [info] {Doctrine_Connection_Mysql} exec : SET NAMES 'UTF8' - ()
+Jan 21 20:45:56 symfony [info] {Doctrine_Connection_Mysql} query : SELECT m.id AS m__id, m.token AS m__token, m.jugador1_id AS m__jugador1_id, m.jugador2_id AS m__jugador2_id, m.tiempo AS m__tiempo, m.eliminado AS m__eliminado, m.created_at AS m__created_at, m.updated_at AS m__updated_at FROM mesa m - ()
+Jan 21 20:45:56 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\modules/Mesa/templates/indexSuccess.php"
+Jan 21 20:45:56 symfony [info] {sfPHPView} Decorate content with "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:45:56 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:45:56 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Jan 21 20:45:56 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Jan 21 20:45:56 symfony [info] {sfWebDebugLogger} Configuration 134.76 ms (10)
+Jan 21 20:45:56 symfony [info] {sfWebDebugLogger} Factories 213.63 ms (1)
+Jan 21 20:45:56 symfony [info] {sfWebDebugLogger} Action "Mesa/index" 578.27 ms (1)
+Jan 21 20:45:56 symfony [info] {sfWebDebugLogger} Database (Doctrine) 0.03 ms (2)
+Jan 21 20:45:56 symfony [info] {sfWebDebugLogger} View "Success" for "Mesa/index" 52.05 ms (1)
+Jan 21 20:45:56 symfony [info] {sfWebResponse} Send content (31422 o)
+Jan 21 20:46:00 symfony [info] {sfPatternRouting} Match route "default" (/:module/:action/*) for /Mesa/new with parameters array (  'module' => 'Mesa',  'action' => 'new',)
+Jan 21 20:46:00 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Jan 21 20:46:00 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Jan 21 20:46:00 symfony [info] {MesaActions} Call "MesaActions->executeNew()"
+Jan 21 20:46:01 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\modules/Mesa/templates/newSuccess.php"
+Jan 21 20:46:01 symfony [info] {sfPartialView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\modules/Mesa/templates/_form.php"
+Jan 21 20:46:01 symfony [info] {Doctrine_Connection_Mysql} exec : SET NAMES 'UTF8' - ()
+Jan 21 20:46:01 symfony [info] {Doctrine_Connection_Mysql} query : SELECT j.id AS j__id, j.token AS j__token, j.user_id AS j__user_id, j.nombre AS j__nombre, j.eliminado AS j__eliminado, j.created_at AS j__created_at, j.updated_at AS j__updated_at FROM jugador j - ()
+Jan 21 20:46:01 symfony [info] {sfPHPView} Decorate content with "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:46:01 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:46:01 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Jan 21 20:46:01 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Jan 21 20:46:01 symfony [info] {sfWebDebugLogger} Configuration 30.41 ms (9)
+Jan 21 20:46:01 symfony [info] {sfWebDebugLogger} Factories 86.79 ms (1)
+Jan 21 20:46:01 symfony [info] {sfWebDebugLogger} Action "Mesa/new" 83.36 ms (1)
+Jan 21 20:46:01 symfony [info] {sfWebDebugLogger} View "Success" for "Mesa/new" 662.73 ms (1)
+Jan 21 20:46:01 symfony [info] {sfWebDebugLogger} Partial "Mesa/_form" 630.96 ms (1)
+Jan 21 20:46:01 symfony [info] {sfWebDebugLogger} Database (Doctrine) 0.06 ms (2)
+Jan 21 20:46:01 symfony [info] {sfWebResponse} Send content (50083 o)
+Jan 21 20:46:04 symfony [info] {sfPatternRouting} Match route "homepage" (/) for / with parameters array (  'module' => 'Mesa',  'action' => 'index',)
+Jan 21 20:46:04 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Jan 21 20:46:04 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Jan 21 20:46:04 symfony [info] {MesaActions} Call "MesaActions->executeIndex()"
+Jan 21 20:46:04 symfony [info] {Doctrine_Connection_Mysql} exec : SET NAMES 'UTF8' - ()
+Jan 21 20:46:04 symfony [info] {Doctrine_Connection_Mysql} query : SELECT m.id AS m__id, m.token AS m__token, m.jugador1_id AS m__jugador1_id, m.jugador2_id AS m__jugador2_id, m.tiempo AS m__tiempo, m.eliminado AS m__eliminado, m.created_at AS m__created_at, m.updated_at AS m__updated_at FROM mesa m - ()
+Jan 21 20:46:04 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\modules/Mesa/templates/indexSuccess.php"
+Jan 21 20:46:04 symfony [info] {sfPHPView} Decorate content with "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:46:04 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:46:04 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Jan 21 20:46:04 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Jan 21 20:46:04 symfony [info] {sfWebDebugLogger} Configuration 29.45 ms (9)
+Jan 21 20:46:04 symfony [info] {sfWebDebugLogger} Factories 88.82 ms (1)
+Jan 21 20:46:04 symfony [info] {sfWebDebugLogger} Action "Mesa/index" 581.32 ms (1)
+Jan 21 20:46:04 symfony [info] {sfWebDebugLogger} Database (Doctrine) 0.05 ms (2)
+Jan 21 20:46:04 symfony [info] {sfWebDebugLogger} View "Success" for "Mesa/index" 52.88 ms (1)
+Jan 21 20:46:04 symfony [info] {sfWebResponse} Send content (31385 o)
+Jan 21 20:48:13 symfony [info] {sfPatternRouting} Match route "homepage" (/) for / with parameters array (  'module' => 'Mesa',  'action' => 'index',)
+Jan 21 20:48:13 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Jan 21 20:48:13 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Jan 21 20:48:13 symfony [info] {MesaActions} Call "MesaActions->executeIndex()"
+Jan 21 20:48:13 symfony [info] {Doctrine_Connection_Mysql} exec : SET NAMES 'UTF8' - ()
+Jan 21 20:48:13 symfony [info] {Doctrine_Connection_Mysql} query : SELECT m.id AS m__id, m.token AS m__token, m.jugador1_id AS m__jugador1_id, m.jugador2_id AS m__jugador2_id, m.tiempo AS m__tiempo, m.eliminado AS m__eliminado, m.created_at AS m__created_at, m.updated_at AS m__updated_at FROM mesa m - ()
+Jan 21 20:48:13 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\modules/Mesa/templates/indexSuccess.php"
+Jan 21 20:48:13 symfony [info] {sfPHPView} Decorate content with "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:48:13 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:48:13 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Jan 21 20:48:13 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Jan 21 20:48:13 symfony [info] {sfWebDebugLogger} Configuration 51.11 ms (9)
+Jan 21 20:48:13 symfony [info] {sfWebDebugLogger} Factories 107.33 ms (1)
+Jan 21 20:48:13 symfony [info] {sfWebDebugLogger} Action "Mesa/index" 588.76 ms (1)
+Jan 21 20:48:13 symfony [info] {sfWebDebugLogger} Database (Doctrine) 0.06 ms (2)
+Jan 21 20:48:13 symfony [info] {sfWebDebugLogger} View "Success" for "Mesa/index" 85.33 ms (1)
+Jan 21 20:48:13 symfony [info] {sfWebResponse} Send content (31223 o)
+Jan 21 20:48:20 symfony [info] {sfPatternRouting} Match route "default" (/:module/:action/*) for /Mesa/new with parameters array (  'module' => 'Mesa',  'action' => 'new',)
+Jan 21 20:48:20 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Jan 21 20:48:20 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Jan 21 20:48:20 symfony [info] {MesaActions} Call "MesaActions->executeNew()"
+Jan 21 20:48:20 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\modules/Mesa/templates/newSuccess.php"
+Jan 21 20:48:20 symfony [info] {sfPartialView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\modules/Mesa/templates/_form.php"
+Jan 21 20:48:21 symfony [info] {Doctrine_Connection_Mysql} exec : SET NAMES 'UTF8' - ()
+Jan 21 20:48:21 symfony [info] {Doctrine_Connection_Mysql} query : SELECT j.id AS j__id, j.token AS j__token, j.user_id AS j__user_id, j.nombre AS j__nombre, j.eliminado AS j__eliminado, j.created_at AS j__created_at, j.updated_at AS j__updated_at FROM jugador j - ()
+Jan 21 20:48:21 symfony [info] {sfPHPView} Decorate content with "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:48:21 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\MVG\apps\frontend\templates/layout.php"
+Jan 21 20:48:21 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Jan 21 20:48:21 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Jan 21 20:48:21 symfony [info] {sfWebDebugLogger} Configuration 34.21 ms (9)
+Jan 21 20:48:21 symfony [info] {sfWebDebugLogger} Factories 94.26 ms (1)
+Jan 21 20:48:21 symfony [info] {sfWebDebugLogger} Action "Mesa/new" 92.04 ms (1)
+Jan 21 20:48:21 symfony [info] {sfWebDebugLogger} View "Success" for "Mesa/new" 630.01 ms (1)
+Jan 21 20:48:21 symfony [info] {sfWebDebugLogger} Partial "Mesa/_form" 594.58 ms (1)
+Jan 21 20:48:21 symfony [info] {sfWebDebugLogger} Database (Doctrine) 0.06 ms (2)
+Jan 21 20:48:21 symfony [info] {sfWebResponse} Send content (50083 o)

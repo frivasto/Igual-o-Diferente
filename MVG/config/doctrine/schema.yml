@@ -1,0 +1,105 @@
+Jugador:
+  actAs:
+    Timestampable:
+  columns:
+    id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
+    token:   { type: string(255), notnull: true, unique: true }
+    user_id:   { type: string(255), notnull: true, unique: true }
+    nombre:   { type: string(255), notnull: false }
+    eliminado: { type: boolean, default: 0 }
+ 
+Video:
+  actAs:
+    Timestampable:
+  columns:
+    id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
+    token:   { type: string(255), notnull: true, unique: true }
+    url:   { type: string(255), notnull: true }
+    nombre:   { type: string(255), notnull: false }
+    eliminado: { type: boolean, default: 0 }
+
+Intervalo:
+  actAs:
+    Timestampable:
+  columns:
+    id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
+    token:   { type: string(255), notnull: true, unique: true }
+    video_id:   { type: integer(4) }
+    inicio: { type: time }
+    fin: { type: time }
+    eliminado: { type: boolean, default: 0 }
+  relations:
+    Video: { local: video_id, foreign: id, foreignAlias: IntervaloVideo }
+
+
+Etiqueta:
+  actAs:
+    Timestampable:
+  columns:
+    id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
+    token:   { type: string(255), notnull: true, unique: true }
+    texto:   { type: string(255) }
+    ponderacion: { type: integer(4) }
+
+Mesa:
+  actAs:
+    Timestampable:
+  columns:
+    id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
+    token:   { type: string(255), notnull: true, unique: true }
+    jugador1_id:   { type: integer(4) }
+    jugador2_id:   { type: integer(4) }
+    tiempo: { type: time }
+    eliminado: { type: boolean, default: 0 }
+  relations:
+    Jugador: { local: jugador1_id, foreign: id, foreignAlias: JugadorMesa1 }
+    Jugador: { local: jugador2_id, foreign: id, foreignAlias: JugadorMesa2 }
+
+
+
+RelacionMesaVideo:
+  actAs:
+    Timestampable:
+  columns:
+    id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
+    token:   { type: string(255), notnull: true, unique: true }
+    mesa_id:   { type: integer(4) }
+    video_id:   { type: integer(4) }
+    jugador_id:   { type: integer(4) }
+    intervalo_id: { type: integer(4) }
+    respuesta_real: { type: boolean, default: 0 }
+    eliminado: { type: boolean, default: 0 }
+  relations:
+    Mesa: { local: mesa_id, foreign: id, foreignAlias: MesaMesaVideo }
+    Video: { local: video_id, foreign: id, foreignAlias: VideoMesaVideo }
+    Jugador: { local: jugador_id, foreign: id, foreignAlias: JugadorMesaVideo }
+    Intervalo: { local: intervalo_id, foreign: id, foreignAlias: MesaVideoIntervalo }
+
+
+InstanciaEtiqueta:
+  actAs:
+    Timestampable:
+  columns:
+    id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
+    token:   { type: string(255), notnull: true, unique: true }
+    relacionmesavideo_id:   { type: integer(4) }
+    texto:   { type: string(255) }
+    tiempo: { type: time }
+    eliminado: { type: boolean, default: 0 }
+  relations:
+    RelacionMesaVideo: { local: relacionmesavideo_id, foreign: id, foreignAlias: InstanciaEtiquetaRelacionMesaVideo }
+    
+
+Decision:
+  actAs:
+    Timestampable:
+  columns:
+    id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
+    token:   { type: string(255), notnull: true, unique: true }
+    relacionmesavideo_id:   { type: integer(4) }
+    tiempo: { type: time }
+    respuesta: { type: boolean, default: 0 }
+    eliminado: { type: boolean, default: 0 }
+  relations:
+    RelacionMesaVideo: { local: relacionmesavideo_id, foreign: id, foreignAlias: InstanciaEtiquetaRelacionMesaVideo }
+    
