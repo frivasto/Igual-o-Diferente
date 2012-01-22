@@ -10,6 +10,47 @@
  */
 class MesaActions extends sfActions
 {
+    public function executeComet(sfWebRequest $request)
+    {
+/*
+        $filename  = dirname(__FILE__).'/data.txt';
+
+
+        // store new message in the file
+        $msg = isset($request->getParameter('msg')) ? $request->getParameter('msg') : '';
+
+        if ($msg != '')
+        {
+          file_put_contents($filename,$msg);
+          die();
+        }
+
+        // infinite loop until the data file is not modified
+        $lastmodif    = isset($request->getParameter('timestamp')) ? $request->getParameter('timestamp') : 0;
+        $currentmodif = filemtime($filename);
+
+
+        while ($currentmodif <= $lastmodif) // check if the data file has been modified
+        {
+          usleep(10000); // sleep 10ms to unload the CPU
+          clearstatcache();
+
+          $currentmodif = filemtime($filename);
+
+        }
+
+        // return a json array
+
+
+
+        $response = array();
+        $response['msg']       = file_get_contents($filename);
+        $response['timestamp'] = $currentmodif;
+        echo json_encode($response);
+        flush();
+        
+        return sfView::NONE;*/
+    }
   public function executeIndex(sfWebRequest $request)
   {
     $this->mesas = Doctrine_Core::getTable('Mesa')

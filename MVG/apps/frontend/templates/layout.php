@@ -9,6 +9,7 @@
     <?php include_javascripts() ?>
   </head>
   <body>
+    <h1>Music Video Game</h1>
     <?php echo $sf_content ?>
   </body>
 </html>
