@@ -8,10 +8,6 @@
     var atts = { id: "myytplayer" };
     swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1",
                        "ytapiplayer", "425", "356", "8", null, null, params, atts);
-  
-
-
-
 
   function onYouTubePlayerReady(playerId) {
 
@@ -52,13 +48,12 @@
     </form>
 
 </div>
-
 <script type="text/javascript">
 var Comet = Class.create();
 Comet.prototype = {
 
   timestamp: 0,
-  url: './comet',
+  url: '<?php echo url_for('Mesa/comet'); ?>',
   noerror: true,
 
   initialize: function() { },
@@ -111,5 +106,4 @@ var comet = new Comet();
 comet.connect();
 
 </script>
-
-<?php include_partial('form', array('form' => $form)) ?>
+<?php include_partial('form', array('form' => $form)); ?>
