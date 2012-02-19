@@ -3,7 +3,8 @@
 <title>WebSocket</title>
 <style>
  html,body{font:normal 0.9em arial,helvetica;}
- #log {width:440px; height:200px; border:1px solid #7F9DB9; overflow:auto;}
+ #log {width:220px; height:200px; border:1px solid #7F9DB9; overflow:auto; float:left; margin-right: 10px;}
+ #logpartner {width:220px; height:200px; border:1px solid #7F9DB9; overflow:auto;}
  #msg {width:330px;}
 </style>
 <script>
@@ -14,7 +15,7 @@ function init(){
     socket = new WebSocket(host);
     log('WebSocket - status '+socket.readyState);
     socket.onopen    = function(msg){ log("Welcome - status "+this.readyState); };
-    socket.onmessage = function(msg){ log("Received: "+msg.data); };
+    socket.onmessage = function(msg){ logPartner("Received: "+msg.data); };
     socket.onclose   = function(msg){ log("Disconnected - status "+this.readyState); };
   }
   catch(ex){ log("error: "+ex); }
@@ -39,9 +40,9 @@ function quit(){
 // Utilities
 function $(id){ return document.getElementById(id); }
 function log(msg){ $("log").innerHTML+="<br>"+msg; }
+function logPartner(msg){ $("logpartner").innerHTML+="<br>"+msg; }
 function onkey(event){ if(event.keyCode==13){ send(); } }
 </script>
-
 </head>
 <body onload="init()">
 <div id="ytapiplayer">
@@ -74,6 +75,7 @@ function onkey(event){ if(event.keyCode==13){ send(); } }
 <a href="javascript:void(0);" onclick="play();">Next</a>
  <h3>WebSocket v2.00</h3>
  <div id="log"></div>
+ <div id="logpartner"></div>
  <input id="msg" type="textbox" onkeypress="onkey(event)"/>
  <button onclick="send()">Send</button>
  <button onclick="quit()">Quit</button>
