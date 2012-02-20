@@ -43,7 +43,8 @@
                 request.onreadystatechange=function(){                      
                     if(request.readyState==4){
                         if(request.status==200){                             
-                            respuestajson=manejador(request);                            
+                            respuestajson=manejador(request); 
+                            alert(""+respuestajson);
                         }
                     }
                 };
@@ -60,10 +61,11 @@ function init(){
   try{
     socket = new WebSocket(host);
     log('WebSocket - status '+socket.readyState);
-    socket.onopen    = function(msg){ 
+    socket.onopen = function(msg){ 
         log("Welcome - status "+this.readyState);
         var status_socket=this.readyState;
-        consulta(status_socket); //ajax edita el resultado        
+        consulta(status_socket); //ajax edita el resultado 
+        //alert(""+respuestajson);
         if(respuestajson!=null){
             //enviar al servidor de sockets
             sendMensajes(respuestajson);

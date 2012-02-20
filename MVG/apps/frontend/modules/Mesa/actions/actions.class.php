@@ -68,14 +68,14 @@ class MesaActions extends sfActions {
                 if(!empty($mesas)){
                     //Si hay obtner la mesa y poner alli actaulizar usuario de la base tomar mesa_id
                     echo $mesas[0]['id']; 
+                    $id_mesa=$mesas[0]['id']; 
                     //update
                     $q = Doctrine_Query::create()
                     ->update('Mesa m')
-                    ->set('jugador1_id', '?', $user_actual)
+                    ->set('jugador2_id', '?', $user_actual)
                     ->where('m.id = ?', $id_mesa);
                     
-                    $rows = $q->execute();                                        
-                    $id_mesa=$mesas[0]['id']; 
+                    $rows = $q->execute();                                                            
                 }else{
                     //Sino insertar una mesa nueva y poner alli a este usuario, tomar mesa_id
                     $mesa = new Mesa();
