@@ -8,20 +8,89 @@
  #msg {width:330px;}
 </style>
 <script>
+/*Ajax*/
+            function createXMLHttpRequest() {
+              var request = false;
+              /* Does this browser support the XMLHttpRequest object? */
+              if (window.XMLHttpRequest) {
+                if (typeof XMLHttpRequest != 'undefined')
+                  /* Try to create a new XMLHttpRequest object */
+                  try {
+                    request = new XMLHttpRequest( );
+                  } catch (e) {
+                    request = false;
+                  }
+              /* Does this browser support ActiveX objects? */
+              } else if (window.ActiveXObject) {
+                /* Try to create a new ActiveX XMLHTTP object */
+                try {
+                  request = new ActiveXObject('Msxml2.XMLHTTP');
+                } catch(e) {
+                  try {
+                    request = new ActiveXObject('Microsoft.XMLHTTP');
+                  } catch (e) {
+                    request = false;
+                  }
+                }
+              }
+              return request;
+            }
+            var respuestajson=null;
+            function consulta(status_socket){
+                var request;
+                request = createXMLHttpRequest( );
+                request.open('GET','<?php echo url_for('Mesa/emparejar'); ?>'+"?estado="+status_socket,true);
+                request.onreadystatechange=function(){                      
+                    if(request.readyState==4){
+                        if(request.status==200){                             
+                            respuestajson=manejador(request);                            
+                        }
+                    }
+                };
+                request.send(null);
+            }
+            function manejador(xhr)
+            {	
+		var resp2=xhr.responseText;
+                return resp2;                
+            }
 var socket;
 function init(){
   var host = "ws://127.0.0.1:12345"; //ws://localhost:12345/websocket/server.php
   try{
     socket = new WebSocket(host);
     log('WebSocket - status '+socket.readyState);
-    socket.onopen    = function(msg){ log("Welcome - status "+this.readyState); };
-    socket.onmessage = function(msg){ logPartner("Received: "+msg.data); };
+    socket.onopen    = function(msg){ 
+        log("Welcome - status "+this.readyState);
+        var status_socket=this.readyState;
+        consulta(status_socket); //ajax edita el resultado        
+        if(respuestajson!=null){
+            //enviar al servidor de sockets
+            sendMensajes(respuestajson);
+            var pruebadiv=document.getElementById("prueba");
+            pruebadiv.innerHTML="RESPUESTA: "+respuestajson;
+        }
+    };
+    socket.onmessage = function(msg){ 
+        //Verificar si mensaje es de tipo conexion o mensaje
+        
+        //Si es conexion  VER MSG : COMPLETO O INCOMPLETO
+        //Si es incompleto mostrar en pantalla juego deshabilitado no cronom text inahbilit y mensaje esperando
+        
+        //Si es completo ya habilita juego, iniciar cronometro
+        
+        //Dendienfo del tipo de mensaje enviado 
+        logPartner("Received: "+msg.data); 
+    };
     socket.onclose   = function(msg){ log("Disconnected - status "+this.readyState); };
   }
   catch(ex){ log("error: "+ex); }
   $("msg").focus();
 }
-
+//Envío de mensajes internos al servidor
+function sendMensajes(msg){
+    try{ socket.send(msg); } catch(ex){ }
+}
 function send(){
   var txt,msg;
   txt = $("msg");
@@ -74,6 +143,7 @@ function onkey(event){ if(event.keyCode==13){ send(); } }
   </script>
 <a href="javascript:void(0);" onclick="play();">Next</a>
  <h3>WebSocket v2.00</h3>
+ <div id="prueba"></div>
  <div id="log"></div>
  <div id="logpartner"></div>
  <input id="msg" type="textbox" onkeypress="onkey(event)"/>

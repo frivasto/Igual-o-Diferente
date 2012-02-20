@@ -48,6 +48,52 @@ class MesaActions extends sfActions {
                 ->execute();
     }
 
+    public function executeEmparejar(sfWebRequest $request) {            
+        $tmp = $request->getParameter('estado');
+        $estado = isset($tmp) ? $tmp : '';
+        $response = array();
+        if ($estado != '') { 
+            if ($estado ==1){ //estado ok de los sockets 1 OPEN
+                //buscar una mesa con usuario disponible de la bas de datos
+                $q = Doctrine_Query::create()
+                ->select('m.id')
+                ->from('Mesa m')
+                ->where('m.jugador1_id is not null AND m.jugador2_id is null');
+
+                $mesas = $q->fetchArray();
+                $id_mesa=0;
+                //sacar de session el user_id
+                $user_actual = $this->getUser()->getAttribute('userid');
+                
+                if(!empty($mesas)){
+                    //Si hay obtner la mesa y poner alli actaulizar usuario de la base tomar mesa_id
+                    echo $mesas[0]['id']; 
+                    //update
+                    $q = Doctrine_Query::create()
+                    ->update('Mesa m')
+                    ->set('jugador1_id', '?', $user_actual)
+                    ->where('m.id = ?', $id_mesa);
+                    
+                    $rows = $q->execute();                                        
+                    $id_mesa=$mesas[0]['id']; 
+                }else{
+                    //Sino insertar una mesa nueva y poner alli a este usuario, tomar mesa_id
+                    $mesa = new Mesa();
+                    $mesa->setJugador1Id($user_actual);
+                    $mesa->save();
+                    
+                    echo $mesa->getId(); 
+                    $id_mesa=$mesa->getId(); 
+                }                                               
+                //Devolver JSON con estos datos
+                $response['mesaid'] = $id_mesa;                 
+                $response['userid'] = $user_actual; 
+            }
+        }                
+        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
+        return $this->renderText(json_encode($response));                
+    }
+    
     public function executeNew(sfWebRequest $request) {
         $this->form = new MesaForm();
     }
