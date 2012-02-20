@@ -1,0 +1,14 @@
+Feb 20 14:52:24 symfony [info] {sfPatternRouting} Match route "homepage" (/) for / with parameters array (  'module' => 'ejemplo1',  'action' => 'index',)
+Feb 20 14:52:24 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Feb 20 14:52:24 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Feb 20 14:52:24 symfony [info] {ejemplo1Actions} Call "ejemplo1Actions->executeIndex()"
+Feb 20 14:52:24 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\ajaxsymfony\apps\frontend\modules/ejemplo1/templates/indexSuccess.php"
+Feb 20 14:52:24 symfony [info] {sfPHPView} Decorate content with "C:\wamp\www\Igual-o-Diferente\ajaxsymfony\apps\frontend\templates/layout.php"
+Feb 20 14:52:24 symfony [info] {sfPHPView} Render "C:\wamp\www\Igual-o-Diferente\ajaxsymfony\apps\frontend\templates/layout.php"
+Feb 20 14:52:24 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Feb 20 14:52:24 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Feb 20 14:52:24 symfony [info] {sfWebDebugLogger} Configuration 714.36 ms (9)
+Feb 20 14:52:24 symfony [info] {sfWebDebugLogger} Factories 358.91 ms (1)
+Feb 20 14:52:24 symfony [info] {sfWebDebugLogger} Action "ejemplo1/index" 0.28 ms (1)
+Feb 20 14:52:24 symfony [info] {sfWebDebugLogger} View "Success" for "ejemplo1/index" 39.88 ms (1)
+Feb 20 14:52:24 symfony [info] {sfWebResponse} Send content (31222 o)

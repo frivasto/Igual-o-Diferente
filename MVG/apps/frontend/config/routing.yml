@@ -4,7 +4,8 @@
 # default rules
 homepage:
   url:   /
-  param: { module: Mesa, action: index }
+  #param: { module: Mesa, action: index }
+  param: { module: login, action: index }
 
 # generic rules
 # please, remove them by adding more specific rules
