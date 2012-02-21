@@ -43,8 +43,13 @@
                 request.onreadystatechange=function(){                      
                     if(request.readyState==4){
                         if(request.status==200){                             
-                            respuestajson=manejador(request); 
-                            alert(""+respuestajson);                            
+                            respuestajson=manejador(request);  
+                            if(respuestajson!=null){
+                                //enviar al servidor de sockets
+                                sendMensajes(respuestajson);
+                                var pruebadiv=document.getElementById("prueba");
+                                pruebadiv.innerHTML="RESPUESTA: "+respuestajson;
+                            }
                         }
                     }
                 };
@@ -64,14 +69,7 @@ function init(){
     socket.onopen = function(msg){ 
         log("Welcome - status "+this.readyState);
         var status_socket=this.readyState;
-        consulta(status_socket); //ajax edita el resultado 
-        alert(""+respuestajson);
-        if(respuestajson!=null){
-            //enviar al servidor de sockets
-            sendMensajes(respuestajson);
-            var pruebadiv=document.getElementById("prueba");
-            pruebadiv.innerHTML="RESPUESTA: "+respuestajson;
-        }
+        consulta(status_socket); //ajax edita el resultado  y lo envía server sockets        
     };
     socket.onmessage = function(msg){ 
         //Verificar si mensaje es de tipo conexion o mensaje
