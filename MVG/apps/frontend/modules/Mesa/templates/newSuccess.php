@@ -89,7 +89,10 @@ function init(){
             logPartner("Received: "+myObject.objeto.mensaje);
         }        
     };
-    socket.onclose   = function(msg){ log("Disconnected - status "+this.readyState); };
+    socket.onclose   = function(msg){ 
+        log("Disconnected - status "+this.readyState); 
+        //además bloquear la pantalla de juego o enviar a una página de error personalizada
+    };
   }
   catch(ex){ log("error: "+ex); }
   $("msg").focus();

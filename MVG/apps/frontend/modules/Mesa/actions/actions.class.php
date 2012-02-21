@@ -33,8 +33,7 @@ class MesaActions extends sfActions {
         //$this->getResponse()->setContentType('application/json');
         $response = array();
         $response['msg'] = file_get_contents($filename);
-        $response['timestamp'] = $currentmodif;
-        //echo json_encode($response);
+        $response['timestamp'] = $currentmodif;        
         $this->getResponse()->setHttpHeader('Content-type', 'application/json');
         return $this->renderText(json_encode($response));
         
@@ -72,8 +71,6 @@ class MesaActions extends sfActions {
                     $jugador = new Jugador();
                     $jugador->user_id=$user_actual;
                     $jugador->save();
-                    
-                    echo $jugador->getId(); 
                     $id_jugador=$jugador->getId(); 
                 }
                 
@@ -89,7 +86,6 @@ class MesaActions extends sfActions {
                 
                 if(!empty($mesas)){
                     //Si hay obtner la mesa y poner alli actaulizar usuario de la base tomar mesa_id
-                    echo $mesas[0]['id']; 
                     $id_mesa=$mesas[0]['id']; 
                     //update
                     $q = Doctrine_Query::create()
@@ -103,8 +99,6 @@ class MesaActions extends sfActions {
                     $mesa = new Mesa();
                     $mesa->setJugador1Id($id_jugador);
                     $mesa->save();
-                    
-                    echo $mesa->getId(); 
                     $id_mesa=$mesa->getId(); 
                 }                                               
                 //Devolver JSON con estos datos

@@ -55,9 +55,9 @@ function process2($user,$msg){
 	echo "Usuario ID (Tu): ".$user->id;
 	$action = decode2($msg);
 	say("< ".$action);
-
+	$mesas=$GLOBALS['mesas'];
 	//json decode ese mensaje
-	$arregloMensaje=json_decode($msg, TRUE);
+	$arregloMensaje=json_decode($action, TRUE);
 	//-- ver su tipo::: Si es de identificación-- Todo esto Actualizar el hash mesa que esta global decode
 	if($arregloMensaje["tipo"] == "identificacion"){
 		$keys=array_keys($arregloMensaje["objeto"]);
