@@ -72,15 +72,22 @@ function init(){
         consulta(status_socket); //ajax edita el resultado  y lo envía server sockets        
     };
     socket.onmessage = function(msg){ 
-        //Verificar si mensaje es de tipo conexion o mensaje
-        
-        //Si es conexion  VER MSG : COMPLETO O INCOMPLETO
-        //Si es incompleto mostrar en pantalla juego deshabilitado no cronom text inahbilit y mensaje esperando
-        
-        //Si es completo ya habilita juego, iniciar cronometro
-        
-        //Dendienfo del tipo de mensaje enviado 
-        logPartner("Received: "+msg.data); 
+        //json
+        var myObject = eval('(' + msg.data + ')');
+        //Verificar si mensaje es de tipo conexion o mensaje //Dendiendo del tipo de mensaje enviado 
+        if(myObject.tipo=="conexion"){
+            //de tipo CONEXION
+            if(myObject.objeto.confirmacion=="INCOMPLETO"){
+                //Si es incompleto mostrar en pantalla juego deshabilitado no cronom text inahbilit y mensaje esperando
+                alert("Estamos buscándole un compañero de juego");
+            }else{
+                //Si es completo ya habilita juego que estuvo dehabilitado e iniciar cronometro
+                alert("Prueba juego habilitado");
+            }                                   
+        }else{
+            //de tipo MENSAJES            
+            logPartner("Received: "+myObject.objeto.mensaje);
+        }        
     };
     socket.onclose   = function(msg){ log("Disconnected - status "+this.readyState); };
   }

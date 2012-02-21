@@ -81,21 +81,12 @@ function process2($user,$msg){
 		}	  				
 	}else{  
 	  global $users;
-	  //ENVIAR A TODOS CLIENTES  //Si es de mensajes-- Determinar a quien PARTNER enviarle si no es bot
+	  //ENVIAR A TODOS CLIENTES  //Si es de mensajes-- Determinar a quien PARTNER (usuario diferente de este user, a su partner) enviarle si no es bot
 	  $n=count($users);
-	  for($i=0;$i<$n;$i++){
-		  echo $users[$i]->id;
-		  switch($action){
-			case "hello" : send($users[$i]->socket,"hello human");                       break;
-			case "hi"    : send($users[$i]->socket,"zup human");                         break;
-			case "name"  : send($users[$i]->socket,"my name is Multivac, silly I know"); break;
-			case "age"   : send($users[$i]->socket,"I am older than time itself");       break;
-			case "date"  : send($users[$i]->socket,"today is ".date("Y.m.d"));           break;
-			case "time"  : send($users[$i]->socket,"server time is ".date("H:i:s"));     break;
-			case "thanks": send($users[$i]->socket,"you're welcome");                    break;
-			case "bye"   : send($users[$i]->socket,"bye");                               break;
-			default      : send($users[$i]->socket,$action." not understood");           break;
-		  }
+	  for($i=0;$i<$n;$i++){ //borrar este for, es a su partner no más
+		  echo $users[$i]->id;		  
+		  //enviar mensaje
+		  send($users[$i]->socket,'{"tipo":"mensajes","objeto":{"mensaje": "'.$action.'"}}');
 	  }
 	}//fin mensajes    
 }
