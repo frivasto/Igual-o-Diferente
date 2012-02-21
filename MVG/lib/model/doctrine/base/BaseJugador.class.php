@@ -48,7 +48,7 @@ abstract class BaseJugador extends sfDoctrineRecord
         $this->hasColumn('token', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
-             'unique' => true,
+             'unique' => false,
              'length' => 255,
              ));
         $this->hasColumn('user_id', 'string', 255, array(

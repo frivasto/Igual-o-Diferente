@@ -54,6 +54,30 @@ class MesaActions extends sfActions {
         $response = array();
         if ($estado != '') { 
             if ($estado ==1){ //estado ok de los sockets 1 OPEN
+                //sacar de session el user_id
+                $user_actual = $this->getUser()->getAttribute('userid');
+                
+                //buscar usuario de este userid de facebook                
+                $q = Doctrine_Query::create()
+                ->select('j.id')
+                ->from('Jugador j')
+                ->where('j.user_id = ?',$user_actual);
+
+                $jugador = $q->fetchArray();
+                $id_jugador=0;
+                if(!empty($jugador)){
+                    $id_jugador=$jugador[0]['id']; 
+                }else{
+                    //Sino insertar una mesa nueva y poner alli a este usuario, tomar mesa_id
+                    $jugador = new Jugador();
+                    $jugador->user_id=$user_actual;
+                    $jugador->save();
+                    
+                    echo $jugador->getId(); 
+                    $id_jugador=$jugador->getId(); 
+                }
+                
+             
                 //buscar una mesa con usuario disponible de la bas de datos
                 $q = Doctrine_Query::create()
                 ->select('m.id')
@@ -62,8 +86,6 @@ class MesaActions extends sfActions {
 
                 $mesas = $q->fetchArray();
                 $id_mesa=0;
-                //sacar de session el user_id
-                $user_actual = $this->getUser()->getAttribute('userid');
                 
                 if(!empty($mesas)){
                     //Si hay obtner la mesa y poner alli actaulizar usuario de la base tomar mesa_id
@@ -72,14 +94,14 @@ class MesaActions extends sfActions {
                     //update
                     $q = Doctrine_Query::create()
                     ->update('Mesa m')
-                    ->set('jugador2_id', '?', $user_actual)
+                    ->set('jugador2_id', '?', $id_jugador)
                     ->where('m.id = ?', $id_mesa);
                     
                     $rows = $q->execute();                                                            
                 }else{
                     //Sino insertar una mesa nueva y poner alli a este usuario, tomar mesa_id
                     $mesa = new Mesa();
-                    $mesa->setJugador1Id($user_actual);
+                    $mesa->setJugador1Id($id_jugador);
                     $mesa->save();
                     
                     echo $mesa->getId(); 
@@ -87,7 +109,7 @@ class MesaActions extends sfActions {
                 }                                               
                 //Devolver JSON con estos datos
                 $response['mesaid'] = $id_mesa;                 
-                $response['userid'] = $user_actual; 
+                $response['userid'] = $id_jugador; 
             }
         }                
         $this->getResponse()->setHttpHeader('Content-type', 'application/json');

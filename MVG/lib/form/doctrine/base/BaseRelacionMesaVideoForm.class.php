@@ -41,10 +41,7 @@ abstract class BaseRelacionMesaVideoForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorAnd(array(
-        new sfValidatorDoctrineUnique(array('model' => 'RelacionMesaVideo', 'column' => array('id'))),
-        new sfValidatorDoctrineUnique(array('model' => 'RelacionMesaVideo', 'column' => array('token'))),
-      ))
+      new sfValidatorDoctrineUnique(array('model' => 'RelacionMesaVideo', 'column' => array('id')))
     );
 
     $this->widgetSchema->setNameFormat('relacion_mesa_video[%s]');

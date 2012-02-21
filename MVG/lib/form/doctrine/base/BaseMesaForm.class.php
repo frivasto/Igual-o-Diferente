@@ -37,10 +37,7 @@ abstract class BaseMesaForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorAnd(array(
-        new sfValidatorDoctrineUnique(array('model' => 'Mesa', 'column' => array('id'))),
-        new sfValidatorDoctrineUnique(array('model' => 'Mesa', 'column' => array('token'))),
-      ))
+      new sfValidatorDoctrineUnique(array('model' => 'Mesa', 'column' => array('id')))
     );
 
     $this->widgetSchema->setNameFormat('mesa[%s]');

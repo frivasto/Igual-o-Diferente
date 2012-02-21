@@ -37,10 +37,7 @@ abstract class BaseDecisionForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorAnd(array(
-        new sfValidatorDoctrineUnique(array('model' => 'Decision', 'column' => array('id'))),
-        new sfValidatorDoctrineUnique(array('model' => 'Decision', 'column' => array('token'))),
-      ))
+      new sfValidatorDoctrineUnique(array('model' => 'Decision', 'column' => array('id')))
     );
 
     $this->widgetSchema->setNameFormat('decision[%s]');

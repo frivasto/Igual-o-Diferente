@@ -39,7 +39,7 @@ abstract class BaseEtiqueta extends sfDoctrineRecord
         $this->hasColumn('token', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
-             'unique' => true,
+             'unique' => false,
              'length' => 255,
              ));
         $this->hasColumn('texto', 'string', 255, array(

@@ -37,7 +37,6 @@ abstract class BaseJugadorForm extends BaseFormDoctrine
     $this->validatorSchema->setPostValidator(
       new sfValidatorAnd(array(
         new sfValidatorDoctrineUnique(array('model' => 'Jugador', 'column' => array('id'))),
-        new sfValidatorDoctrineUnique(array('model' => 'Jugador', 'column' => array('token'))),
         new sfValidatorDoctrineUnique(array('model' => 'Jugador', 'column' => array('user_id'))),
       ))
     );

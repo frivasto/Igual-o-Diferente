@@ -66,7 +66,7 @@ abstract class BaseRelacionMesaVideo extends sfDoctrineRecord
         $this->hasColumn('token', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
-             'unique' => true,
+             'unique' => false,
              'length' => 255,
              ));
         $this->hasColumn('mesa_id', 'integer', 4, array(

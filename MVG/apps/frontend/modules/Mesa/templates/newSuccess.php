@@ -44,7 +44,7 @@
                     if(request.readyState==4){
                         if(request.status==200){                             
                             respuestajson=manejador(request); 
-                            alert(""+respuestajson);
+                            alert(""+respuestajson);                            
                         }
                     }
                 };
@@ -65,7 +65,7 @@ function init(){
         log("Welcome - status "+this.readyState);
         var status_socket=this.readyState;
         consulta(status_socket); //ajax edita el resultado 
-        //alert(""+respuestajson);
+        alert(""+respuestajson);
         if(respuestajson!=null){
             //enviar al servidor de sockets
             sendMensajes(respuestajson);

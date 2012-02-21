@@ -33,10 +33,7 @@ abstract class BaseEtiquetaForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorAnd(array(
-        new sfValidatorDoctrineUnique(array('model' => 'Etiqueta', 'column' => array('id'))),
-        new sfValidatorDoctrineUnique(array('model' => 'Etiqueta', 'column' => array('token'))),
-      ))
+      new sfValidatorDoctrineUnique(array('model' => 'Etiqueta', 'column' => array('id')))
     );
 
     $this->widgetSchema->setNameFormat('etiqueta[%s]');

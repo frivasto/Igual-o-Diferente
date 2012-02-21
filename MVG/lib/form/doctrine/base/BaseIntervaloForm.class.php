@@ -37,10 +37,7 @@ abstract class BaseIntervaloForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorAnd(array(
-        new sfValidatorDoctrineUnique(array('model' => 'Intervalo', 'column' => array('id'))),
-        new sfValidatorDoctrineUnique(array('model' => 'Intervalo', 'column' => array('token'))),
-      ))
+      new sfValidatorDoctrineUnique(array('model' => 'Intervalo', 'column' => array('id')))
     );
 
     $this->widgetSchema->setNameFormat('intervalo[%s]');

@@ -3,7 +3,7 @@ Jugador:
     Timestampable:
   columns:
     id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
-    token:   { type: string(255), notnull: true, unique: true }
+    token:   { type: string(255), notnull: true, unique: false }
     user_id:   { type: string(255), notnull: true, unique: true }
     nombre:   { type: string(255), notnull: false }
     eliminado: { type: boolean, default: 0 }
@@ -13,7 +13,7 @@ Video:
     Timestampable:
   columns:
     id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
-    token:   { type: string(255), notnull: true, unique: true }
+    token:   { type: string(255), notnull: true, unique: false }
     url:   { type: string(255), notnull: true }
     nombre:   { type: string(255), notnull: false }
     eliminado: { type: boolean, default: 0 }
@@ -23,7 +23,7 @@ Intervalo:
     Timestampable:
   columns:
     id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
-    token:   { type: string(255), notnull: true, unique: true }
+    token:   { type: string(255), notnull: true, unique: false }
     video_id:   { type: integer(4) }
     inicio: { type: time }
     fin: { type: time }
@@ -37,7 +37,7 @@ Etiqueta:
     Timestampable:
   columns:
     id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
-    token:   { type: string(255), notnull: true, unique: true }
+    token:   { type: string(255), notnull: true, unique: false }
     texto:   { type: string(255) }
     ponderacion: { type: integer(4) }
 
@@ -46,7 +46,7 @@ Mesa:
     Timestampable:
   columns:
     id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
-    token:   { type: string(255), notnull: true, unique: true }
+    token:   { type: string(255), notnull: true, unique: false }
     jugador1_id:   { type: integer(4) }
     jugador2_id:   { type: integer(4) }
     tiempo: { type: time }
@@ -62,7 +62,7 @@ RelacionMesaVideo:
     Timestampable:
   columns:
     id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
-    token:   { type: string(255), notnull: true, unique: true }
+    token:   { type: string(255), notnull: true, unique: false }
     mesa_id:   { type: integer(4) }
     video_id:   { type: integer(4) }
     jugador_id:   { type: integer(4) }
@@ -81,7 +81,7 @@ InstanciaEtiqueta:
     Timestampable:
   columns:
     id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
-    token:   { type: string(255), notnull: true, unique: true }
+    token:   { type: string(255), notnull: true, unique: false }
     relacionmesavideo_id:   { type: integer(4) }
     texto:   { type: string(255) }
     tiempo: { type: time }
@@ -95,7 +95,7 @@ Decision:
     Timestampable:
   columns:
     id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
-    token:   { type: string(255), notnull: true, unique: true }
+    token:   { type: string(255), notnull: true, unique: false }
     relacionmesavideo_id:   { type: integer(4) }
     tiempo: { type: time }
     respuesta: { type: boolean, default: 0 }
