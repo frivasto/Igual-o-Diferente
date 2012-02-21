@@ -108,8 +108,12 @@ class MesaActions extends sfActions {
                     $id_mesa=$mesa->getId(); 
                 }                                               
                 //Devolver JSON con estos datos
-                $response['mesaid'] = $id_mesa;                 
-                $response['userid'] = $id_jugador; 
+                $response['tipo']="identificacion";
+                $response['objeto']=array();
+                $response['objeto'][$id_mesa]=$id_jugador;                
+                
+                //$response['mesaid'] = $id_mesa;                 
+                //$response['userid'] = $id_jugador; 
             }
         }                
         $this->getResponse()->setHttpHeader('Content-type', 'application/json');

@@ -4,6 +4,8 @@ error_reporting(E_ALL);
 set_time_limit(0);
 ob_implicit_flush();
 
+//MESAS::::
+$mesas=array();
 $master  = WebSocket("localhost",12345);
 $sockets = array($master);
 $users   = array();
@@ -49,47 +51,54 @@ function process($user,$msg){
   }
 }
 
-function process2($user,$msg){
-  //$action = unwrap($msg);
-  echo "Usuario ID (Tu): ".$user->id;
-  $action = decode2($msg);
-  say("< ".$action);
+function process2($user,$msg){	
+	echo "Usuario ID (Tu): ".$user->id;
+	$action = decode2($msg);
+	say("< ".$action);
 
-//json decode ese mensaje-- ver su tipo 
-//Si es de identificación-- Todo esto Actualizar el hash mesa que esta global decode
-  
-  //Si aún no está esta mesa agregada
-	
-	//agregar mesa
-	//y al usuario
-  
-  //Sino crearla incompleta editarla y poner usuario alli
-  
-  //Mandar MSG:: COMPLETO, MSG: incompleto de tipo <conexion>
-  
-//Si es de mensajes-- Esto, determinar a quien enviarle si no es bot
-  global $users;
-  //ENVIAR A TODOS CLIENTES
-  $n=count($users);
-  for($i=0;$i<$n;$i++){
-	  echo $users[$i]->id;
-	  switch($action){
-		case "hello" : send($users[$i]->socket,"hello human");                       break;
-		case "hi"    : send($users[$i]->socket,"zup human");                         break;
-		case "name"  : send($users[$i]->socket,"my name is Multivac, silly I know"); break;
-		case "age"   : send($users[$i]->socket,"I am older than time itself");       break;
-		case "date"  : send($users[$i]->socket,"today is ".date("Y.m.d"));           break;
-		case "time"  : send($users[$i]->socket,"server time is ".date("H:i:s"));     break;
-		case "thanks": send($users[$i]->socket,"you're welcome");                    break;
-		case "bye"   : send($users[$i]->socket,"bye");                               break;
-		default      : send($users[$i]->socket,$action." not understood");           break;
+	//json decode ese mensaje
+	$arregloMensaje=json_decode($msg, TRUE);
+	//-- ver su tipo::: Si es de identificación-- Todo esto Actualizar el hash mesa que esta global decode
+	if($arregloMensaje["tipo"] == "identificacion"){
+		$keys=array_keys($arregloMensaje["objeto"]);
+		$mesaid=$keys[0]; //key es mesaid :: value es userid
+		//Si está mesa agregada
+		if (array_key_exists($mesaid, $mesas)) {
+			//editarla y poner usuario alli para completar
+			//EDITAR EL ID DEL USER			
+			$user->id = $arregloMensaje["objeto"][$mesaid];				
+			$mesas[$mesaid][]=$user;
+			//Mandar en formato json MSG:: COMPLETO de tipo <conexion> a los 2 usuarios	AMBOS USUARIOS poner en sus sockets	
+			send($mesas[$mesaid][0]->socket,'{"tipo":"conexion","objeto":{"confirmacion": "COMPLETO"}}'); //este es el 2do player confirma completo a ambos
+			send($mesas[$mesaid][1]->socket,'{"tipo":"conexion","objeto":{"confirmacion": "COMPLETO"}}'); 
+		}else{
+			//agregar mesa y al value que es el usuario 
+			$mesas[$mesaid]=array();	
+			$user->id = $arregloMensaje["objeto"][$mesaid];				
+			$mesas[$mesaid][]=$user;			
+			//MSG: incompleto de tipo <conexion> a este 1er usuario agregado
+			send($mesas[$mesaid][0]->socket,'{"tipo":"conexion","objeto":{"confirmacion": "INCOMPLETO"}}');
+		}	  				
+	}else{  
+	  global $users;
+	  //ENVIAR A TODOS CLIENTES  //Si es de mensajes-- Determinar a quien PARTNER enviarle si no es bot
+	  $n=count($users);
+	  for($i=0;$i<$n;$i++){
+		  echo $users[$i]->id;
+		  switch($action){
+			case "hello" : send($users[$i]->socket,"hello human");                       break;
+			case "hi"    : send($users[$i]->socket,"zup human");                         break;
+			case "name"  : send($users[$i]->socket,"my name is Multivac, silly I know"); break;
+			case "age"   : send($users[$i]->socket,"I am older than time itself");       break;
+			case "date"  : send($users[$i]->socket,"today is ".date("Y.m.d"));           break;
+			case "time"  : send($users[$i]->socket,"server time is ".date("H:i:s"));     break;
+			case "thanks": send($users[$i]->socket,"you're welcome");                    break;
+			case "bye"   : send($users[$i]->socket,"bye");                               break;
+			default      : send($users[$i]->socket,$action." not understood");           break;
+		  }
 	  }
-  }
-//fin mensajes  
-  
-  
+	}//fin mensajes    
 }
-
 
 /**
  * Encode a text for sending to clients via ws://

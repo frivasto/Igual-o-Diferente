@@ -114,6 +114,9 @@ function onkey(event){ if(event.keyCode==13){ send(); } }
 </script>
 </head>
 <body onload="init()">
+<p>
+    Hola usuario: <strong><?php echo $sf_user->getAttribute('userid')?></strong>.
+</p>    
 <div id="ytapiplayer">
     You need Flash player 8+ and JavaScript enabled to view this video.
   </div>
