@@ -55,15 +55,20 @@ function process2($user,$msg){
 	echo "Usuario ID (Tu): ".$user->id;
 	$action = decode2($msg);
 	say("< ".$action);
-	$mesas=$GLOBALS['mesas'];
+	//$mesas=$GLOBALS['mesas'];
+	global $mesas;
+	print_r($mesas);
 	//json decode ese mensaje
 	$arregloMensaje=json_decode($action, TRUE);
 	//-- ver su tipo::: Si es de identificación-- Todo esto Actualizar el hash mesa que esta global decode
 	if($arregloMensaje["tipo"] == "identificacion"){
 		$keys=array_keys($arregloMensaje["objeto"]);
 		$mesaid=$keys[0]; //key es mesaid :: value es userid
+		echo "\nRespuesta1: ".array_key_exists($mesaid, $mesas);
+		echo "\nRespuesta2: ".array_key_exists($mesaid."", $mesas);
 		//Si está mesa agregada
 		if (array_key_exists($mesaid, $mesas)) {
+			echo "\nExiste esta mesa_id";
 			//editarla y poner usuario alli para completar
 			//EDITAR EL ID DEL USER			
 			$user->id = $arregloMensaje["objeto"][$mesaid];				
@@ -72,12 +77,14 @@ function process2($user,$msg){
 			send($mesas[$mesaid][0]->socket,'{"tipo":"conexion","objeto":{"confirmacion": "COMPLETO"}}'); //este es el 2do player confirma completo a ambos
 			send($mesas[$mesaid][1]->socket,'{"tipo":"conexion","objeto":{"confirmacion": "COMPLETO"}}'); 
 		}else{
+			echo "\nAún no existe esta mesa_id";
 			//agregar mesa y al value que es el usuario 
 			$mesas[$mesaid]=array();	
 			$user->id = $arregloMensaje["objeto"][$mesaid];				
 			$mesas[$mesaid][]=$user;			
 			//MSG: incompleto de tipo <conexion> a este 1er usuario agregado
 			send($mesas[$mesaid][0]->socket,'{"tipo":"conexion","objeto":{"confirmacion": "INCOMPLETO"}}');
+			print_r($mesas);
 		}	  				
 	}else{  
 	  global $users;

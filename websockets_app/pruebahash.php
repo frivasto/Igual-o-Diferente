@@ -51,6 +51,26 @@ function obtener_partner($mesa_id, $socketid){
 	}
 }
 	
+function ponerUnElemento(){
+	$mesas=$GLOBALS['mesas'];
+	$user2 = new User();
+	$user2->id = uniqid();
+	$user2->socket = "SOCKET3";	
+	
+	$mesas["44"]=array();
+	$mesas["44"][]=$user2;
+}
+
+function ponerUnElementoDeclareGlobal(){
+	global $mesas;
+	$user2 = new User();
+	$user2->id = uniqid();
+	$user2->socket = "SOCKET3";	
+	
+	$mesas["44"]=array();
+	$mesas["44"][]=$user2;
+}
+
 //mostrar_mesaJuego();
 obtener_partner("1", "SOCKET1");
 echo "<br/> elements";
@@ -81,4 +101,9 @@ $mesitas['abc4']="hola4";
 echo "<br />**resultados";
 while ( list( $key, $value ) = each( $mesitas ) )
  echo "<br />*resp: $key - $value";
+ 
+ponerUnElemento();
+ponerUnElementoDeclareGlobal();
+echo "<br />con uno más... Editar arreglo globaaaaaaaal en la función anterior.............";
+print_r($mesas);
 ?>
