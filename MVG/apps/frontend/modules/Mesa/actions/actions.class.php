@@ -106,6 +106,10 @@ class MesaActions extends sfActions {
                 $response['objeto']=array();
                 $response['objeto'][$id_mesa]=$id_jugador;                
                 
+                //poner en session la mesaid
+                $mesaid = $this->getUser()->getAttribute('mesaid',""); 
+                $mesaid =$id_mesa;
+                $this->getUser()->setAttribute('mesaid',$id_mesa);
                 //$response['mesaid'] = $id_mesa;                 
                 //$response['userid'] = $id_jugador; 
             }

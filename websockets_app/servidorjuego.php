@@ -55,12 +55,11 @@ function process2($user,$msg){
 	echo "Usuario ID (Tu): ".$user->id;
 	$action = decode2($msg);
 	say("< ".$action);
-	//$mesas=$GLOBALS['mesas'];
-	global $mesas;
+	global $mesas; //$mesas=$GLOBALS['mesas'];
 	print_r($mesas);
 	//json decode ese mensaje
 	$arregloMensaje=json_decode($action, TRUE);
-	//-- ver su tipo::: Si es de identificación-- Todo esto Actualizar el hash mesa que esta global decode
+	//-- ver tipo::: Si es de identificación-- Todo esto Actualizar el hash mesa que esta global decode
 	if($arregloMensaje["tipo"] == "identificacion"){
 		$keys=array_keys($arregloMensaje["objeto"]);
 		$mesaid=$keys[0]; //key es mesaid :: value es userid
@@ -87,14 +86,14 @@ function process2($user,$msg){
 			print_r($mesas);
 		}	  				
 	}else{  
-	  global $users;
-	  //ENVIAR A TODOS CLIENTES  //Si es de mensajes-- Determinar a quien PARTNER (usuario diferente de este user, a su partner) enviarle si no es bot
-	  $n=count($users);
-	  for($i=0;$i<$n;$i++){ //borrar este for, es a su partner no más
-		  echo $users[$i]->id;		  
-		  //enviar mensaje
-		  send($users[$i]->socket,'{"tipo":"mensajes","objeto":{"mensaje": "'.$action.'"}}');
-	  }
+		//Si es de mensajes-- Determinar a quien PARTNER (usuario diferente de este user, su partner, es decir misma mesa) //[Falta validar enviarle si no es bot]		
+		$keys=array_keys($arregloMensaje["objeto"]);
+		$mesaid=$keys[0];
+		if($mesas[$mesaid][0]->id!=$user)
+			$socket_enviar=$mesas[$mesaid][0]->socket;
+		else
+			$socket_enviar=$mesas[$mesaid][1]->socket; //el del otro					
+			send($socket_enviar,$action); //enviar mensaje ya codificado json - en este caso es el mismo mensaje que da la vuelta por acá	'{"tipo":"mensajes","objeto":{"'+mesa_id+'": "'+msg+'"}}'	  	  
 	}//fin mensajes    
 }
 

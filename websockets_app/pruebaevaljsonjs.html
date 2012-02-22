@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>Pagina</title>
+		<script type="text/javascript">
+			function pruebaEval(){
+				var msg='{"tipo":"mensajes","objeto":{"mensaje": "holaaaa"}}';
+				var div=document.getElementById("seccionprueba");
+				var myObject = eval('(' + msg + ')');
+				//div.innerHTML=myObject.tipo+" - "+myObject.objeto.mesa1;				
+                var keys=Object.keys(myObject.objeto);
+				var key=keys[0];
+				var value=myObject.objeto[key];
+				div.innerHTML=myObject.tipo+" - "+value;				
+			}
+		</script>
+	</head>
+	<body>
+		<div id="seccionprueba">
+		</div>
+		<input type="button" value="dale click" onclick="pruebaEval();" />
+	</body>
+</html>

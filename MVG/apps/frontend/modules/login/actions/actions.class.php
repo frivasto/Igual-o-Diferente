@@ -29,6 +29,9 @@ class loginActions extends sfActions
         $user = $this->getUser()->getAttribute('userid',"");    
         $user=$usuario_nombre.$usuario_password;
         $this->getUser()->setAttribute('userid',$user);
+        
+        $mesaid = $this->getUser()->getAttribute('mesaid',"");                    
+        $this->getUser()->setAttribute('mesaid','0');
         $this->redirect('Mesa/index'); 
     }
     else{

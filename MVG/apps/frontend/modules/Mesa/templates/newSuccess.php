@@ -36,6 +36,7 @@
               return request;
             }
             var respuestajson=null;
+            var mesa_id;
             function consulta(status_socket){
                 var request;
                 request = createXMLHttpRequest( );
@@ -49,6 +50,9 @@
                                 sendMensajes(respuestajson);
                                 var pruebadiv=document.getElementById("prueba");
                                 pruebadiv.innerHTML="RESPUESTA: "+respuestajson;
+                                var myObject = eval('(' + respuestajson + ')');
+                                var keys=Object.keys(myObject.objeto);
+                                mesa_id=keys[0]; //actualizar mesa_id de este usuario para enviarlo
                             }
                         }
                     }
@@ -86,7 +90,10 @@ function init(){
             }                                   
         }else{
             //de tipo MENSAJES            
-            logPartner("Received: "+myObject.objeto.mensaje);
+            var keys=Object.keys(myObject.objeto);
+            var key=keys[0];
+            var value=myObject.objeto[key];
+            logPartner("Received: "+value);
         }        
     };
     socket.onclose   = function(msg){ 
@@ -101,6 +108,7 @@ function init(){
 function sendMensajes(msg){
     try{ socket.send(msg); } catch(ex){ }
 }
+
 function send(){
   var txt,msg;
   txt = $("msg");
@@ -108,7 +116,10 @@ function send(){
   if(!msg){ alert("Message can not be empty"); return; }
   txt.value="";
   txt.focus();
-  try{ socket.send(msg); log('Sent: '+msg); } catch(ex){ log(ex); }
+  try{ 
+      var mensajejson= '{"tipo":"mensajes","objeto":{"'+mesa_id+'": "'+msg+'"}}';
+      socket.send(mensajejson); 
+      log('Sent: -mesa: '+mesa_id+" - "+msg); } catch(ex){ log(ex); }
 }
 function quit(){
   log("Goodbye!");
