@@ -73,34 +73,70 @@ class MesaActions extends sfActions {
                     $jugador->save();
                     $id_jugador=$jugador->getId(); 
                 }
-                
-             
-                //buscar una mesa con usuario disponible de la bas de datos
+
+
+                // NUEVO jugadores disponibles de acuerdo al estado
+                $q = Doctrine_Query::create()
+                ->select('j.id')
+                ->from('Jugador j')
+                ->where('j.estado=1 and j.id != ?',$id_jugador);
+
+                $jugadores = $q->fetchArray();
+
+                //Buscar una mesa incompleta
                 $q = Doctrine_Query::create()
                 ->select('m.id')
                 ->from('Mesa m')
-                ->where('m.jugador1_id is not null AND m.jugador2_id is null');
+                ->where('m.estado=0');
+                 $mesas_inc = $q->fetchArray();
 
-                $mesas = $q->fetchArray();
-                $id_mesa=0;
-                
-                if(!empty($mesas)){
-                    //Si hay obtner la mesa y poner alli actaulizar usuario de la base tomar mesa_id
-                    $id_mesa=$mesas[0]['id']; 
+                  if(!empty($mesas_inc)){ // Si hay mesas incompletas registrarme aqui
+                    $id_mesa=$mesas_inc[0]['id'];
                     //update
                     $q = Doctrine_Query::create()
                     ->update('Mesa m')
                     ->set('jugador2_id', '?', $id_jugador)
+                    ->set('estado', '?', 1) //Estado 1 :: mesa completa
                     ->where('m.id = ?', $id_mesa);
-                    
-                    $rows = $q->execute();                                                            
-                }else{
-                    //Sino insertar una mesa nueva y poner alli a este usuario, tomar mesa_id
+                    $rows = $q->execute();
+
+                    $jug=Jugador::getJugadorById($id_jugador);
+                    $jug->setEstado(0); // no disponible
+                    $jug->save();
+
+                  }else{ // Crearme una mesa y buscarme quien sera mi competidor---Crear Mesa para ambos
                     $mesa = new Mesa();
-                    $mesa->setJugador1Id($id_jugador);
-                    $mesa->save();
-                    $id_mesa=$mesa->getId(); 
-                }                                               
+                      if(!empty($jugadores)){ // Existe con quien jugar, setearmelo de una
+                            $mesa->setJugador1Id($id_jugador);
+                            $mesa->setJugador2Id($jugadores[0]->getId()); // El q me escogieron
+                            $mesa->setEstado(1);
+                            $mesa->save();
+                            $id_mesa=$mesa->getId();
+
+                            $jug=Jugador::getJugadorById($id_jugador);
+                            $jug->setEstado(0); // no disponible
+                            $jug->save();
+
+                            $jug1=Jugador::getJugadorById($id_jugador);
+                            $jug1->setEstado(0); // no disponible
+                            $jug1->save();
+
+                       }else{ // Se quedo la mesa conmigo y estado incompleto
+                            $mesa->setJugador1Id($id_jugador);
+                            //$mesa->setJugador2Id($jugadores[0]->getId()); // El q me escogieron
+                            $mesa->setEstado(0); //Incompleta
+                            $mesa->save();
+                            $id_mesa=$mesa->getId();
+
+                            $jug=Jugador::getJugadorById($id_jugador);
+                            $jug->setEstado(0); // no disponible
+                            $jug->save();
+
+                      }
+                  }
+
+
+                //$id_mesa=0
                 //Devolver JSON con estos datos
                 $response['tipo']="identificacion";
                 $response['objeto']=array();

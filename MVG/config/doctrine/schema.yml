@@ -6,6 +6,7 @@ Jugador:
     token:   { type: string(255), notnull: true, unique: false }
     user_id:   { type: string(255), notnull: true, unique: true }
     nombre:   { type: string(255), notnull: false }
+    estado:   { type: integer(1), default:1 }
     eliminado: { type: boolean, default: 0 }
  
 Video:
@@ -50,6 +51,7 @@ Mesa:
     jugador1_id:   { type: integer(4) }
     jugador2_id:   { type: integer(4) }
     tiempo: { type: time }
+    estado:   { type: integer(1) } 
     eliminado: { type: boolean, default: 0 }
   relations:
     Jugador: { local: jugador1_id, foreign: id, foreignAlias: JugadorMesa1 }
