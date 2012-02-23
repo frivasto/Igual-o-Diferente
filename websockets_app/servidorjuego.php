@@ -89,7 +89,7 @@ function process2($user,$msg){
 		//Si es de mensajes-- Determinar a quien PARTNER (usuario diferente de este user, su partner, es decir misma mesa) //[Falta validar enviarle si no es bot]		
 		$keys=array_keys($arregloMensaje["objeto"]);
 		$mesaid=$keys[0];
-		if($mesas[$mesaid][0]->id!=$user)
+		if($mesas[$mesaid][0]->id!=$user->id)
 			$socket_enviar=$mesas[$mesaid][0]->socket;
 		else
 			$socket_enviar=$mesas[$mesaid][1]->socket; //el del otro					
