@@ -174,5 +174,6 @@ function onkey(event){ if(event.keyCode==13){ send(); } }
  <button onclick="send()">Send</button>
  <button onclick="quit()">Quit</button>
  <div>Commands: hello, hi, name, age, date, time, thanks, bye</div>
+ <a href="<?php echo url_for('Mesa/new'); ?>">Volver a Jugar </a>
 </body>
 </html>
