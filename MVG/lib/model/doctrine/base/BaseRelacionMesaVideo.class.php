@@ -8,13 +8,11 @@
  * @property integer $id
  * @property string $token
  * @property integer $mesa_id
- * @property integer $video_id
  * @property integer $jugador_id
  * @property integer $intervalo_id
  * @property boolean $respuesta_real
  * @property boolean $eliminado
  * @property Mesa $Mesa
- * @property Video $Video
  * @property Jugador $Jugador
  * @property Intervalo $Intervalo
  * @property Doctrine_Collection $InstanciaEtiquetaRelacionMesaVideo
@@ -22,26 +20,22 @@
  * @method integer             getId()                                 Returns the current record's "id" value
  * @method string              getToken()                              Returns the current record's "token" value
  * @method integer             getMesaId()                             Returns the current record's "mesa_id" value
- * @method integer             getVideoId()                            Returns the current record's "video_id" value
  * @method integer             getJugadorId()                          Returns the current record's "jugador_id" value
  * @method integer             getIntervaloId()                        Returns the current record's "intervalo_id" value
  * @method boolean             getRespuestaReal()                      Returns the current record's "respuesta_real" value
  * @method boolean             getEliminado()                          Returns the current record's "eliminado" value
  * @method Mesa                getMesa()                               Returns the current record's "Mesa" value
- * @method Video               getVideo()                              Returns the current record's "Video" value
  * @method Jugador             getJugador()                            Returns the current record's "Jugador" value
  * @method Intervalo           getIntervalo()                          Returns the current record's "Intervalo" value
  * @method Doctrine_Collection getInstanciaEtiquetaRelacionMesaVideo() Returns the current record's "InstanciaEtiquetaRelacionMesaVideo" collection
  * @method RelacionMesaVideo   setId()                                 Sets the current record's "id" value
  * @method RelacionMesaVideo   setToken()                              Sets the current record's "token" value
  * @method RelacionMesaVideo   setMesaId()                             Sets the current record's "mesa_id" value
- * @method RelacionMesaVideo   setVideoId()                            Sets the current record's "video_id" value
  * @method RelacionMesaVideo   setJugadorId()                          Sets the current record's "jugador_id" value
  * @method RelacionMesaVideo   setIntervaloId()                        Sets the current record's "intervalo_id" value
  * @method RelacionMesaVideo   setRespuestaReal()                      Sets the current record's "respuesta_real" value
  * @method RelacionMesaVideo   setEliminado()                          Sets the current record's "eliminado" value
  * @method RelacionMesaVideo   setMesa()                               Sets the current record's "Mesa" value
- * @method RelacionMesaVideo   setVideo()                              Sets the current record's "Video" value
  * @method RelacionMesaVideo   setJugador()                            Sets the current record's "Jugador" value
  * @method RelacionMesaVideo   setIntervalo()                          Sets the current record's "Intervalo" value
  * @method RelacionMesaVideo   setInstanciaEtiquetaRelacionMesaVideo() Sets the current record's "InstanciaEtiquetaRelacionMesaVideo" collection
@@ -73,10 +67,6 @@ abstract class BaseRelacionMesaVideo extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('video_id', 'integer', 4, array(
-             'type' => 'integer',
-             'length' => 4,
-             ));
         $this->hasColumn('jugador_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
@@ -100,10 +90,6 @@ abstract class BaseRelacionMesaVideo extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('Mesa', array(
              'local' => 'mesa_id',
-             'foreign' => 'id'));
-
-        $this->hasOne('Video', array(
-             'local' => 'video_id',
              'foreign' => 'id'));
 
         $this->hasOne('Jugador', array(
