@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>jQuery Test Runner</title>
+
+		<link rel="stylesheet" type="text/css" href="lib/jasmine.css">
+
+		<script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="../js/jquery.chrony.js"></script>
+
+		<script type="text/javascript" charset="utf-8" src="lib/jasmine.js"></script>
+		<script type="text/javascript" charset="utf-8" src="lib/jasmine-html.js"></script>
+		<script type="text/javascript" charset="utf-8" src="lib/jasmine-jquery.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+			describe('single test', function() {
+
+				beforeEach(function() {
+				    $('body').append('<div id="time"></div>');
+					jasmine.Clock.useMock();
+				});
+
+				afterEach(function () {
+					$('#time').remove();
+				});
+				
+				it ('should override the finish callback', function() {
+					// given
+					var $time			= $('#time'),
+						firstExpected	= 'Finished!',
+						expected		= 'Overrided!';
+
+					// when
+					$time.chrony({ seconds: 1, finish: function() { $(this).html(firstExpected); } });
+
+					$('#time').chrony('set', { finish: function() { $(this).html(expected); } });
+
+					jasmine.Clock.tick(1000);
+
+					// then
+					expect($time).toHaveText(expected);
+				});
+
+			});
+
+			jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+			jasmine.getEnv().execute();
+		</script>
+	</body>
+</html>

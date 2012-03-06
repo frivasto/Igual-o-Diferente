@@ -10,6 +10,7 @@
  * @property integer $video_id
  * @property time $inicio
  * @property time $fin
+ * @property integer $total_tags
  * @property boolean $eliminado
  * @property Video $Video
  * @property Doctrine_Collection $MesaVideoIntervalo
@@ -19,6 +20,7 @@
  * @method integer             getVideoId()            Returns the current record's "video_id" value
  * @method time                getInicio()             Returns the current record's "inicio" value
  * @method time                getFin()                Returns the current record's "fin" value
+ * @method integer             getTotalTags()          Returns the current record's "total_tags" value
  * @method boolean             getEliminado()          Returns the current record's "eliminado" value
  * @method Video               getVideo()              Returns the current record's "Video" value
  * @method Doctrine_Collection getMesaVideoIntervalo() Returns the current record's "MesaVideoIntervalo" collection
@@ -27,6 +29,7 @@
  * @method Intervalo           setVideoId()            Sets the current record's "video_id" value
  * @method Intervalo           setInicio()             Sets the current record's "inicio" value
  * @method Intervalo           setFin()                Sets the current record's "fin" value
+ * @method Intervalo           setTotalTags()          Sets the current record's "total_tags" value
  * @method Intervalo           setEliminado()          Sets the current record's "eliminado" value
  * @method Intervalo           setVideo()              Sets the current record's "Video" value
  * @method Intervalo           setMesaVideoIntervalo() Sets the current record's "MesaVideoIntervalo" collection
@@ -63,6 +66,10 @@ abstract class BaseIntervalo extends sfDoctrineRecord
              ));
         $this->hasColumn('fin', 'time', null, array(
              'type' => 'time',
+             ));
+        $this->hasColumn('total_tags', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
              ));
         $this->hasColumn('eliminado', 'boolean', null, array(
              'type' => 'boolean',

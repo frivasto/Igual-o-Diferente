@@ -12,5 +12,12 @@
  */
 class Jugador extends BaseJugador
 {
+     public static function getJugadorById($id_jugador){
+        $jugador=Doctrine_Core::getTable('Jugador')
+                            ->createQuery('j')
+                            ->where('j.id= ?',$id_jugador)
+                            ->fetchOne();
+        return $jugador;
+    }
 
 }

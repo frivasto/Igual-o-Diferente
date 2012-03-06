@@ -165,6 +165,7 @@ function connect($socket){
   array_push($users,$user);
   array_push($sockets,$socket);
   console($socket." CONNECTED!");
+  echo "\n**socket conectado ".$socket;
 }
 
 function disconnect($socket){
@@ -174,10 +175,12 @@ function disconnect($socket){
   for($i=0;$i<$n;$i++){
     if($users[$i]->socket==$socket){ $found=$i; break; }
   }
+  echo "\n**Usuario salió ".$users[$found]->id;
   if(!is_null($found)){ array_splice($users,$found,1); }
   $index = array_search($socket,$sockets);
   socket_close($socket);
   console($socket." DISCONNECTED!");
+  echo "\n**socket desconectado ".$socket;
   if($index>=0){ array_splice($sockets,$index,1); }
 }
 

@@ -37,9 +37,10 @@
             }
             var respuestajson=null;
             var mesa_id;
+            /*AJax para enviar a emparejar*/
             function consulta(status_socket){
                 var request;
-                request = createXMLHttpRequest( );
+                request = createXMLHttpRequest();
                 request.open('GET','<?php echo url_for('Mesa/emparejar'); ?>'+"?estado="+status_socket,true);
                 request.onreadystatechange=function(){                      
                     if(request.readyState==4){
@@ -64,6 +65,55 @@
 		var resp2=xhr.responseText;
                 return resp2;                
             }
+            /*AJAX para mandar a guardar la etiqueta y acumularla y evaluarla para el puntaje del jugador*/
+            /*ENVIAR  ETIQUETA TEXTO, TIEMPO */
+            function consulta_guardarEtiqueta(etiqueta_texto){
+                var request;
+                request = createXMLHttpRequest();
+                request.open('GET','<?php echo url_for('Mesa/insertarEtiqueta'); ?>'+"?etiqueta_texto="+etiqueta_texto,true);
+                request.onreadystatechange=function(){                      
+                    if(request.readyState==4){
+                        if(request.status==200){                             
+                            respuestajson=manejador(request);  
+                            if(respuestajson!=null){
+                                //setear puntaje en el juego
+                                //FALTAAAAAAAAA!!!!
+                            }
+                        }
+                    }
+                };
+                request.send(null);
+            }
+/****************************** Tiempo Regresivo ****************************/            
+var today2=new Date();
+today2.setHours(0);
+today2.setMinutes(3);
+today2.setSeconds(0);            
+function bajarTime()
+{
+	var h=today2.getHours();
+	var m=today2.getMinutes();
+	var s=today2.getSeconds();
+		
+	if(!(h==0 && m==0 && s==0)){
+		today2.setSeconds(today2.getSeconds()-1);
+		m=today2.getMinutes();
+		s=today2.getSeconds();
+		// add a zero in front of numbers<10
+		m=checkTime(m);
+		s=checkTime(s);
+		document.getElementById('timer').innerHTML=h+":"+m+":"+s;	
+		t=setTimeout('bajarTime()',1000);
+	}	
+}
+
+function checkTime(i)
+{
+	if (i<10)i="0" + i;  
+	return i;
+}
+
+/****************************** SOCKETS ****************************/
 var socket;
 function init(){
   var host = "ws://127.0.0.1:12345"; //ws://localhost:12345/websocket/server.php
@@ -87,6 +137,8 @@ function init(){
             }else{
                 //Si es completo ya habilita juego que estuvo dehabilitado e iniciar cronometro
                 alert("Prueba juego habilitado");
+                //COMPLETO, VER SI SE CARGARON LOS VIDEOS DE AMBOS PARA SINCRONIZAR
+                bajarTime();
             }                                   
         }else{
             //de tipo MENSAJES            
@@ -118,8 +170,13 @@ function send(){
   txt.focus();
   try{ 
       var mensajejson= '{"tipo":"mensajes","objeto":{"'+mesa_id+'": "'+msg+'"}}';
+      //enviarlo a aoacket server
       socket.send(mensajejson); 
-      log('Sent: -mesa: '+mesa_id+" - "+msg); } catch(ex){ log(ex); }
+      //mostrarlo en la cajita de texto Tu
+      log('Sent: -mesa: '+mesa_id+" - "+msg); 
+      //guardarlo en la base de datos llamar al action por ajax
+      
+  } catch(ex){ log(ex); }
 }
 function quit(){
   log("Goodbye!");
@@ -171,8 +228,10 @@ function onkey(event){ if(event.keyCode==13){ send(); } }
  <div id="log"></div>
  <div id="logpartner"></div>
  <input id="msg" type="textbox" onkeypress="onkey(event)"/>
+ <p id="timer"></p>
  <button onclick="send()">Send</button>
  <button onclick="quit()">Quit</button>
  <div>Commands: hello, hi, name, age, date, time, thanks, bye</div>
+ <a href="<?php echo url_for('Mesa/new'); ?>">Volver a Jugar </a>
 </body>
 </html>

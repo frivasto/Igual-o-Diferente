@@ -11,7 +11,6 @@
  * @property string $nombre
  * @property boolean $eliminado
  * @property Doctrine_Collection $IntervaloVideo
- * @property Doctrine_Collection $VideoMesaVideo
  * 
  * @method integer             getId()             Returns the current record's "id" value
  * @method string              getToken()          Returns the current record's "token" value
@@ -19,14 +18,12 @@
  * @method string              getNombre()         Returns the current record's "nombre" value
  * @method boolean             getEliminado()      Returns the current record's "eliminado" value
  * @method Doctrine_Collection getIntervaloVideo() Returns the current record's "IntervaloVideo" collection
- * @method Doctrine_Collection getVideoMesaVideo() Returns the current record's "VideoMesaVideo" collection
  * @method Video               setId()             Sets the current record's "id" value
  * @method Video               setToken()          Sets the current record's "token" value
  * @method Video               setUrl()            Sets the current record's "url" value
  * @method Video               setNombre()         Sets the current record's "nombre" value
  * @method Video               setEliminado()      Sets the current record's "eliminado" value
  * @method Video               setIntervaloVideo() Sets the current record's "IntervaloVideo" collection
- * @method Video               setVideoMesaVideo() Sets the current record's "VideoMesaVideo" collection
  * 
  * @package    MusicVideoGame
  * @subpackage model
@@ -71,10 +68,6 @@ abstract class BaseVideo extends sfDoctrineRecord
     {
         parent::setUp();
         $this->hasMany('Intervalo as IntervaloVideo', array(
-             'local' => 'id',
-             'foreign' => 'video_id'));
-
-        $this->hasMany('RelacionMesaVideo as VideoMesaVideo', array(
              'local' => 'id',
              'foreign' => 'video_id'));
 

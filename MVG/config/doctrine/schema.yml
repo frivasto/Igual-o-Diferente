@@ -6,6 +6,7 @@ Jugador:
     token:   { type: string(255), notnull: true, unique: false }
     user_id:   { type: string(255), notnull: true, unique: true }
     nombre:   { type: string(255), notnull: false }
+    estado:   { type: integer(1), default:1 }
     eliminado: { type: boolean, default: 0 }
  
 Video:
@@ -27,6 +28,7 @@ Intervalo:
     video_id:   { type: integer(4) }
     inicio: { type: time }
     fin: { type: time }
+    total_tags: { type: integer(4) }
     eliminado: { type: boolean, default: 0 }
   relations:
     Video: { local: video_id, foreign: id, foreignAlias: IntervaloVideo }
@@ -50,6 +52,7 @@ Mesa:
     jugador1_id:   { type: integer(4) }
     jugador2_id:   { type: integer(4) }
     tiempo: { type: time }
+    estado:   { type: integer(1) } 
     eliminado: { type: boolean, default: 0 }
   relations:
     Jugador: { local: jugador1_id, foreign: id, foreignAlias: JugadorMesa1 }
@@ -63,15 +66,13 @@ RelacionMesaVideo:
   columns:
     id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
     token:   { type: string(255), notnull: true, unique: false }
-    mesa_id:   { type: integer(4) }
-    video_id:   { type: integer(4) }
+    mesa_id:   { type: integer(4) }    
     jugador_id:   { type: integer(4) }
-    intervalo_id: { type: integer(4) }
+    intervalo_id: { type: integer(4) }    
     respuesta_real: { type: boolean, default: 0 }
     eliminado: { type: boolean, default: 0 }
   relations:
-    Mesa: { local: mesa_id, foreign: id, foreignAlias: MesaMesaVideo }
-    Video: { local: video_id, foreign: id, foreignAlias: VideoMesaVideo }
+    Mesa: { local: mesa_id, foreign: id, foreignAlias: MesaMesaVideo }    
     Jugador: { local: jugador_id, foreign: id, foreignAlias: JugadorMesaVideo }
     Intervalo: { local: intervalo_id, foreign: id, foreignAlias: MesaVideoIntervalo }
 

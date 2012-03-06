@@ -10,6 +10,7 @@
  * @property integer $jugador1_id
  * @property integer $jugador2_id
  * @property time $tiempo
+ * @property integer $estado
  * @property boolean $eliminado
  * @property Jugador $Jugador
  * @property Doctrine_Collection $MesaMesaVideo
@@ -19,6 +20,7 @@
  * @method integer             getJugador1Id()    Returns the current record's "jugador1_id" value
  * @method integer             getJugador2Id()    Returns the current record's "jugador2_id" value
  * @method time                getTiempo()        Returns the current record's "tiempo" value
+ * @method integer             getEstado()        Returns the current record's "estado" value
  * @method boolean             getEliminado()     Returns the current record's "eliminado" value
  * @method Jugador             getJugador()       Returns the current record's "Jugador" value
  * @method Doctrine_Collection getMesaMesaVideo() Returns the current record's "MesaMesaVideo" collection
@@ -27,6 +29,7 @@
  * @method Mesa                setJugador1Id()    Sets the current record's "jugador1_id" value
  * @method Mesa                setJugador2Id()    Sets the current record's "jugador2_id" value
  * @method Mesa                setTiempo()        Sets the current record's "tiempo" value
+ * @method Mesa                setEstado()        Sets the current record's "estado" value
  * @method Mesa                setEliminado()     Sets the current record's "eliminado" value
  * @method Mesa                setJugador()       Sets the current record's "Jugador" value
  * @method Mesa                setMesaMesaVideo() Sets the current record's "MesaMesaVideo" collection
@@ -64,6 +67,10 @@ abstract class BaseMesa extends sfDoctrineRecord
              ));
         $this->hasColumn('tiempo', 'time', null, array(
              'type' => 'time',
+             ));
+        $this->hasColumn('estado', 'integer', 1, array(
+             'type' => 'integer',
+             'length' => 1,
              ));
         $this->hasColumn('eliminado', 'boolean', null, array(
              'type' => 'boolean',
