@@ -251,22 +251,33 @@ class MesaActions extends sfActions {
     public function executeInsertarEtiqueta(sfWebRequest $request) {  
         $tmp = $request->getParameter('etiqueta_texto');
         $etiqueta_texto = isset($tmp) ? $tmp : '';
+        $tmp = $request->getParameter('tiempo_envio');
+        $tiempo_envio = isset($tmp) ? $tmp : '';
+        
         $response = array();
-        if ($etiqueta_texto != '') {
-            
+        if ($etiqueta_texto != '' && $tiempo_envio!='') {
+            //calificar, insertarla con el tiempo
+            $etiqueta = new InstanciaEtiqueta();
+            $etiqueta->relacionmesavideo_id=0;
+            $etiqueta->texto=$etiqueta_texto;
+            $etiqueta->tiempo=$tiempo_envio; //convert time
+            $etiqueta->save();           
+            $id_etiqueta=$etiqueta->getId();
         }
+        //Devolver JSON con estos datos
+        $response['puntaje']="identificacion";        
+        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
+        return $this->renderText(json_encode($response));  
     }
+    
     public function executeNew(sfWebRequest $request) {
         $this->form = new MesaForm();
     }
 
     public function executeCreate(sfWebRequest $request) {
         $this->forward404Unless($request->isMethod(sfRequest::POST));
-
         $this->form = new MesaForm();
-
         $this->processForm($request, $this->form);
-
         $this->setTemplate('new');
     }
 
@@ -279,18 +290,14 @@ class MesaActions extends sfActions {
         $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
         $this->forward404Unless($mesa = Doctrine_Core::getTable('Mesa')->find(array($request->getParameter('id'))), sprintf('Object mesa does not exist (%s).', $request->getParameter('id')));
         $this->form = new MesaForm($mesa);
-
         $this->processForm($request, $this->form);
-
         $this->setTemplate('edit');
     }
 
     public function executeDelete(sfWebRequest $request) {
         $request->checkCSRFProtection();
-
         $this->forward404Unless($mesa = Doctrine_Core::getTable('Mesa')->find(array($request->getParameter('id'))), sprintf('Object mesa does not exist (%s).', $request->getParameter('id')));
         $mesa->delete();
-
         $this->redirect('Mesa/index');
     }
 

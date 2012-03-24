@@ -70,7 +70,9 @@
             function consulta_guardarEtiqueta(etiqueta_texto){
                 var request;
                 request = createXMLHttpRequest();
-                request.open('GET','<?php echo url_for('Mesa/insertarEtiqueta'); ?>'+"?etiqueta_texto="+etiqueta_texto,true);
+                //obtener etiqueta, tiempo
+                var tiempo_envio=0;
+                request.open('GET','<?php echo url_for('Mesa/insertarEtiqueta'); ?>'+"?etiqueta_texto="+etiqueta_texto+"&tiempo="+tiempo_envio,true);
                 request.onreadystatechange=function(){                      
                     if(request.readyState==4){
                         if(request.status==200){                             
