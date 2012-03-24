@@ -76,6 +76,17 @@ class MesaActions extends sfActions {
 
 
                 // NUEVO jugadores disponibles de acuerdo al estado
+<<<<<<< HEAD
+=======
+                $q = Doctrine_Query::create()
+                ->select('j.id')
+                ->from('Jugador j')
+                ->where('j.estado=1 and j.id != ?',$id_jugador);
+
+                $jugadores = $q->fetchArray();
+
+                //Buscar una mesa incompleta
+>>>>>>> ef53b81eeab3ab7a61e743eef4bad0bb34e49995
                 $q = Doctrine_Query::create()
                 ->select('j.id')
                 ->from('Jugador j')
@@ -90,6 +101,7 @@ class MesaActions extends sfActions {
                 ->where('m.estado=0');
                  $mesas_inc = $q->fetchArray();
 
+<<<<<<< HEAD
                 //--------------------COLECCIONES DE VIDEOS INTERVALOS----------
                  //5 videos de los ordenados por el número de tags :: Prioridad al de menor tags
                  $q = Doctrine_Query::create()
@@ -104,6 +116,10 @@ class MesaActions extends sfActions {
                   if(!empty($mesas_inc)){ // Si hay mesas incompletas registrarme aqui
                     $id_mesa=$mesas_inc[0]['id'];
                     $jug_partner=$mesas_inc[0]['jugador1_id']; //OJO
+=======
+                  if(!empty($mesas_inc)){ // Si hay mesas incompletas registrarme aqui
+                    $id_mesa=$mesas_inc[0]['id'];
+>>>>>>> ef53b81eeab3ab7a61e743eef4bad0bb34e49995
                     //update
                     $q = Doctrine_Query::create()
                     ->update('Mesa m')
@@ -115,6 +131,7 @@ class MesaActions extends sfActions {
                     $jug=Jugador::getJugadorById($id_jugador);
                     $jug->setEstado(0); // no disponible
                     $jug->save();
+<<<<<<< HEAD
                     
                     //-----------------------------------ASIGNAR VIDEO ---------
                     //relacion mesa video del otro JUG
@@ -146,6 +163,8 @@ class MesaActions extends sfActions {
                     $relacion_mesa_vid2->jugador_id=$id_jugador;
                     $relacion_mesa_vid2->save();                    
                     //----------------------------------------------------------
+=======
+>>>>>>> ef53b81eeab3ab7a61e743eef4bad0bb34e49995
 
                   }else{ // Crearme una mesa y buscarme quien sera mi competidor---Crear Mesa para ambos
                     $mesa = new Mesa();
@@ -160,6 +179,7 @@ class MesaActions extends sfActions {
                             $jug->setEstado(0); // no disponible
                             $jug->save();
 
+<<<<<<< HEAD
                             //OJO
                             $jug1=Jugador::getJugadorById($jugadores[0]->getId());
                             $jug1->setEstado(0); // no disponible
@@ -198,6 +218,11 @@ class MesaActions extends sfActions {
                             $relacion_mesa_vid2->jugador_id=$jugadores[0]->getId();
                             $relacion_mesa_vid2->save();
                             //--------------------------------------------------
+=======
+                            $jug1=Jugador::getJugadorById($id_jugador);
+                            $jug1->setEstado(0); // no disponible
+                            $jug1->save();
+>>>>>>> ef53b81eeab3ab7a61e743eef4bad0bb34e49995
 
                        }else{ // Se quedo la mesa conmigo y estado incompleto
                             $mesa->setJugador1Id($id_jugador);
@@ -209,6 +234,7 @@ class MesaActions extends sfActions {
                             $jug=Jugador::getJugadorById($id_jugador);
                             $jug->setEstado(0); // no disponible
                             $jug->save();
+<<<<<<< HEAD
                             
                             //-----------------------------------ASIGNAR VIDEO -
                             //este es relacion_mesa 1ER JUG INCOMPLETO----------
@@ -233,6 +259,14 @@ class MesaActions extends sfActions {
                       }
                   }
                   
+=======
+
+                      }
+                  }
+
+
+                //$id_mesa=0
+>>>>>>> ef53b81eeab3ab7a61e743eef4bad0bb34e49995
                 //Devolver JSON con estos datos
                 $response['tipo']="identificacion";
                 $response['objeto']=array();
