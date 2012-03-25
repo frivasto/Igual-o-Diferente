@@ -36,10 +36,17 @@
 	#content1{
 		min-height:400px;
 		width:30%;
-		background: rgb(253,223,255);
+		background: rgb(253,213,255); /*223*/
 		margin: 10px 0px 0px 30px;
 		float:left;	
 		font-size:12px;
+	}
+	#tabs{
+		margin: 10px 30px 0px 30px;
+		font-size:12px;		
+	}
+	.ui-tabs .ui-tabs-panel{
+		padding: 0px !important;
 	}
 	#content2{
 		/*min-height:400px;*/
@@ -125,6 +132,7 @@
 	button.ui-state-active, button.ui-state-hover{
 		border: 1px solid #98BF21 !important; background: #98BF21 url(custom_css/css/custom-theme/images/ui-bg_glass_45_98bf21_1x400.png) 50% 50% repeat-x !important;
 	}	
+	
 </style>
 <script type="text/javascript">
 $(document).ready(function() {  
@@ -139,6 +147,9 @@ $(document).ready(function() {
 		.click(function(){});
 	$('#videos_radios4').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20)
 		.click(function(){});
+		
+	//$( "#menu_opciones" ).buttonset();	
+	$( "#tabs" ).tabs();
 });
 </script>
 </head>
@@ -148,43 +159,60 @@ $(document).ready(function() {
 		<h1>My First Heading</h1>
 		<p>Res&uacute;men del Juego</p>
 	</div>
-	<div id="body">	
-		<div id="content1">
-			<h3>Resultados:</h3>			
-			<span id="rounds">Rounds:</span>						
-			<input type="radio" name="videos_radios" id="videos_radios1" checked value="1" onclick=""><label for="videos_radios1" style="width: 238px !important; text-align: left;"> 1. Correcto </label> 
-			<input type="radio" name="videos_radios" id="videos_radios2" value="2" onclick=""><label for="videos_radios2" style="width: 238px !important; text-align: left;"> 2. Incorrecto </label> 
-			<input type="radio" name="videos_radios" id="videos_radios3" value="3" onclick=""><label for="videos_radios3" style="width: 238px !important; text-align: left;"> 3. Incorrecto </label>
-			<input type="radio" name="videos_radios" id="videos_radios4" value="4" onclick=""><label for="videos_radios4" style="width: 238px !important; text-align: left;"> 4. Incorrecto </label>
-			<button id="jugar_again" onclick="">Volver a Jugar</button>
-		</div>	
-		<div id="content2">
-			<h3>Detalle de los resultados:</h3>
-			<div id="videos"><!--display:none ajax videos visto el checked display: block when checked-->
-				<div id="video_1" class="video_with_details" >
-					<h3 style="margin: 0px; padding: 5px 5px 2px 0px;">T&uacute;</h3>
-					<iframe width="200" height="131" src="http://www.youtube.com/embed/a_YR4dKArgo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
-					<div id="video_details">
-						<p>Tag 1 escrito</p>
-						<p>Tag 2 escrito</p>
-						<p>Tag 3 escrito</p>
-						<p>Tag 4 escrito</p>
-						<p>Tag 5 escrito</p>
-						<p>Tag 6 escrito</p>
-						<p>Tag 7 escrito</p>
-					</div>
+	<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Res&uacute;men del Juego</a></li>
+		<li><a href="#tabs-2">Puntaje</a></li>		
+	</ul>
+		<!--Tab Game Recap-->
+		<div id="tabs-1">	
+			<div id="content1">
+				<div id="menu_opciones">				
+					<!--<input type="radio" id="menu_opciones1" name="menu_opciones" /><label for="menu_opciones1">Puntajes</label>
+					<input type="radio" id="menu_opciones2" name="menu_opciones" checked="checked" /><label for="menu_opciones2">Res&uacute;men</label>-->				
 				</div>
-				<div id="video_2" class="video_with_details" >	
-					<h3 style="margin: 0px; padding: 5px 5px 2px 0px;">Tu compa&ntilde;ero</h3>
-					<iframe width="200" height="131" src="http://www.youtube.com/embed/_RRyniZG0Jo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
-					<div id="video_details">
-						<p>Tag 1 escrito</p>
-						<p>Tag 2 escrito</p>
+				<h3>Resultados:</h3>			
+				<span id="rounds">Rounds:</span>						
+				<input type="radio" name="videos_radios" id="videos_radios1" checked value="1" onclick=""><label for="videos_radios1" style="width: 99.5% !important; text-align: left;"> 1. Correcto </label> 
+				<input type="radio" name="videos_radios" id="videos_radios2" value="2" onclick=""><label for="videos_radios2" style="width: 99.5% !important; text-align: left;"> 2. Incorrecto </label> 
+				<input type="radio" name="videos_radios" id="videos_radios3" value="3" onclick=""><label for="videos_radios3" style="width: 99.5% !important; text-align: left;"> 3. Incorrecto </label>
+				<input type="radio" name="videos_radios" id="videos_radios4" value="4" onclick=""><label for="videos_radios4" style="width: 99.5% !important; text-align: left;"> 4. Incorrecto </label>
+				<button id="jugar_again" onclick="">Volver a Jugar</button>
+			</div>	
+			<div id="content2">
+				<h3>Detalle de los resultados:</h3>
+				<div id="videos"><!--display:none ajax videos visto el checked display: block when checked-->
+					<div id="video_1" class="video_with_details" >
+						<h3 style="margin: 0px; padding: 5px 5px 2px 0px;">T&uacute;</h3>
+						<iframe width="200" height="131" src="http://www.youtube.com/embed/a_YR4dKArgo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
+						<div id="video_details">
+							<p>Tag 1 escrito</p>
+							<p>Tag 2 escrito</p>
+							<p>Tag 3 escrito</p>
+							<p>Tag 4 escrito</p>
+							<p>Tag 5 escrito</p>
+							<p>Tag 6 escrito</p>
+							<p>Tag 7 escrito</p>
+						</div>
 					</div>
-				</div>									
-			</div>
-		</div>	
+					<div id="video_2" class="video_with_details" >	
+						<h3 style="margin: 0px; padding: 5px 5px 2px 0px;">Tu compa&ntilde;ero</h3>
+						<iframe width="200" height="131" src="http://www.youtube.com/embed/_RRyniZG0Jo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
+						<div id="video_details">
+							<p>Tag 1 escrito</p>
+							<p>Tag 2 escrito</p>
+						</div>
+					</div>									
+				</div>
+			</div>	
+			<div id="clear-fix" style="clear:both; width:100%"></div>
+		</div>
+		<!--Tab Scores-->
+		<div id="tabs-2">
+			<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+		</div>
 	</div>
+	
 </div>
 </body>
 </html> 
