@@ -112,9 +112,10 @@ class MesaActions extends sfActions {
                         $respuesta_real_jug=1;
                     } else { //DIFFERENT                        
                         $respuesta_real_jug=0;
+                        $intervalos_videos = Intervalo::getFragmentoVideosOrdenadosXTagsExcluyendo($intervalo_id); //5 videos de los ordenados por el número de tags :: Prioridad al de menor tags                
+                        $tam_intervalos_videos = count($intervalos_videos);                        
                         $id_array = mt_rand(0, $tam_intervalos_videos - 1);
-                        $intervalo_id_jug = $intervalos_videos[$id_array]['id'];
-                        //Corregir aleatorio puede dar la misma  intervalo_id
+                        $intervalo_id_jug = $intervalos_videos[$id_array]['id'];                                                
                     }
 
                     //CREARLE relacionmesavideo A JUG ACTUAL, setearle respuesta real del anterior
@@ -124,6 +125,7 @@ class MesaActions extends sfActions {
                     $relacion_mesa_vid->setMesaId($id_mesa);
                     $relacion_mesa_vid->setJugadorId($id_jugador);
                     $relacion_mesa_vid->save();
+                    
                 } else { // Crearme una mesa y buscarme quien sera mi competidor---Crear Mesa para ambos                    
                     $jugadores = Jugador::getJugadoresDisponibles($id_jugador);  //BUSCAR JUGADORES DISPONIBLES sin incluir ACTUAL
                     $mesa = new Mesa(); //NUEVA MESA
@@ -151,20 +153,24 @@ class MesaActions extends sfActions {
                         if ($respuesta == 1) {
                             //$respuesta_real_jug = "SAME"; //SAME
                             $respuesta_real_jug =1;
-                            $intervalo_id_partner = $intervalo_id;
+                            $respuesta_real_partner=1;
+                            $intervalo_id_jug = $intervalo_id;
+                            $intervalo_id_partner=$intervalo_id;
                         } else {
                             //$respuesta_real_partner = "DIFFERENT"; //DIFFERENT
-                            $respuesta_real_partner =0;
+                            $respuesta_real_partner =0;                            
                             $id_array2 = mt_rand(0, $tam_intervalos_videos - 1);
                             while ($id_array2 != $id_array)
                                 $id_array2 = mt_rand(0, $tam_intervalos_videos - 1);
                             $intervalo_id_partner = $intervalos_videos[$id_array2]['id'];
+                            $respuesta_real_jug=1;
+                            $intervalo_id_jug = $intervalo_id;
                         }
 
                         //crear relacionmesavideo de este JUG1
                         $relacion_mesa_vid = new RelacionMesaVideo();
                         $relacion_mesa_vid->setRespuestaReal($respuesta_real_jug);
-                        $relacion_mesa_vid->setIntervaloId($intervalo_id);
+                        $relacion_mesa_vid->setIntervaloId($intervalo_id_jug);
                         $relacion_mesa_vid->setMesaId($id_mesa);
                         $relacion_mesa_vid->setJugadorId($id_jugador); //a este le seteo ACTUAL
                         $relacion_mesa_vid->save();
@@ -176,6 +182,7 @@ class MesaActions extends sfActions {
                         $relacion_mesa_vid_partner->setMesaId($id_mesa);
                         $relacion_mesa_vid_partner->setJugadorId($jugadores[0]['id']); //a este PARTNER
                         $relacion_mesa_vid_partner->save();
+                        
                     } else { // Se quedo la mesa conmigo y estado incompleto                           
                         $mesa->setJugador1Id($id_jugador);
                         $mesa->setEstado(0); //Incompleta

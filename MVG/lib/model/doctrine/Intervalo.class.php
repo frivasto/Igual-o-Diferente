@@ -21,4 +21,14 @@ class Intervalo extends BaseIntervalo
         //->fetchArray();
         return $intervalos_videos; 
     }
+    public static function getFragmentoVideosOrdenadosXTagsExcluyendo($id_intervalo_excluir){
+        $intervalos_videos=Doctrine_Core::getTable('Intervalo')
+                            ->createQuery('i')
+                            ->where('i.id != ?',$id_intervalo_excluir)
+                            ->orderBy('i.total_tags')         
+                            ->limit(5)
+                            ->fetchArray();
+        //->fetchArray();
+        return $intervalos_videos; 
+    }
 }
