@@ -12,5 +12,13 @@
  */
 class RelacionMesaVideo extends BaseRelacionMesaVideo
 {
-
+    //'r.id, r.respuesta_real, r.intervalo_id'
+    public static function getRelacionMesaVideo($id_mesa, $jugador_duenio){
+        $relacion_mesa_vid=Doctrine_Core::getTable('RelacionMesaVideo')
+                    ->createQuery('r')                                      
+                    ->where('r.mesa_id = ?',$id_mesa)
+                    ->andWhere('r.jugador_id = ?',$jugador_duenio)
+                    ->fetchOne();
+        return $relacion_mesa_vid;        
+    }
 }

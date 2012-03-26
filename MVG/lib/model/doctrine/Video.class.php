@@ -12,5 +12,5 @@
  */
 class Video extends BaseVideo
 {
-
+  
 }

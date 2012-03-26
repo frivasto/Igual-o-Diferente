@@ -11,6 +11,14 @@
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 class Intervalo extends BaseIntervalo
-{
-
+{  
+    public static function getFragmentoVideosOrdenadosXTags(){
+        $intervalos_videos=Doctrine_Core::getTable('Intervalo')
+                            ->createQuery('i')
+                            ->orderBy('i.total_tags')         
+                            ->limit(5)
+                            ->fetchArray();
+        //->fetchArray();
+        return $intervalos_videos; 
+    }
 }
