@@ -1,0 +1,221 @@
+<html>
+<head>
+<link type="text/css" href="jquerycustomfucsia/css/custom-theme/jquery-ui-1.8.18.custom.css" rel="stylesheet" /> 
+<script src="jquerycustomfucsia/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="jquerycustomfucsia/js/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
+<style type="text/css">
+	body{
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	#wrapper{
+		/*resolucion 800x600*/
+		background:#ffffff url('bg_fondo_800x1px.jpg') repeat-y left top;
+		min-height:600px;
+		width:800px;
+	}
+	#header{
+		height:150px; /*100*/
+		/*background: #A690AF;*/
+		width:91%;
+		/*margin: 10px;*/
+		margin: 10px 0px 0px 30px;
+		position: relative;
+	}
+	#header h1, p{
+		color:white;
+		text-align: center;
+	}
+	#header h1{		
+		padding: 68px 0px 0px 0px; /*35*/
+		font-weight:bold;
+		margin: 10px 10px 0px 10px;
+		font-size:60px; /*40*/
+	}
+	#header p{
+		font-size:10px;
+		margin: 0px;
+	}
+	#content_side1{
+		min-height:200px;
+		width:20%;
+		/*background: rgb(253,223,255);*/
+		margin: 10px 0px 0px 30px;
+		float:left;		
+		position: relative;
+		top: 50px;
+	}
+	#content_side1 #chat_jug, #content_side2 #chat_partner{		
+		background:transparent url('jugador_chat_img.png') no-repeat left top;
+		min-height:198px;
+		width:100%;
+	}
+	#content_side1 h3, #content_side2 h3{
+		color:white;
+		text-align: center;
+		margin: 0px;
+	}
+	#content1{
+		min-height:400px;
+		width:50%;
+		/*background: rgb(253,223,255);*/
+		margin: 10px 10px 0px 10px;
+		float:left;		
+	}
+	#timer_content{		
+		background:transparent url('tiempo_fondo_img.png') no-repeat left top;
+		min-height:150px;
+		width:100%;
+		
+		position: absolute;
+		top: 0px;		
+		left: 620px;
+	}
+	#puntos_content{		
+		background:transparent url('puntos_fondo_img.png') no-repeat left top;
+		min-height:150px;
+		width:100%;
+		
+		position: absolute;
+		top: 0px;		
+		left: -30px;
+	}
+	#puntos_content h3, #timer_content h3{	
+		color:white;
+		padding-left:20px;
+		margin-bottom:0px;
+	}
+	#puntos_content h3{	
+		color:white;
+		padding-left:22px;		
+	}
+	#timer_content h3{	
+		color:white;
+		padding-left:42px;		
+	}
+	.content_text{
+		color:white;
+		padding:0px;
+		font-size:40px;
+		margin:0px;
+		font-weight:bold;
+	}
+	#video_principal{
+		/*resolucion 800x600*/
+		background:transparent url('tv_plasma4_img.png') no-repeat left top;
+		height:273px;*/
+		width:100%;
+	}
+	#video_principal iframe{
+		/*position: relative;
+		top: 0px;
+		left: 50px;*/
+		position: relative;
+		top: 15px;
+		left: 20px;
+	}
+	#same_different{
+		position: relative;	left: 25%;
+		font-size: 12px;
+	}
+	#content_side2{
+		min-height:200px;
+		width:20%;
+		/*background: rgb(253,223,255);*/
+		margin: 10px 0px 0px 0px;
+		float:left;	
+		position: relative;
+		top: 50px;
+	}	
+	#content1 h3, #content1 p{	
+		/*color: rgb(78,1,82);*/
+		/*padding:10px;*/
+		margin:0px;
+		text-align: center;
+	}	
+	#content1 #jugar_again{
+		margin:30px
+	}
+	#content1 ul
+	{
+		list-style-type:none;
+		margin:0;
+		padding:0;
+	}	
+	#content1 a:link, #content1 a:visited
+	{
+		display:block;
+		font-weight:bold;
+		color:#FFFFFF;
+		background-color:#98bf21;
+		border-style:none solid none none;
+		border-color:#399;
+		border-width:5px;
+		/*width:120px;*/
+		text-align:left;
+		padding:4px 4px 4px 10px;
+		text-decoration:none;
+		/*text-transform:uppercase;*/
+	}
+	#content1 a:hover, #content1 a:active
+	{
+		background-color:#399;/*#7A991A*/
+		border-style:none solid none none;
+		border-color:#7A991A;
+		border-width:5px;
+	}	
+	textarea{
+		margin: 20px; height: 150px; overflow: auto;  border-style:none;		
+	}
+</style>
+<script type="text/javascript">
+$(document).ready(function() { 
+	$("#cmd_enviar").button();
+	$("#same_different").buttonset();
+	$("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185})
+		.click(function(){});
+	$('#same_different2').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20)
+		.click(function(){});
+});
+</script>
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<h1>My First Heading</h1>
+		<p>Divi&eacute;rtete</p>
+		<div id="timer_content">
+			<h3>Tiempo:</h3>
+			<h3 class="content_text">3:30</h3>
+		</div>
+		<div id="puntos_content">
+			<h3>Puntos:</h3>
+			<h3 class="content_text">100</h3>
+		</div>
+	</div>
+	<div id="body">	
+		<div id="content_side1">
+			<h3>T&uacute;</h3>
+			<div id="chat_jug">
+				<textarea cols="12" readonly="readonly">Holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</textarea>
+			</div>
+		</div>
+		<div id="content1">
+			<div id="same_different">
+				<input type="radio" name="same_different" id="same_different1" checked value="1" onclick=""><label for="same_different1" > Igual </label> 
+				<input type="radio" name="same_different" id="same_different2" value="2" onclick=""><label for="same_different2" > Diferente </label> 
+			</div>
+			<div id="video_principal">
+				<iframe width="360" height="200" src="http://www.youtube.com/embed/a_YR4dKArgo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
+			</div>
+			<p style="font-size:10px; font-weight:bold" ><input type="text" name="txt_palabra" /><input type="button" value="Enviar" id="cmd_enviar" /></p>
+		</div>
+		<div id="content_side2">
+			<h3>Tu compa&ntilde;ero</h3>
+			<div id="chat_partner">
+				<textarea cols="12" readonly="readonly">HOLA siiiiiiiiiiiiiii</textarea>
+			</div>
+		</div>	
+	</div>
+</div>
+</body>
+</html> 
