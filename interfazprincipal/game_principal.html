@@ -3,6 +3,7 @@
 <link type="text/css" href="jquerycustomfucsia/css/custom-theme/jquery-ui-1.8.18.custom.css" rel="stylesheet" /> 
 <script src="jquerycustomfucsia/js/jquery-1.7.1.min.js" type="text/javascript"></script>
 <script src="jquerycustomfucsia/js/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/jquery.chrony.min.js"></script>
 <style type="text/css">
 	body{
 		font-family: Arial, Helvetica, sans-serif;
@@ -12,6 +13,7 @@
 		background:#ffffff url('bg_fondo_800x1px.jpg') repeat-y left top;
 		min-height:600px;
 		width:800px;
+		margin:0 auto;
 	}
 	#header{
 		height:150px; /*100*/
@@ -88,16 +90,14 @@
 		color:white;
 		padding-left:22px;		
 	}
-	#timer_content h3{	
-		color:white;
-		padding-left:42px;		
-	}
 	.content_text{
 		color:white;
 		padding:0px;
-		font-size:40px;
+		/*font-size:40px;*/
+		font-size:30px;
 		margin:0px;
 		font-weight:bold;
+		padding-left:18px;
 	}
 	#video_principal{
 		/*resolucion 800x600*/
@@ -172,9 +172,23 @@ $(document).ready(function() {
 	$("#cmd_enviar").button();
 	$("#same_different").buttonset();
 	$("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185})
-		.click(function(){});
+	.click(function(){ 
+		$( "#dialog_result" ).dialog( "open" );	
+	});
 	$('#same_different2').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20)
-		.click(function(){});
+	.click(function(){
+		$( "#dialog_result" ).dialog( "open" );	
+	});
+	
+	//JQUERY CHRONY con callback  otra opcion es enviar el texto completo text: '1:20:30' MEJOR!!  
+	//PERMITE REAJUSTAR DATOS TAMBIÉN $('#time').chrony('set', { decrement: 2 }); re-adjust runtime options.
+	$('#time').chrony({hour: 0, minute: 1, second: 3,finish: function() {
+		$(this).html('Finished!');}, blink: true
+	});
+	
+	$( "#dialog_result" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});	
+	$('.alert div.ui-dialog-titlebar').hide();//transparent
+	$('.alert').css('background','transparent')
 });
 </script>
 </head>
@@ -184,8 +198,8 @@ $(document).ready(function() {
 		<h1>My First Heading</h1>
 		<p>Divi&eacute;rtete</p>
 		<div id="timer_content">
-			<h3>Tiempo:</h3>
-			<h3 class="content_text">3:30</h3>
+			<h3>Tiempo:</h3>			
+			<div id="time" class="content_text" ></div>
 		</div>
 		<div id="puntos_content">
 			<h3>Puntos:</h3>
@@ -203,9 +217,10 @@ $(document).ready(function() {
 			<div id="same_different">
 				<input type="radio" name="same_different" id="same_different1" checked value="1" onclick=""><label for="same_different1" > Igual </label> 
 				<input type="radio" name="same_different" id="same_different2" value="2" onclick=""><label for="same_different2" > Diferente </label> 
-			</div>
+			</div>			
 			<div id="video_principal">
-				<iframe width="360" height="200" src="http://www.youtube.com/embed/a_YR4dKArgo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
+				<!--iframe zindex youtube wmode=transparent-->
+				<iframe width="360" height="200" src="http://www.youtube.com/embed/a_YR4dKArgo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0&wmode=transparent" frameborder="0" allowfullscreen></iframe>
 			</div>
 			<p style="font-size:10px; font-weight:bold" ><input type="text" name="txt_palabra" /><input type="button" value="Enviar" id="cmd_enviar" /></p>
 		</div>
@@ -214,8 +229,13 @@ $(document).ready(function() {
 			<div id="chat_partner">
 				<textarea cols="12" readonly="readonly">HOLA siiiiiiiiiiiiiii</textarea>
 			</div>
-		</div>	
+		</div>		
 	</div>
+	<div id="dialog_result" title="Basic dialog" style="display:none; background: #333; min-height: 0px !important; opacity:0.95; filter:alpha(opacity=95); ">
+		<div style="float:left;" ><p style="font-size:10px; font-weight:bold;">Tu</p><img src="icon_checked.png" width="16px" /></div>
+		<div style="float:left; padding:0px 25px;"><h3 style="text-align:center; font-size:20px; color:white;">Incorrecto</h3></div>
+		<div style="float:left;"><p style="font-size:10px; font-weight:bold;">Tu compa&ntilde;ero</p><img src="icon_checked.png" width="16px" /></div>
+	</div>	
 </div>
 </body>
 </html> 
