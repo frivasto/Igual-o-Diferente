@@ -169,7 +169,7 @@
 </style>
 <script type="text/javascript">
 $(document).ready(function() { 
-	$("#cmd_enviar").button();
+	$("#cmd_enviar").button().click(function(){ getHoraMinSec(); });
 	$("#same_different").buttonset();
 	$("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185})
 	.click(function(){ 
@@ -190,6 +190,13 @@ $(document).ready(function() {
 	$('.alert div.ui-dialog-titlebar').hide();//transparent
 	$('.alert').css('background','transparent')
 });
+
+function getHoraMinSec(){
+	var hora=$("#time #hour:first").text();
+	var minuto=$("#time #minute:first").text();
+	var segundo=$("#time #second:first").text();
+	alert(hora+" - "+minuto+" - "+segundo);
+}
 </script>
 </head>
 <body>
@@ -220,6 +227,8 @@ $(document).ready(function() {
 			</div>			
 			<div id="video_principal">
 				<!--iframe zindex youtube wmode=transparent-->
+				<!--UNSAFE JAVASCRIPT SOLUTION: http://apiblog.youtube.com/2011/01/introducing-javascript-player-api-for.html-->
+				<!--https://developers.google.com/youtube/iframe_api_reference?hl=es-ES-->
 				<iframe width="360" height="200" src="http://www.youtube.com/embed/a_YR4dKArgo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0&wmode=transparent" frameborder="0" allowfullscreen></iframe>
 			</div>
 			<p style="font-size:10px; font-weight:bold" ><input type="text" name="txt_palabra" /><input type="button" value="Enviar" id="cmd_enviar" /></p>

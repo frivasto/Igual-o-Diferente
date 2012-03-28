@@ -67,19 +67,20 @@
             }
             /*AJAX para mandar a guardar la etiqueta y acumularla y evaluarla para el puntaje del jugador*/
             /*ENVIAR  ETIQUETA TEXTO, TIEMPO */
-            function consulta_guardarEtiqueta(etiqueta_texto){
+            function consulta_guardarEtiqueta(etiqueta_texto){                
                 var request;
                 request = createXMLHttpRequest();
                 //obtener etiqueta, tiempo
-                var tiempo_envio=0;
-                request.open('GET','<?php echo url_for('Mesa/insertarEtiqueta'); ?>'+"?etiqueta_texto="+etiqueta_texto+"&tiempo="+tiempo_envio,true);
+                var hora='00';
+                var minuto='01';
+                var segundo='50';
+                request.open('GET','<?php echo url_for('Mesa/insertarEtiqueta'); ?>'+"?etiqueta_texto="+etiqueta_texto+"&hora="+hora+"&minuto="+minuto+"&segundo="+segundo,true);
                 request.onreadystatechange=function(){                      
                     if(request.readyState==4){
                         if(request.status==200){                             
                             respuestajson=manejador(request);  
-                            if(respuestajson!=null){
-                                //setear puntaje en el juego
-                                //FALTAAAAAAAAA!!!!
+                            if(respuestajson!=null && respuestajson!='' && respuestajson!='0'){
+                                alert("se guardo!!");
                             }
                         }
                     }
@@ -177,7 +178,7 @@ function send(){
       //mostrarlo en la cajita de texto Tu
       log('Sent: -mesa: '+mesa_id+" - "+msg); 
       //guardarlo en la base de datos llamar al action por ajax
-      
+      consulta_guardarEtiqueta(msg);      
   } catch(ex){ log(ex); }
 }
 function quit(){

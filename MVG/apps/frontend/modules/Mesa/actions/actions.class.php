@@ -126,6 +126,13 @@ class MesaActions extends sfActions {
                     $relacion_mesa_vid->setJugadorId($id_jugador);
                     $relacion_mesa_vid->save();
                     
+                    //poner en session relacionmesavideo                        
+                    $relacionmesavideo_id= $this->getUser()->getAttribute('relacionmesavideo_id',"");    
+                    $relacionmesavideo_id=$relacion_mesa_vid->getId();
+                    $this->getUser()->setAttribute('relacionmesavideo_id',$relacionmesavideo_id);
+                    //$request->setParameter('relacionmesavideo_id',$relacionmesavideo_id);
+                    $mesaid = $this->getUser()->getAttribute('mesaid',""); 
+                    
                 } else { // Crearme una mesa y buscarme quien sera mi competidor---Crear Mesa para ambos                    
                     $jugadores = Jugador::getJugadoresDisponibles($id_jugador);  //BUSCAR JUGADORES DISPONIBLES sin incluir ACTUAL
                     $mesa = new Mesa(); //NUEVA MESA
@@ -175,6 +182,11 @@ class MesaActions extends sfActions {
                         $relacion_mesa_vid->setJugadorId($id_jugador); //a este le seteo ACTUAL
                         $relacion_mesa_vid->save();
 
+                        //poner en session relacionmesavideo                        
+                        $relacionmesavideo_id= $this->getUser()->getAttribute('relacionmesavideo_id',"");    
+                        $relacionmesavideo_id=$relacion_mesa_vid->getId();
+                        $this->getUser()->setAttribute('relacionmesavideo_id',$relacionmesavideo_id);
+                        //$request->setParameter('relacionmesavideo_id',$relacionmesavideo_id);
                         //crear relacionmesavideo de este JUG2
                         $relacion_mesa_vid_partner = new RelacionMesaVideo();
                         $relacion_mesa_vid_partner->setRespuestaReal($respuesta_real_partner);
@@ -216,6 +228,12 @@ class MesaActions extends sfActions {
                         $relacion_mesa_vid->setMesaId($id_mesa);
                         $relacion_mesa_vid->setJugadorId($id_jugador); //a este le seteo ACTUAL
                         $relacion_mesa_vid->save();
+                        
+                        //poner en session relacionmesavideo                        
+                        $relacionmesavideo_id= $this->getUser()->getAttribute('relacionmesavideo_id',"");    
+                        $relacionmesavideo_id=$relacion_mesa_vid->getId();
+                        $this->getUser()->setAttribute('relacionmesavideo_id',$relacionmesavideo_id);
+                        //$request->setParameter('relacionmesavideo_id',$relacionmesavideo_id);
                     }
                 }
                 //Devolver JSON con estos datos
@@ -237,23 +255,35 @@ class MesaActions extends sfActions {
     public function executeInsertarEtiqueta(sfWebRequest $request) {
         $tmp = $request->getParameter('etiqueta_texto');
         $etiqueta_texto = isset($tmp) ? $tmp : '';
-        $tmp = $request->getParameter('tiempo_envio');
-        $tiempo_envio = isset($tmp) ? $tmp : '';
-
-        $response = array();
-        if ($etiqueta_texto != '' && $tiempo_envio != '') {
+        
+        $tmp = $request->getParameter('hora');
+        $hora = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('minuto');
+        $minuto = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('segundo');
+        $segundo = isset($tmp) ? $tmp : '';
+        
+        $id_etiqueta=0;
+        //$response = array();
+        if ($etiqueta_texto != '' && $hora != '' && $minuto != '' && $segundo != '') {
             //calificar, insertarla con el tiempo
             $etiqueta = new InstanciaEtiqueta();
-            $etiqueta->setRelacionmesavideoId(0); //*IMPORTANTE* ojo HAY QUE PASAR RELACIONMESAVIDEO
+            //sacar de session su relacionmesavideo_id
+            $relacionmesavideo_id= $this->getUser()->getAttribute('relacionmesavideo_id',"");
+            //$relacionmesavideo_id=$request->getParameter('relacionmesavideo_id');
+            $etiqueta->setRelacionmesavideoId($relacionmesavideo_id); //*IMPORTANTE* ojo HAY QUE PASAR RELACIONMESAVIDEO
             $etiqueta->setTexto($etiqueta_texto);
-            $etiqueta->setTiempo($tiempo_envio); //convert time
+            $etiqueta->setTiempo(date("H:i:s", strtotime(' ', mktime($hora,$minuto,$segundo,0,0,0)))); //convert time
             $etiqueta->save();
-            //$id_etiqueta = $etiqueta->getId();
+            $id_etiqueta = $etiqueta->getId();
         }
         //Devolver JSON con estos datos
-        $response['puntaje'] = "identificacion"; //RETORNAR MENSAJES DE TIPO ? Y PUNTAJE
-        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
-        return $this->renderText(json_encode($response));
+        //$response['puntaje'] = "identificacion"; //RETORNAR MENSAJES DE TIPO ? Y PUNTAJE
+        //$this->getResponse()->setHttpHeader('Content-type', 'application/json');
+        //return $this->renderText(json_encode($response));
+        return $this->renderText(""+$id_etiqueta);
     }
 
     public function executeNew(sfWebRequest $request) {
