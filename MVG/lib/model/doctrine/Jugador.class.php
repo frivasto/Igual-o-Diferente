@@ -19,5 +19,21 @@ class Jugador extends BaseJugador
                             ->fetchOne();
         return $jugador;
     }
-
+    
+    public static function getJugadorByUserId($user_id_facebook){
+        $jugador=Doctrine_Core::getTable('Jugador')
+                            ->createQuery('j')
+                            ->where('j.user_id = ?',$user_id_facebook)
+                            ->fetchOne();                
+        return $jugador;
+    }
+    
+    public static function getJugadoresDisponibles($id_jugador_no_incluido){
+        //antes estado 1 ahora 0 disponible no ocupado
+        $jugadores = Doctrine_Core::getTable('Jugador')
+                ->createQuery('j')                                
+                ->where('j.estado=0 and j.id != ?',$id_jugador_no_incluido)
+                ->fetchArray();
+        return $jugadores;
+    }
 }

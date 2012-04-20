@@ -12,5 +12,13 @@
  */
 class Mesa extends BaseMesa
 {
-
+     public static function getMesaIncompleta(){
+         //'m.id,m.jugador1_id'
+        $mesa_incompleta=Doctrine_Core::getTable('Mesa')
+                            ->createQuery('m')
+                            ->where('m.estado=0')
+                            ->limit(1)
+                            ->fetchOne();
+        return $mesa_incompleta;                 
+     }
 }

@@ -1,0 +1,190 @@
+<html>
+<head>
+<link type="text/css" href="custom_css/css/custom-theme/jquery-ui-1.8.18.custom.css" rel="stylesheet" /> 
+<script src="custom_css/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="custom_css/js/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
+<style type="text/css">
+	body{
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	#wrapper{
+		/*resolucion 800x600*/
+		background:#ffffff url('bgfondojuego.jpg') repeat-y left top;
+		min-height:600px;
+		width:800px;
+	}
+	#header{
+		height:100px;
+		/*background: #A690AF;*/
+		width:91%;
+		/*margin: 10px;*/
+		margin: 10px 0px 0px 30px;
+	}
+	#header h1, p{
+		color:white;
+		text-align: center;
+	}
+	#header h1{		
+		padding: 35px 0px 0px 0px;
+		font-weight:bold;
+		margin: 10px 10px 0px 10px;
+	}
+	#header p{
+		font-size:10px;
+		margin: 0px;
+	}
+	#content1{
+		min-height:400px;
+		width:30%;
+		background: rgb(253,223,255);
+		margin: 10px 0px 0px 30px;
+		float:left;	
+		font-size:12px;
+	}
+	#content2{
+		/*min-height:400px;*/
+		height:400px;
+		width:60%;
+		background: rgb(210,188,216);
+		margin: 10px 10px 10px 0px;
+		float:left;		
+	}
+	#content2 #videos{
+		height:340px;
+		margin: 10px 10px 10px 10px;
+		overflow:auto;		
+	}
+	#content1 h3, #content1 p{	
+		/*color: rgb(78,1,82);*/
+		padding:10px;
+	}
+	#content2 h3, #content2 p{	
+		color: rgb(78,1,82);
+	}
+	#content2 h3{			
+		padding: 0px 10px 5px 5px;
+		margin: 5px 10px 10px 5px;
+	}
+	#content2 p{
+		padding:1px;
+		margin:2px;
+		font-size: 12px;
+	}
+	#content2 iframe{
+		float: left;			
+	}
+	#content2 #video_details{
+		height:131px;
+		overflow:auto;
+		background-color:#399; /*rgb(78,1,82);*/
+	}
+	#content2 #video_details p{			
+		color:white;
+		text-align:	left;
+		padding:2px 0px 0px 10px;
+		font-weight:bold;
+	}	
+	#content2 div#video_details h3{			
+		margin: 2px 10px 1px 5px;
+	}
+	#content1 #jugar_again{
+		margin:30px
+	}
+	#content1 ul
+	{
+		list-style-type:none;
+		margin:0;
+		padding:0;
+	}	
+	#content1 span#rounds
+	{		
+		display:block;
+		font-weight:bold;
+		color:#FFFFFF;
+		background-color:#399;/*#7A991A*/
+		border-style:none solid none none;
+		border-color:#7A991A;
+		border-width:5px;		
+		text-align:left;
+		padding:4px 4px 4px 10px;
+		text-decoration:none;	
+		margin-bottom: 5px;
+	}
+	#content1 a:hover, #content1 a:active
+	{
+		/*
+		background-color:#399;/*#7A991A*/
+		border-style:none solid none none;
+		border-color:#7A991A;
+		border-width:5px;
+		*/
+	}
+	#jugar_again{
+		border: 1px solid #448dae; background: #026890 url(custom_css/css/custom-theme/images/ui-bg_gloss-wave_50_026890_500x100.png) 50% 50% repeat-x;
+	}
+	button.ui-state-active, button.ui-state-hover{
+		border: 1px solid #98BF21 !important; background: #98BF21 url(custom_css/css/custom-theme/images/ui-bg_glass_45_98bf21_1x400.png) 50% 50% repeat-x !important;
+	}	
+</style>
+<script type="text/javascript">
+$(document).ready(function() {  
+	$("#jugar_again").button();
+  
+	$("#videos_radios").buttonset();
+	$("#videos_radios1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185})
+		.click(function(){});
+	$('#videos_radios2').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20)
+		.click(function(){});
+	$('#videos_radios3').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20)
+		.click(function(){});
+	$('#videos_radios4').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20)
+		.click(function(){});
+});
+</script>
+</head>
+<body>
+<div id="wrapper">
+	<div id="header">
+		<h1>My First Heading</h1>
+		<p>Res&uacute;men del Juego</p>
+	</div>
+	<div id="body">	
+		<div id="content1">
+			<h3>Resultados:</h3>			
+			<span id="rounds">Rounds:</span>						
+			<input type="radio" name="videos_radios" id="videos_radios1" checked value="1" onclick=""><label for="videos_radios1" style="width: 238px !important; text-align: left;"> 1. Correcto </label> 
+			<input type="radio" name="videos_radios" id="videos_radios2" value="2" onclick=""><label for="videos_radios2" style="width: 238px !important; text-align: left;"> 2. Incorrecto </label> 
+			<input type="radio" name="videos_radios" id="videos_radios3" value="3" onclick=""><label for="videos_radios3" style="width: 238px !important; text-align: left;"> 3. Incorrecto </label>
+			<input type="radio" name="videos_radios" id="videos_radios4" value="4" onclick=""><label for="videos_radios4" style="width: 238px !important; text-align: left;"> 4. Incorrecto </label>
+			<button id="jugar_again" onclick="">Volver a Jugar</button>
+		</div>	
+		<div id="content2">
+			<h3>Detalle de los resultados:</h3>
+			<div id="videos"><!--display:none ajax videos visto el checked display: block when checked-->
+				<div id="video_1" class="video_with_details" >
+					<h3 style="margin: 0px; padding: 5px 5px 2px 0px;">T&uacute;</h3>
+					<iframe width="200" height="131" src="http://www.youtube.com/embed/a_YR4dKArgo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
+					<div id="video_details">
+						<p>Tag 1 escrito</p>
+						<p>Tag 2 escrito</p>
+						<p>Tag 3 escrito</p>
+						<p>Tag 4 escrito</p>
+						<p>Tag 5 escrito</p>
+						<p>Tag 6 escrito</p>
+						<p>Tag 7 escrito</p>
+					</div>
+				</div>
+				<div id="video_2" class="video_with_details" >	
+					<h3 style="margin: 0px; padding: 5px 5px 2px 0px;">Tu compa&ntilde;ero</h3>
+					<iframe width="200" height="131" src="http://www.youtube.com/embed/_RRyniZG0Jo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
+					<div id="video_details">
+						<p>Tag 1 escrito</p>
+						<p>Tag 2 escrito</p>
+					</div>
+				</div>									
+			</div>
+		</div>	
+	</div>
+</div>
+</body>
+</html> 

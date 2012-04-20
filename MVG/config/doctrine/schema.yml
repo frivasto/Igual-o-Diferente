@@ -28,6 +28,7 @@ Intervalo:
     video_id:   { type: integer(4) }
     inicio: { type: time }
     fin: { type: time }
+    total_tags: { type: integer(4) }
     eliminado: { type: boolean, default: 0 }
   relations:
     Video: { local: video_id, foreign: id, foreignAlias: IntervaloVideo }
@@ -67,7 +68,7 @@ RelacionMesaVideo:
     token:   { type: string(255), notnull: true, unique: false }
     mesa_id:   { type: integer(4) }    
     jugador_id:   { type: integer(4) }
-    intervalo_id: { type: integer(4) }
+    intervalo_id: { type: integer(4) }    
     respuesta_real: { type: boolean, default: 0 }
     eliminado: { type: boolean, default: 0 }
   relations:
@@ -102,4 +103,3 @@ Decision:
     eliminado: { type: boolean, default: 0 }
   relations:
     RelacionMesaVideo: { local: relacionmesavideo_id, foreign: id, foreignAlias: InstanciaEtiquetaRelacionMesaVideo }
-    
