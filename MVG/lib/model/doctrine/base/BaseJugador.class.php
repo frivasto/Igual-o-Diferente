@@ -67,7 +67,7 @@ abstract class BaseJugador extends sfDoctrineRecord
              ));
         $this->hasColumn('estado', 'integer', 1, array(
              'type' => 'integer',
-             'default' => 1,
+             'default' => 0,
              'length' => 1,
              ));
         $this->hasColumn('eliminado', 'boolean', null, array(

@@ -144,6 +144,7 @@ function send($client,$msg){
   say("** ".$msg);
   $send_msg = encode2 ($msg);
   socket_write ($client, $send_msg, strlen ($send_msg));  
+  //socket_write ($client, "\r\n", strlen ("\r\n"));
 } 
 
 function WebSocket($address,$port){

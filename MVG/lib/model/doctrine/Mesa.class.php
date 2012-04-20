@@ -21,4 +21,99 @@ class Mesa extends BaseMesa
                             ->fetchOne();
         return $mesa_incompleta;                 
      }
+     public static function getMesaxId($mesa_id){         
+        $mesa=Doctrine_Core::getTable('Mesa')
+                            ->createQuery('m')
+                            ->where('m.id=?',$mesa_id)                            
+                            ->fetchOne();
+        return $mesa;                 
+     }
+     public static function obtenerParejaJuego($user_actual){        
+            $jugador_pareja_id = 0;
+            $jugador_actual = Jugador::getJugadorByUserId($user_actual);
+
+            //SI JUGADOR NUNCA REGISTRADO, AGREGARLO, SINO TOMAR SU ID
+            $id_jugador = 0;
+            if (!empty($jugador_actual)) {
+                $id_jugador = $jugador_actual->getId();
+            } else {
+                //Sino insertar una mesa nueva y poner alli a este usuario, tomar mesa_id
+                $jugador_actual = new Jugador();
+                $jugador_actual->setUserId($user_actual);
+                $jugador_actual->save();
+                $id_jugador = $jugador_actual->getId();
+            }
+
+            //Buscar una mesa incompleta CON UN SOLO JUGADOR
+            $mesa_inc = self::getMesaIncompleta();
+            if (!empty($mesa_inc)) { // Si hay MESA INCOMPLETA
+                $id_mesa = $mesa_inc->getId();
+                $jug_partner_id = $mesa_inc->getJugador1Id(); //OBTNER EL JUG QUE ESTA ALLI
+                //SI NO ES EL MISMO JUG
+                if ($jug_partner_id != $id_jugador) {
+                    //$mesa_inc->setEstado(1); //COMPLETARLA
+                    //$mesa_inc->save();
+                    //ACTUALIZAR AL JUGADOR2 QUE ES EL ACTUAL Y COMPLETAR LA MESA
+                    $q = Doctrine_Query::create()
+                            ->update('Mesa m')
+                            ->set('jugador2_id', '?', $id_jugador)
+                            ->set('estado', '?', 1) //Estado 1 :: mesa completa
+                            ->where('m.id = ?', $id_mesa);
+                    $rows = $q->execute();
+
+                    //Y ACTUALIZAR EL ESTDO DEL JUG ACTUAL
+                    $jug_actual = Jugador::getJugadorById($id_jugador);
+                    $jug_actual->setEstado(1); // Estado: ocupado 1 no disponible
+                    $jug_actual->save();
+
+                    //ACTUALIZAR A JUGADOR PARTNER ocupado
+                    $jug_partner = Jugador::getJugadorById($jug_partner_id);
+                    $jug_partner->setEstado(1); // Estado: ocupado 1 no disponible
+                    $jug_partner->save();
+
+                    //JUGADOR ENCONTRADO
+                    $jugador_pareja_id = $jug_partner->getId();
+                }
+            } else { // Crearme una mesa y buscarme quien sera mi competidor---Crear Mesa para ambos
+                $jugadores = Jugador::getJugadoresDisponibles($id_jugador);  //BUSCAR JUGADORES DISPONIBLES sin incluir ACTUAL
+                $mesa = new Mesa(); //NUEVA MESA
+
+                if (!empty($jugadores)) { // Existe con quien jugar, setearmelo de una
+                    $mesa->setJugador1Id($id_jugador); //SET JUG ACTUAL
+                    $mesa->setJugador2Id($jugadores[0]['id']); // El q me escogieron
+                    $mesa->setEstado(1); //COMPLETA
+                    $mesa->save();
+                    $id_mesa = $mesa->getId();
+
+                    $jug_actual = Jugador::getJugadorById($id_jugador);
+                    $jug_actual->setEstado(1); // SETEAR JUG ACTUAL no disponible
+                    $jug_actual->save();
+
+                    $jug_partner = Jugador::getJugadorById($jugadores[0]['id']);
+                    $jug_partner->setEstado(1); // SETEAR JUG PARTNER no disponible
+                    $jug_partner->save();
+
+                    //JUGADOR ENCONTRADO
+                    $jugador_pareja_id = $jug_partner->getId();
+                } else { // Se quedo la mesa conmigo y estado incompleto
+                    $mesa->setJugador1Id($id_jugador);
+                    $mesa->setEstado(0); //Incompleta
+                    $mesa->save();
+                    $id_mesa = $mesa->getId();
+
+                    //SÓLO PONERLO NO DISPONIBLE RELACIONMESAVIDEO SE LE ASIGNARÁ EN LOS OTROS CASOS (debe esperar)
+                    $jug_actual = Jugador::getJugadorById($id_jugador);
+                    $jug_actual->setEstado(1); // no disponible
+                    $jug_actual->save();
+
+                    //JUGADOR ENCONTRADO
+                    $jugador_pareja_id = 0;
+                }
+            }           
+            //-----------------------------------------------------------------------------------------
+            $mesa_jugador=array();
+            $mesa_jugador[0]=$jugador_pareja_id;
+            $mesa_jugador[1]=$id_mesa;
+            return $mesa_jugador;
+     }
 }

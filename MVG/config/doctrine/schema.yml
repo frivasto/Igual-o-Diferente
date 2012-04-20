@@ -6,7 +6,8 @@ Jugador:
     token:   { type: string(255), notnull: true, unique: false }
     user_id:   { type: string(255), notnull: true, unique: true }
     nombre:   { type: string(255), notnull: false }
-    estado:   { type: integer(1), default:1 }
+    #DISPONIBLE 0 JUGADOR
+    estado:   { type: integer(1), default:0 }     
     eliminado: { type: boolean, default: 0 }
  
 Video:
@@ -68,7 +69,9 @@ RelacionMesaVideo:
     token:   { type: string(255), notnull: true, unique: false }
     mesa_id:   { type: integer(4) }    
     jugador_id:   { type: integer(4) }
-    intervalo_id: { type: integer(4) }    
+    num_round:   { type: integer(4) }
+    intervalo_id: { type: integer(4) }  
+    video_intervalo_estado: { type: integer(1) }
     respuesta_real: { type: boolean, default: 0 }
     eliminado: { type: boolean, default: 0 }
   relations:

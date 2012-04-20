@@ -36,4 +36,13 @@ class Jugador extends BaseJugador
                 ->fetchArray();
         return $jugadores;
     }
+    //Existe un unico jugadorBot
+    public static function getJugador($user_id, $nombre){
+        $jugador=Doctrine_Core::getTable('Jugador')
+                            ->createQuery('j')
+                            ->where('j.user_id = ?',$user_id)
+                            ->andWhere('j.nombre = ?', $nombre)
+                            ->fetchOne();                
+        return $jugador;
+    }    
 }
