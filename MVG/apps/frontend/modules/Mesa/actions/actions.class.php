@@ -9,273 +9,87 @@
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class MesaActions extends sfActions {
-
-    public function executeComet(sfWebRequest $request) {
-        $filename = dirname(__FILE__) . '/data.txt';
-        $tmp = $request->getParameter('msg');
-        $msg = isset($tmp) ? $tmp : '';
-        if ($msg != '') {
-            file_put_contents($filename, $msg);
-            die();
-        }
-        // infinite loop until the data file is not modified
-        $tmp = $request->getParameter('timestamp');
-        $lastmodif = isset($tmp) ? $tmp : 0;
-        $currentmodif = filemtime($filename);
-
-        while ($currentmodif <= $lastmodif) { // check if the data file has been modified
-            usleep(10000); // sleep 10ms to unload the CPU
-            clearstatcache();
-            $currentmodif = filemtime($filename);
-        }
-        $response = array();
-        $response['msg'] = file_get_contents($filename);
-        $response['timestamp'] = $currentmodif;
-        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
-        return $this->renderText(json_encode($response));
-
-        flush();
-        //return sfView::NONE;
-    }
-
     public function executeIndex(sfWebRequest $request) {
         $this->mesas = Doctrine_Core::getTable('Mesa')
                 ->createQuery('a')
                 ->execute();
     }
 
-    //Observacion ESTADO: MESA 0:Incompleta 1:Completa JUGADOR 0:Disponible 1:No disponible Ocupado RESPUESTAREAL EN RELACIONMESAVIDEO 1:Same 0:Different
+    //Observacion ESTADO: MESA 0:Incompleta 1:Completa JUGADOR 0:Disponible 1:No disponible Ocupado RESPUESTAREAL EN RELACIONMESAVIDEO 1:Same 0:Different    
     public function executeEmparejar(sfWebRequest $request) {
-        $tmp = $request->getParameter('estado');
-        $estado = isset($tmp) ? $tmp : '';
         $response = array();
-        if ($estado != '') {
-            if ($estado == 1) { //estado ok de los sockets 1 OPEN                
-                $user_actual = $this->getUser()->getAttribute('userid');  //sacar de session el user_id único de facebook            
-                $jugador_actual = Jugador::getJugadorByUserId($user_actual);
-
-                //SI JUGADOR NUNCA REGISTRADO, AGREGARLO, SINO TOMAR SU ID
-                $id_jugador = 0;
-                if (!empty($jugador_actual)) {
-                    $id_jugador = $jugador_actual->getId();
-                } else {
-                    //Sino insertar una mesa nueva y poner alli a este usuario, tomar mesa_id
-                    $jugador_actual = new Jugador();
-                    $jugador_actual->setUserId($user_actual);
-                    $jugador_actual->save();
-                    $id_jugador = $jugador_actual->getId();
-                }
-
-                //Buscar una mesa incompleta CON UN SOLO JUGADOR                
-                $mesa_inc = Mesa::getMesaIncompleta();
-                
-                //--------------------COLECCIONES DE VIDEOS INTERVALOS----------                 
-                $intervalos_videos = Intervalo::getFragmentoVideosOrdenadosXTags(); //5 videos de los ordenados por el número de tags :: Prioridad al de menor tags                
-                $tam_intervalos_videos = count($intervalos_videos);
-                
-                //--------------------------------------------------------------
-                if (!empty($mesa_inc)) { // Si hay MESA INCOMPLETA
-                    $id_mesa = $mesa_inc->getId();
-                                        
-                    $mesa_inc->setEstado(1);//COMPLETARLA
-                    $mesa_inc->save();
-                    
-                    $jug_partner_id = $mesa_inc->getJugador1Id(); //OBTNER EL JUG QUE ESTA ALLI
-                    //ACTUALIZAR AL JUGADOR2 QUE ES EL ACTUAL Y COMPLETAR LA MESA
-                    $q = Doctrine_Query::create()
-                            ->update('Mesa m')
-                            ->set('jugador2_id', '?', $id_jugador)
-                            ->set('estado', '?', 1) //Estado 1 :: mesa completa
-                            ->where('m.id = ?', $id_mesa);
-                    $rows = $q->execute();
-
-                    //Y ACTUALIZAR EL ESTDO DEL JUG ACTUAL
-                    $jug_actual = Jugador::getJugadorById($id_jugador);
-                    $jug_actual->setEstado(1); // Estado: ocupado 1 no disponible
-                    $jug_actual->save();
-                    
-                    //obtener RELACIONMESAVIDEO DEL PARTNER Y MESAID
-                    $relacion_mesa_vid = RelacionMesaVideo::getRelacionMesaVideo($id_mesa, $jug_partner_id);
-                    
-                    //ACTUALIZAR A JUGADOR PARTNER ocupado
-                    $jug_partner = Jugador::getJugadorById($jug_partner_id);
-                    $jug_partner->setEstado(1); // Estado: ocupado 1 no disponible
-                    $jug_partner->save();
-                    
-                    $respuesta_real = $relacion_mesa_vid->getRespuestaReal();
-                    $intervalo_id = $relacion_mesa_vid->getIntervaloId();
-
-                    //si same o different
-                    //SAME NOO tiniyint
-                    if ($respuesta_real == 1) {
-                        $intervalo_id_jug = $intervalo_id;
-                        $respuesta_real_jug=1;
-                    } else { //DIFFERENT                        
-                        $respuesta_real_jug=0;
-                        $intervalos_videos = Intervalo::getFragmentoVideosOrdenadosXTagsExcluyendo($intervalo_id); //5 videos de los ordenados por el número de tags :: Prioridad al de menor tags                
-                        $tam_intervalos_videos = count($intervalos_videos);                        
-                        $id_array = mt_rand(0, $tam_intervalos_videos - 1);
-                        $intervalo_id_jug = $intervalos_videos[$id_array]['id'];                                                
-                    }
-
-                    //CREARLE relacionmesavideo A JUG ACTUAL, setearle respuesta real del anterior
-                    $relacion_mesa_vid = new RelacionMesaVideo();
-                    $relacion_mesa_vid->setRespuestaReal($respuesta_real_jug);
-                    $relacion_mesa_vid->setIntervaloId($intervalo_id_jug);
-                    $relacion_mesa_vid->setMesaId($id_mesa);
-                    $relacion_mesa_vid->setJugadorId($id_jugador);
-                    $relacion_mesa_vid->save();
-                    
-                    //poner en session relacionmesavideo                        
-                    $relacionmesavideo_id= $this->getUser()->getAttribute('relacionmesavideo_id',"");    
-                    $relacionmesavideo_id=$relacion_mesa_vid->getId();
-                    $this->getUser()->setAttribute('relacionmesavideo_id',$relacionmesavideo_id);
-                    //$request->setParameter('relacionmesavideo_id',$relacionmesavideo_id);
-                    $mesaid = $this->getUser()->getAttribute('mesaid',""); 
-                    
-                } else { // Crearme una mesa y buscarme quien sera mi competidor---Crear Mesa para ambos                    
-                    $jugadores = Jugador::getJugadoresDisponibles($id_jugador);  //BUSCAR JUGADORES DISPONIBLES sin incluir ACTUAL
-                    $mesa = new Mesa(); //NUEVA MESA
-
-                    if (!empty($jugadores)) { // Existe con quien jugar, setearmelo de una
-                        $mesa->setJugador1Id($id_jugador); //SET JUG ACTUAL
-                        $mesa->setJugador2Id($jugadores[0]['id']); // El q me escogieron
-                        $mesa->setEstado(1); //COMPLETA
-                        $mesa->save();
-                        $id_mesa = $mesa->getId();
-
-                        $jug_actual = Jugador::getJugadorById($id_jugador);
-                        $jug_actual->setEstado(1); // SETEAR JUG ACTUAL no disponible
-                        $jug_actual->save();
-
-                        $jug_partner = Jugador::getJugadorById($jugadores[0]['id']);
-                        $jug_partner->setEstado(1); // SETEAR JUG PARTNER no disponible
-                        $jug_partner->save();
-
-                        $id_array = mt_rand(0, $tam_intervalos_videos - 1);
-                        $intervalo_id = $intervalos_videos[$id_array]['id'];
-
-                        //aleatorio same or different
-                        $respuesta = mt_rand(0, 1);
-                        if ($respuesta == 1) {
-                            //$respuesta_real_jug = "SAME"; //SAME
-                            $respuesta_real_jug =1;
-                            $respuesta_real_partner=1;
-                            $intervalo_id_jug = $intervalo_id;
-                            $intervalo_id_partner=$intervalo_id;
-                        } else {
-                            //$respuesta_real_partner = "DIFFERENT"; //DIFFERENT
-                            $respuesta_real_partner =0;                            
-                            $id_array2 = mt_rand(0, $tam_intervalos_videos - 1);
-                            while ($id_array2 != $id_array)
-                                $id_array2 = mt_rand(0, $tam_intervalos_videos - 1);
-                            $intervalo_id_partner = $intervalos_videos[$id_array2]['id'];
-                            $respuesta_real_jug=1;
-                            $intervalo_id_jug = $intervalo_id;
-                        }
-
-                        //crear relacionmesavideo de este JUG1
-                        $relacion_mesa_vid = new RelacionMesaVideo();
-                        $relacion_mesa_vid->setRespuestaReal($respuesta_real_jug);
-                        $relacion_mesa_vid->setIntervaloId($intervalo_id_jug);
-                        $relacion_mesa_vid->setMesaId($id_mesa);
-                        $relacion_mesa_vid->setJugadorId($id_jugador); //a este le seteo ACTUAL
-                        $relacion_mesa_vid->save();
-
-                        //poner en session relacionmesavideo                        
-                        $relacionmesavideo_id= $this->getUser()->getAttribute('relacionmesavideo_id',"");    
-                        $relacionmesavideo_id=$relacion_mesa_vid->getId();
-                        $this->getUser()->setAttribute('relacionmesavideo_id',$relacionmesavideo_id);
-                        //$request->setParameter('relacionmesavideo_id',$relacionmesavideo_id);
-                        //crear relacionmesavideo de este JUG2
-                        $relacion_mesa_vid_partner = new RelacionMesaVideo();
-                        $relacion_mesa_vid_partner->setRespuestaReal($respuesta_real_partner);
-                        $relacion_mesa_vid_partner->setIntervaloId($intervalo_id_partner);
-                        $relacion_mesa_vid_partner->setMesaId($id_mesa);
-                        $relacion_mesa_vid_partner->setJugadorId($jugadores[0]['id']); //a este PARTNER
-                        $relacion_mesa_vid_partner->save();
-                        
-                    } else { // Se quedo la mesa conmigo y estado incompleto                           
-                        $mesa->setJugador1Id($id_jugador);
-                        $mesa->setEstado(0); //Incompleta
-                        $mesa->save();
-                        $id_mesa = $mesa->getId();
-
-                        //SÓLO PONERLO NO DISPONIBLE RELACIONMESAVIDEO SE LE ASIGNARÁ EN LOS OTROS CASOS (debe esperar)
-                        $jug_actual = Jugador::getJugadorById($id_jugador);
-                        $jug_actual->setEstado(1); // no disponible
-                        $jug_actual->save();
-                        
-                        //OJOOOO ponerle uhna RELACIONMESAVIDEO porque en la siguiente le van a preguntar por su relacionmesa
-                        $id_array = mt_rand(0, $tam_intervalos_videos - 1);
-                        //ECHO "intervalovideo: ".count($intervalos_videos)." 1 video: ".$intervalos_videos[$id_array]. "id array: ".$id_array." empty:? ".$intervalos_videos[$id_array]['id']; die();
-                        $intervalo_id = $intervalos_videos[$id_array]['id'];// OJO CON LOS FETCARRAY!!!!!!!!!!! VER SI FETCHALLOBJECT!!!//->getId(); //se cae  asdi no $intervalos_videos[$id_array]['id']
-
-                        //aleatorio same or different
-                        $respuesta = mt_rand(0, 1);
-                        if ($respuesta == 1) {
-                            //$respuesta_real = "SAME"; //SAME                            
-                            $respuesta_real_jug=1;
-                        } else {
-                            //$respuesta_real = "DIFFERENT"; //DIFFERENT                            
-                            $respuesta_real_jug=0;
-                        }
-
-                        //crear relacionmesavideo de este JUG1
-                        $relacion_mesa_vid = new RelacionMesaVideo();
-                        $relacion_mesa_vid->setRespuestaReal($respuesta_real_jug);
-                        $relacion_mesa_vid->setIntervaloId($intervalo_id);
-                        $relacion_mesa_vid->setMesaId($id_mesa);
-                        $relacion_mesa_vid->setJugadorId($id_jugador); //a este le seteo ACTUAL
-                        $relacion_mesa_vid->save();
-                        
-                        //poner en session relacionmesavideo                        
-                        $relacionmesavideo_id= $this->getUser()->getAttribute('relacionmesavideo_id',"");    
-                        $relacionmesavideo_id=$relacion_mesa_vid->getId();
-                        $this->getUser()->setAttribute('relacionmesavideo_id',$relacionmesavideo_id);
-                        //$request->setParameter('relacionmesavideo_id',$relacionmesavideo_id);
-                    }
-                }
-                //Devolver JSON con estos datos
-                $response['tipo'] = "identificacion";
-                $response['objeto'] = array();
-                $response['objeto'][$id_mesa] = $id_jugador;
-
-                //poner en session la mesaid
-                $mesaid = $this->getUser()->getAttribute('mesaid', "");
-                $mesaid = $id_mesa;
-                $this->getUser()->setAttribute('mesaid', $id_mesa);
+        $total_time = 0;
+        $jugador_pareja_id = 0;
+        $modoJugada = '';
+        $user_actual = $this->getUser()->getAttribute('userid');  //sacar de session el user_id único de facebook
+        $mesa_id=0;       
+        $date1 = time();
+        $min = 0;
+        //MIENTRAS NO HAYA PASADO TIEMPO ESPERA Y JUG REAL NO CONSEGUIDO        
+        while ($min<=0.35 && $jugador_pareja_id == 0) {
+            //OBTENER PAREJA REAL
+            $mesa_y_jug=Mesa::obtenerParejaJuego($user_actual);
+            $jugador_pareja_id=$mesa_y_jug[0];
+            $mesa_id=$mesa_y_jug[1];
+            $date2 = time();
+            $min = ($date2 - $date1) / 60;           
+        }       
+        //NUNCA CONSIGUIÓ JUG REAL
+        $jugadorObj=Jugador::getJugadorByUserId($user_actual);
+        if ($jugador_pareja_id == 0 && $jugadorObj->getEstado()!=1) {
+            $modoJugada = 'BOT';
+            //DEVOLVER EL JUG BOT
+            $jugadorBOT = Jugador::getJugador('BOT-001', 'BOT');           
+            if (!empty($jugadorBOT)) {
+                $jugadorBOT_id = $jugadorBOT->getId();
             }
+            //ponerlo en la mesa de jugador actual            
+            $mesa = Mesa::getMesaxId($mesa_id);
+            $mesa->setJugador2Id($jugadorBOT_id); // El q me escogieron: BOT
+            $mesa->setEstado(1); //COMPLETA
+            $mesa->save();
+        } else {
+            $modoJugada = 'PAREJAS';
         }
-        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
-        return $this->renderText(json_encode($response));
+        //PONER EN SESSION EL MODO DE JUGADA
+        $modoJuego = $this->getUser()->getAttribute('modoJugada', "");
+        $modoJuego = $modoJugada;
+        $this->getUser()->setAttribute('modoJugada', $modoJuego);
+
+        //PONER EN SESSION LA MESAID
+        $mesaid_session = $this->getUser()->getAttribute('mesaid', "");
+        $mesaid_session = $mesa_id;
+        $this->getUser()->setAttribute('mesaid', $mesaid_session);
+
+        echo 'Page generated in ' . $total_time . ' seconds.';
+        $this->redirect('Mesa/new');
     }
 
     //INCOMPLETO
     public function executeInsertarEtiqueta(sfWebRequest $request) {
         $tmp = $request->getParameter('etiqueta_texto');
         $etiqueta_texto = isset($tmp) ? $tmp : '';
-        
+
         $tmp = $request->getParameter('hora');
         $hora = isset($tmp) ? $tmp : '';
-        
+
         $tmp = $request->getParameter('minuto');
         $minuto = isset($tmp) ? $tmp : '';
-        
+
         $tmp = $request->getParameter('segundo');
         $segundo = isset($tmp) ? $tmp : '';
-        
-        $id_etiqueta=0;
+
+        $id_etiqueta = 0;
         //$response = array();
         if ($etiqueta_texto != '' && $hora != '' && $minuto != '' && $segundo != '') {
             //calificar, insertarla con el tiempo
             $etiqueta = new InstanciaEtiqueta();
             //sacar de session su relacionmesavideo_id
-            $relacionmesavideo_id= $this->getUser()->getAttribute('relacionmesavideo_id',"");
+            $relacionmesavideo_id = $this->getUser()->getAttribute('relacionmesavideo_id', "");
             //$relacionmesavideo_id=$request->getParameter('relacionmesavideo_id');
             $etiqueta->setRelacionmesavideoId($relacionmesavideo_id); //*IMPORTANTE* ojo HAY QUE PASAR RELACIONMESAVIDEO
             $etiqueta->setTexto($etiqueta_texto);
-            $etiqueta->setTiempo(date("H:i:s", strtotime(' ', mktime($hora,$minuto,$segundo,0,0,0)))); //convert time
+            $etiqueta->setTiempo(date("H:i:s", strtotime(' ', mktime($hora, $minuto, $segundo, 0, 0, 0)))); //convert time
             $etiqueta->save();
             $id_etiqueta = $etiqueta->getId();
         }
@@ -283,11 +97,69 @@ class MesaActions extends sfActions {
         //$response['puntaje'] = "identificacion"; //RETORNAR MENSAJES DE TIPO ? Y PUNTAJE
         //$this->getResponse()->setHttpHeader('Content-type', 'application/json');
         //return $this->renderText(json_encode($response));
-        return $this->renderText(""+$id_etiqueta);
+        return $this->renderText("" + $id_etiqueta);
     }
 
+    //actualizarIntervaloEstado
+    public function executeActualizarIntervaloEstado(sfWebRequest $request) {
+        $tmp = $request->getParameter('estado');
+        $estado = isset($tmp) ? $tmp : '';
+        $tmp = $request->getParameter('mesa_id');
+        $mesa_id = isset($tmp) ? $tmp : '';
+        $tmp = $request->getParameter('num_round');
+        $num_round = isset($tmp) ? $tmp : '';
+        $rsp = '';
+        $response = array();
+
+        $user_id_facebook = $this->getUser()->getAttribute('userid', "");
+        $jugador_actual = Jugador::getJugadorByUserId($user_id_facebook);
+        $id_jug = $jugador_actual->getId();
+
+        if ($estado != '' && $mesa_id != '' && $num_round != '') {
+            $mesa = Mesa::getMesaxId($mesa_id);
+            $estado_mesa = $mesa->getEstado();
+            if ($estado_mesa == 0) {
+                //Incompleta
+                $relacion_mesa_vid = RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $id_jug, $num_round);
+                $relacion_mesa_vid->setVideoIntervaloEstado(1); //1: loaded 0 no loaded
+                $relacion_mesa_vid->save();
+                $rsp = 'INCOMPLETO';
+            } else if ($estado_mesa == 1) {
+                //Completa
+                $id_jug1 = $mesa->getJugador1Id();
+                $id_jug2 = $mesa->getJugador2Id();
+
+                //relaciones mesavideo
+                $relacion_mesa_vid_jug1 = RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $id_jug1, $num_round);
+                $relacion_mesa_vid_jug2 = RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $id_jug2, $num_round);
+
+                //Se actualiza la relación mesa video del usuario actualiza
+                if ($id_jug == $id_jug1) {
+                    $relacion_mesa_vid_jug1->setVideoIntervaloEstado(1); //1: loaded 0 no loaded 
+                    $relacion_mesa_vid_jug1->save();
+                } else {
+                    $relacion_mesa_vid_jug2->setVideoIntervaloEstado(1); //1: loaded 0 no loaded  
+                    $relacion_mesa_vid_jug2->save();
+                }
+
+                //Ahora cual es el estado de los videos
+                if ($relacion_mesa_vid_jug1->getNumRound() == 1 && $relacion_mesa_vid_jug2->getNumRound() == 1) {
+                    $rsp = 'COMPLETO'; // en este momento es posible coincidan él último va llegar aquí a confirmar
+                } else {
+                    $rsp = 'INCOMPLETO';
+                }
+            }
+        }
+        //Devolver JSON con estos datos
+        $response['respuesta'] = $rsp; //RETORNAR MENSAJES DE TIPO ? Y PUNTAJE
+        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
+        return $this->renderText(json_encode($response));
+    }
+
+    /* Link Iniciar */
+
     public function executeNew(sfWebRequest $request) {
-        $this->form = new MesaForm();
+        
     }
 
     public function executeCreate(sfWebRequest $request) {
@@ -326,4 +198,5 @@ class MesaActions extends sfActions {
     }
 
 }
+
 ?>
