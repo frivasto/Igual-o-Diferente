@@ -14,6 +14,7 @@
  * @property boolean $eliminado
  * @property Video $Video
  * @property Doctrine_Collection $MesaVideoIntervalo
+ * @property Doctrine_Collection $itemcoleccionint2
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method string              getToken()              Returns the current record's "token" value
@@ -24,6 +25,7 @@
  * @method boolean             getEliminado()          Returns the current record's "eliminado" value
  * @method Video               getVideo()              Returns the current record's "Video" value
  * @method Doctrine_Collection getMesaVideoIntervalo() Returns the current record's "MesaVideoIntervalo" collection
+ * @method Doctrine_Collection getItemcoleccionint2()  Returns the current record's "itemcoleccionint2" collection
  * @method Intervalo           setId()                 Sets the current record's "id" value
  * @method Intervalo           setToken()              Sets the current record's "token" value
  * @method Intervalo           setVideoId()            Sets the current record's "video_id" value
@@ -33,6 +35,7 @@
  * @method Intervalo           setEliminado()          Sets the current record's "eliminado" value
  * @method Intervalo           setVideo()              Sets the current record's "Video" value
  * @method Intervalo           setMesaVideoIntervalo() Sets the current record's "MesaVideoIntervalo" collection
+ * @method Intervalo           setItemcoleccionint2()  Sets the current record's "itemcoleccionint2" collection
  * 
  * @package    MusicVideoGame
  * @subpackage model
@@ -87,6 +90,10 @@ abstract class BaseIntervalo extends sfDoctrineRecord
         $this->hasMany('RelacionMesaVideo as MesaVideoIntervalo', array(
              'local' => 'id',
              'foreign' => 'intervalo_id'));
+
+        $this->hasMany('ItemColeccion as itemcoleccionint2', array(
+             'local' => 'id',
+             'foreign' => 'intervalo2'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);

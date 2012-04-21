@@ -10,6 +10,7 @@
  * @property integer $jugador1_id
  * @property integer $jugador2_id
  * @property time $tiempo
+ * @property integer $coleccion_id
  * @property integer $estado
  * @property boolean $eliminado
  * @property Jugador $Jugador
@@ -20,6 +21,7 @@
  * @method integer             getJugador1Id()    Returns the current record's "jugador1_id" value
  * @method integer             getJugador2Id()    Returns the current record's "jugador2_id" value
  * @method time                getTiempo()        Returns the current record's "tiempo" value
+ * @method integer             getColeccionId()   Returns the current record's "coleccion_id" value
  * @method integer             getEstado()        Returns the current record's "estado" value
  * @method boolean             getEliminado()     Returns the current record's "eliminado" value
  * @method Jugador             getJugador()       Returns the current record's "Jugador" value
@@ -29,6 +31,7 @@
  * @method Mesa                setJugador1Id()    Sets the current record's "jugador1_id" value
  * @method Mesa                setJugador2Id()    Sets the current record's "jugador2_id" value
  * @method Mesa                setTiempo()        Sets the current record's "tiempo" value
+ * @method Mesa                setColeccionId()   Sets the current record's "coleccion_id" value
  * @method Mesa                setEstado()        Sets the current record's "estado" value
  * @method Mesa                setEliminado()     Sets the current record's "eliminado" value
  * @method Mesa                setJugador()       Sets the current record's "Jugador" value
@@ -67,6 +70,10 @@ abstract class BaseMesa extends sfDoctrineRecord
              ));
         $this->hasColumn('tiempo', 'time', null, array(
              'type' => 'time',
+             ));
+        $this->hasColumn('coleccion_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
              ));
         $this->hasColumn('estado', 'integer', 1, array(
              'type' => 'integer',
