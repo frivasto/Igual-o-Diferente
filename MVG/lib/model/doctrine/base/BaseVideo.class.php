@@ -9,6 +9,7 @@
  * @property string $token
  * @property string $url
  * @property string $nombre
+ * @property string $categoria
  * @property boolean $eliminado
  * @property Doctrine_Collection $IntervaloVideo
  * 
@@ -16,12 +17,14 @@
  * @method string              getToken()          Returns the current record's "token" value
  * @method string              getUrl()            Returns the current record's "url" value
  * @method string              getNombre()         Returns the current record's "nombre" value
+ * @method string              getCategoria()      Returns the current record's "categoria" value
  * @method boolean             getEliminado()      Returns the current record's "eliminado" value
  * @method Doctrine_Collection getIntervaloVideo() Returns the current record's "IntervaloVideo" collection
  * @method Video               setId()             Sets the current record's "id" value
  * @method Video               setToken()          Sets the current record's "token" value
  * @method Video               setUrl()            Sets the current record's "url" value
  * @method Video               setNombre()         Sets the current record's "nombre" value
+ * @method Video               setCategoria()      Sets the current record's "categoria" value
  * @method Video               setEliminado()      Sets the current record's "eliminado" value
  * @method Video               setIntervaloVideo() Sets the current record's "IntervaloVideo" collection
  * 
@@ -54,6 +57,11 @@ abstract class BaseVideo extends sfDoctrineRecord
              'length' => 255,
              ));
         $this->hasColumn('nombre', 'string', 255, array(
+             'type' => 'string',
+             'notnull' => false,
+             'length' => 255,
+             ));
+        $this->hasColumn('categoria', 'string', 255, array(
              'type' => 'string',
              'notnull' => false,
              'length' => 255,

@@ -1,0 +1,272 @@
+## YAML Template.
+Video:
+  video1:
+    url: http://www.youtube.com/watch?v=3QMXJg04lsY
+    categoria: Educacion
+  video2:
+    url: 	http://www.youtube.com/watch?v=ANglxq0Qr6g
+    categoria: Educacion
+  video3:
+    url: 	http://www.youtube.com/watch?v=4S7GBaONq1g
+    categoria: Educacion
+  video4:
+    url: http://www.youtube.com/watch?v=7y57BBwhEEM
+    categoria: Educacion
+  video5:
+    url: 	http://www.youtube.com/watch?v=dCcCeig3mgE
+    categoria: Educacion
+  video6:
+    url:  http://www.youtube.com/watch?v=v50qXXKV_c4
+    categoria: Educacion
+  video7:
+    url: http://www.youtube.com/watch?v=CiWTUVFKWkI
+    categoria: Educacion
+  video8:
+    url: 	http://www.youtube.com/watch?v=4dCO9VBlExE
+    categoria: Educacion
+  video9:
+    url: 	http://www.youtube.com/watch?v=9L8Ve7cbT4o
+    categoria: Educacion
+  video10:
+    url: http://www.youtube.com/watch?v=lgpy88oxJDs
+    categoria: Educacion
+  video11:
+    url: 	http://www.youtube.com/watch?v=kfMyfod5eW8
+    categoria: Educacion
+  video12:
+    url: 	http://www.youtube.com/watch?v=0ug96YW3HC0
+    categoria: Educacion
+  video13:
+    url: http://www.youtube.com/watch?v=DTQx3U31tmg
+    categoria: Educacion
+  video14:
+    url: 	http://www.youtube.com/watch?v=G_9SRysJM2c
+    categoria: Educacion
+  video15:
+    url: 	http://www.youtube.com/watch?v=Ud1WRI5Cy6Y
+    categoria: Educacion
+  video16:
+    url: http://www.youtube.com/watch?v=VwTfXGLFqOU
+    categoria: Educacion
+  video17:
+    url: 	http://www.youtube.com/watch?v=inRW-G8JJ2U
+    categoria: Educacion
+  video18:
+    url: 	http://www.youtube.com/watch?v=sQEIk0tBpVo
+    categoria: Educacion
+  video19:
+    url: http://www.youtube.com/watch?v=OAtSI0LkkGM
+    categoria: Educacion
+  video20:
+    url: 	http://www.youtube.com/watch?v=mY_3Nub1qhA
+    categoria: Educacion
+  video21:
+    url: 	http://www.youtube.com/watch?v=_dSl2IQ1c38
+    categoria: Educacion
+  video22:
+    url: http://www.youtube.com/watch?v=icEhwasTbZA
+    categoria: Educacion
+  video23:
+    url: 	http://www.youtube.com/watch?v=GH92JwDCnTg
+    categoria: Educacion
+  video24:
+    url: 	http://www.youtube.com/watch?v=bBgZ8WCZsBI
+    categoria: Educacion
+  video25:
+    url: http://www.youtube.com/watch?v=SXTNPpP3pQc
+    categoria: Educacion
+  video26:
+    url: 	http://www.youtube.com/watch?v=XHid-q5hQ68
+    categoria: Educacion
+  video27:
+    url: 	http://www.youtube.com/watch?v=JsQxXrIZpLQ
+    categoria: Educacion
+  video28:
+    url: http://www.youtube.com/watch?v=Yhq_NhsuyJM
+    categoria: Educacion
+  video29:
+    url: 	http://www.youtube.com/watch?v=EG0TaOgupaE
+    categoria: Educacion
+  video30:
+    url: 	http://www.youtube.com/watch?v=Kg1wow6pgps
+    categoria: Educacion
+  video31:
+    url: http://www.youtube.com/watch?v=SEBLt6Kd9EY
+    categoria: Blooper
+  video32:
+    url: 	http://www.youtube.com/watch?v=YnhP3kTdLeo
+    categoria: Blooper
+  video33:
+    url: 	http://www.youtube.com/watch?v=sd0g59X_IRI
+    categoria: Blooper
+  video34:
+    url: http://www.youtube.com/watch?v=ctJJrBw7e-c
+    categoria: Blooper
+  video35:
+    url: 	http://www.youtube.com/watch?v=wf_IIbT8HGk
+    categoria: Blooper
+  video36:
+    url: 	http://www.youtube.com/watch?v=Hb92wQpPG-s
+    categoria: Blooper
+  video37:
+    url: http://www.youtube.com/watch?v=89kKUeT2sxk
+    categoria: Blooper
+  video38:
+    url: 	http://www.youtube.com/watch?v=u23gEi47_j4
+    categoria: Blooper
+  video39:
+    url:  http://www.youtube.com/watch?v=i479N2ei8Us
+    categoria: Blooper
+  video40:
+    url: http://www.youtube.com/watch?v=eTu6Fq8hC0U
+    categoria: Blooper
+  video41:
+    url: 	http://www.youtube.com/watch?v=lyzxrF8x5Ww
+    categoria: Blooper
+  video42:
+    url: 	http://www.youtube.com/watch?v=9d_i--693WE
+    categoria: Blooper
+  video43:
+    url: http://www.youtube.com/watch?v=cTbu4ZnzNko
+    categoria: Blooper
+  video44:
+    url: 	http://www.youtube.com/watch?v=81NeQJWGYJY
+    categoria: Blooper
+  video45:
+    url: 	http://www.youtube.com/watch?v=oDdI4jsnvyc
+    categoria: Blooper
+  video46:
+    url: http://www.youtube.com/watch?v=cXXm696UbKY
+    categoria: Blooper
+  video47:
+    url: 	http://www.youtube.com/watch?v=ZkWkirlQVxg
+    categoria: Blooper
+  video48:
+    url: 	http://www.youtube.com/watch?v=lL5Y0ng0uRU
+    categoria: Blooper
+  video49:
+    url: http://www.youtube.com/watch?v=CjqvLAs9t1Q
+    categoria: Blooper
+  video50:
+    url: 	http://www.youtube.com/watch?v=sIYzVORJFLI
+    categoria: Blooper
+  video51:
+    url: 	http://www.youtube.com/watch?v=kJY5BRCNAs4
+    categoria: Blooper
+  video52:
+    url: http://www.youtube.com/watch?v=JhUpejnZ-9Q
+    categoria: Blooper
+  video53:
+    url: 	http://www.youtube.com/watch?v=WahvT8hrnsQ
+    categoria: Blooper
+  video54:
+    url: 	http://www.youtube.com/watch?v=GJ6OG5fZ7M0
+    categoria: Blooper
+  video55:
+    url: http://www.youtube.com/watch?v=Q2xzt5_ITtY
+    categoria: Blooper
+  video56:
+    url: 	http://www.youtube.com/watch?v=7PokysnUOo4
+    categoria: Blooper
+  video57:
+    url: 	http://www.youtube.com/watch?v=HsHfV-Ns8Dg
+    categoria: Blooper
+  video58:
+    url: http://www.youtube.com/watch?v=HMPFf66oDFk
+    categoria: Blooper
+  video59:
+    url: 	http://www.youtube.com/watch?v=g8gPicK5Mug
+    categoria: Blooper
+  video60:
+    url: 	http://www.youtube.com/watch?v=qJzREZXiXIw
+    categoria: Blooper
+  video61:
+    url: http://www.youtube.com/watch?v=wbqFMgdSeGs
+    categoria: Popfail
+  video62:
+    url: 	http://www.youtube.com/watch?v=lwnoVnaFwxM
+    categoria: Popfail
+  video63:
+    url: 	http://www.youtube.com/watch?v=F-sSooqYisM
+    categoria: Popfail
+  video64:
+    url: http://www.youtube.com/watch?v=DNJ6a9Lf_K8
+    categoria: Popfail
+  video65:
+    url: 	http://www.youtube.com/watch?v=T-NviMJMQGQ
+    categoria: Popfail
+  video66:
+    url: 	http://www.youtube.com/watch?v=g-RMityCgyo
+    categoria: Popfail
+  video67:
+    url: http://www.youtube.com/watch?v=E_emNxk1CKQ
+    categoria: Popfail
+  video68:
+    url: 	http://www.youtube.com/watch?v=-vgoa0IAOls
+    categoria: Popfail
+  video69:
+    url: 	http://www.youtube.com/watch?v=wpqzukQJ1bU
+    categoria: Popfail
+  video70:
+    url: http://www.youtube.com/watch?v=20lgHlQcLs0
+    categoria: Popfail
+  video71:
+    url: 	http://www.youtube.com/watch?v=QBt9E3dZlNw
+    categoria: Popfail
+  video72:
+    url: 	http://www.youtube.com/watch?v=y4xLM9wIM8A
+    categoria: Popfail
+  video73:
+    url: http://www.youtube.com/watch?v=Q31YDyxbS5k
+    categoria: Popfail
+  video74:
+    url: 	http://www.youtube.com/watch?v=Ct-FfReSonw
+    categoria: Popfail
+  video75:
+    url: 	http://www.youtube.com/watch?v=5HyMJpG4hvg
+    categoria: Popfail
+  video76:
+    url: http://www.youtube.com/watch?v=QT-rQZ6LmKE
+    categoria: Popfail
+  video77:
+    url: 	http://www.youtube.com/watch?v=jOkH55V6HvY
+    categoria: Popfail
+  video78:
+    url: 	http://www.youtube.com/watch?v=Tby-LnyiZUE
+    categoria: Popfail
+  video79:
+    url: http://www.youtube.com/watch?v=3QMXJg04lsY
+    categoria: Popfail
+  video80:
+    url: 	http://www.youtube.com/watch?v=kfVsfOSbJY0
+    categoria: Popfail
+  video81:
+    url: 	http://www.youtube.com/watch?v=cSfgUQKbl0w
+    categoria: Popfail
+  video82:
+    url: http://www.youtube.com/watch?v=thhOrlhst0E
+    categoria: Popfail
+  video83:
+    url: 	http://www.youtube.com/watch?v=8-QToIzw7Fk
+    categoria: Popfail
+  video84:
+    url: 	http://www.youtube.com/watch?v=0AbQpzn6t4c
+    categoria: Popfail
+  video85:
+    url: http://www.youtube.com/watch?v=OtZyj_UHAcw
+    categoria: Popfail
+  video86:
+    url: 	http://www.youtube.com/watch?v=9Sw7z2PWZqU
+    categoria: Popfail
+  video87:
+    url: 	http://www.youtube.com/watch?v=8_lTdVNMbIM
+    categoria: Popfail
+  video88:
+    url: http://www.youtube.com/watch?v=OlR_CQ3NPvI
+    categoria: Popfail
+  video89:
+    url: 	http://www.youtube.com/watch?v=SSA3ydf06yg
+    categoria: Popfail
+  video90:
+    url: 	http://www.youtube.com/watch?v=or2GH3CHXqY
+    categoria: Popfail

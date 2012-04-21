@@ -18,6 +18,7 @@ Video:
     token:   { type: string(255), notnull: true, unique: false }
     url:   { type: string(255), notnull: true }
     nombre:   { type: string(255), notnull: false }
+    categoria:   { type: string(255), notnull: false }
     eliminado: { type: boolean, default: 0 }
 
 Intervalo:
