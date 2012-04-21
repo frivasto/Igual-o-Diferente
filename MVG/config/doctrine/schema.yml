@@ -54,6 +54,7 @@ Mesa:
     jugador1_id:   { type: integer(4) }
     jugador2_id:   { type: integer(4) }
     tiempo: { type: time }
+    coleccion_id: { type: integer(4) }
     estado:   { type: integer(1) } 
     eliminado: { type: boolean, default: 0 }
   relations:
@@ -107,3 +108,25 @@ Decision:
     eliminado: { type: boolean, default: 0 }
   relations:
     RelacionMesaVideo: { local: relacionmesavideo_id, foreign: id, foreignAlias: InstanciaEtiquetaRelacionMesaVideo }
+
+ItemColeccion:
+  actAs:
+    Timestampable:
+  columns:
+    id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
+    intervalo1: { type: integer(4) }
+    intervalo2: { type: integer(4) }
+    respuesta_real: { type: boolean }
+    coleccion_id: { type: integer(4) }
+    
+  relations:
+    Coleccion: { local: coleccion_id, foreign: id, foreignAlias: itemcoleccion }
+    Intervalo: { local: intervalo1, foreign: id, foreignAlias: itemcoleccionint1 }
+    Intervalo: { local: intervalo2, foreign: id, foreignAlias: itemcoleccionint2 }
+
+
+Coleccion:
+  actAs:
+    Timestampable:
+  columns:
+    id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
