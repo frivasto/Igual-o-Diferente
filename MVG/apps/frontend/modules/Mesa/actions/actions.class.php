@@ -16,15 +16,16 @@ class MesaActions extends sfActions {
     }
 
     //Observacion ESTADO: MESA 0:Incompleta 1:Completa JUGADOR 0:Disponible 1:No disponible Ocupado RESPUESTAREAL EN RELACIONMESAVIDEO 1:Same 0:Different    
-    public function executeEmparejar(sfWebRequest $request) {
-        $response = array();
-        $total_time = 0;
+    public function executeEmparejar(sfWebRequest $request) {                
         $jugador_pareja_id = 0;
         $modoJugada = '';
         $user_actual = $this->getUser()->getAttribute('userid');  //sacar de session el user_id único de facebook
         $mesa_id=0;       
         $date1 = time();
         $min = 0;
+        
+        //$jugadorObj=Jugador::getJugadorByUserId($user_actual);
+        //&& $jugadorObj->getEstado()!=1        
         //MIENTRAS NO HAYA PASADO TIEMPO ESPERA Y JUG REAL NO CONSEGUIDO        
         while ($min<=0.35 && $jugador_pareja_id == 0) {
             //OBTENER PAREJA REAL
@@ -34,9 +35,8 @@ class MesaActions extends sfActions {
             $date2 = time();
             $min = ($date2 - $date1) / 60;           
         }       
-        //NUNCA CONSIGUIÓ JUG REAL
-        $jugadorObj=Jugador::getJugadorByUserId($user_actual);
-        if ($jugador_pareja_id == 0 && $jugadorObj->getEstado()!=1) {
+        //NUNCA CONSIGUIÓ JUG REAL        
+        if ($jugador_pareja_id == 0) {
             $modoJugada = 'BOT';
             //DEVOLVER EL JUG BOT
             $jugadorBOT = Jugador::getJugador('BOT-001', 'BOT');           
@@ -48,23 +48,60 @@ class MesaActions extends sfActions {
             $mesa->setJugador2Id($jugadorBOT_id); // El q me escogieron: BOT
             $mesa->setEstado(1); //COMPLETA
             $mesa->save();
-        } else {
-            $modoJugada = 'PAREJAS';
+            
+        } else if ($jugador_pareja_id != 0){
+            $modoJugada = 'PAREJAS';                        
+        }else{
+            $modoJugada = 'ERROR';
         }
-        //PONER EN SESSION EL MODO DE JUGADA
-        $modoJuego = $this->getUser()->getAttribute('modoJugada', "");
-        $modoJuego = $modoJugada;
+                
+        //PONER EN SESSION LA COLECCION DE VIDEOS PARA TODO EL JUEGO
+        $mesa = Mesa::getMesaxId($mesa_id);
+        $coleccion_id=$mesa->getColeccionId(); //COMPLETA
+        if($coleccion_id==NULL){            
+            $coleccion_id=Coleccion::obtenerColeccionAleatoria();
+            $item_colecciones_array= ItemColeccion::getItemsColeccion($coleccion_id);
+            $this->getUser()->setAttribute('colecciones_item', $item_colecciones_array);
+            //setear esta coleccion generada en la mesa                        
+            $mesa->setColeccionId($coleccion_id); //COMPLETA
+            $mesa->save();
+        }
+            
+        //PONER EN SESSION EL MODO DE JUGADA        
         $this->getUser()->setAttribute('modoJugada', $modoJuego);
 
-        //PONER EN SESSION LA MESAID
-        $mesaid_session = $this->getUser()->getAttribute('mesaid', "");
-        $mesaid_session = $mesa_id;
-        $this->getUser()->setAttribute('mesaid', $mesaid_session);
-
-        echo 'Page generated in ' . $total_time . ' seconds.';
+        //PONER EN SESSION LA MESAID       
+        $this->getUser()->setAttribute('mesaid', $mesaid_session);        
+        
+        //REDIRECCIONAR A PÁGINA JUEGO
         $this->redirect('Mesa/new');
     }
 
+    //Para ambos modos de jugada, obtener video
+    public function executeObtenerVideoRound(sfWebRequest $request) {
+        $tmp = $request->getParameter('round_index');
+        $round_index = isset($tmp) ? $tmp : '';
+
+        $tmp = $request->getParameter('jugador_index');
+        $jugador_index = isset($tmp) ? $tmp : '';
+
+        $url_video='';
+        $respuesta_real='';        
+        //SACAR LOS VIDEOS DE SESSION  ROUND Y JUG (1 o 2) (DETERMINARLO O YA SE PONGFA ANTES)     
+        $item_colecciones_array = $this->getUser()->getAttribute('colecciones_item', "");
+        if($round_index!=0 && $jugador_index!=0){
+            $id_video=$item_colecciones_array[$round_index]['video'.$jugador_index];
+            $url_video=Video::getVideoxId($id_video)->getUrl();
+            $respuesta_real=$item_colecciones_array[$round_index]['respuesta_real'];
+        }
+        //Devolver JSON con estos datos
+        $response = array();        
+        $response['video_url'] = $url_video;
+        $response['respuesta_real'] = $respuesta_real;        
+        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
+        return $this->renderText(json_encode($response));
+    }
+    
     //INCOMPLETO
     public function executeInsertarEtiqueta(sfWebRequest $request) {
         $tmp = $request->getParameter('etiqueta_texto');

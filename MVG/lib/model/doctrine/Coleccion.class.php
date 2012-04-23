@@ -12,5 +12,15 @@
  */
 class Coleccion extends BaseColeccion
 {
-
+    public static function getCountColecciones(){
+        $cantidad=Doctrine_Core::getTable('Coleccion')->count();
+        return $cantidad;
+    }
+    public static function obtenerColeccionAleatoria(){
+         //Total de colecciones
+         $totalColecciones=self::getCountColecciones();
+         //Obtener aleatorio colección
+         $coleccion_id=mt_rand(1,$totalColecciones);         
+         return $coleccion_id;
+     }
 }

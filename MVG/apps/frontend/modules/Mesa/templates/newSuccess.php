@@ -63,8 +63,7 @@
             }
             function manejador(xhr)
             {	
-                var resp2=xhr.responseText;
-                return resp2;                
+                return xhr.responseText;                
             }
             /*AJAX para mandar a guardar la etiqueta y acumularla y evaluarla para el puntaje del jugador*/
             /*ENVIAR  ETIQUETA TEXTO, TIEMPO */
@@ -243,15 +242,31 @@
             function log(msg){ $("log").innerHTML+="<br>"+msg; }
             function logPartner(msg){ $("logpartner").innerHTML+="<br>"+msg; }
             function onkey(event){ if(event.keyCode==13){ send(); } }
+            
+            function asignarVideo(round_index, jugador_index){
+                //ajax obtener video
+                var request;
+                request = createXMLHttpRequest();                
+                request.open('GET','<?php echo url_for('Mesa/ObtenerVideoRound'); ?>'+"?round_index="+round_index+"&jugador_index="+jugador_index,true);
+                request.onreadystatechange=function(){                      
+                    if(request.readyState==4){
+                        if(request.status==200){                             
+                            respuestajson=manejador(request);  
+                            if(respuestajson!=null && respuestajson!='' && respuestajson!='0'){                                
+                                var myObject = eval('(' + respuestajson + ')');
+                                var url_video=myObject.video_url;
+                                var respuesta_real=myObject.respuesta_real;
+                                //calcular intervalo de ese video con fórmula yotube api
+                                alert(respuestajson);
+                                alert(url_video);
+                                play(url_video);
+                            }
+                        }
+                    }
+                };
+                request.send(null);                
+            }
         </script>
-    </head>
-    <body onload="init()">
-        <p>
-            Hola usuario: <strong><?php echo $sf_user->getAttribute('userid') ?></strong>.
-        </p>    
-        <div id="ytapiplayer">
-            You need Flash player 8+ and JavaScript enabled to view this video.
-        </div>
         <script type="text/javascript">
             var params = { allowScriptAccess: "always" };
             var atts = { id: "myytplayer" };
@@ -259,29 +274,40 @@
             "ytapiplayer", "425", "356", "8", null, null, params, atts);
             function onYouTubePlayerReady(playerId) {
                 ytplayer = document.getElementById("myytplayer");
+                //play("I9cCPQVPv8o&ob"); //or2GH3CHXqY I9cCPQVPv8o&ob
+                asignarVideo(round_actual,1);
+                /*
                 ytplayer.loadVideoById("iQqK2onobes");
                 ytplayer.seekTo(150,true);
                 ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
-                ytplayer.playVideo();     
+                ytplayer.playVideo();     */        
             }
 
-            function play() {
+            function play(video_url) {
                 ytplayer = document.getElementById("myytplayer");
                 if (ytplayer) {
-                    ytplayer.loadVideoById("29SuuEKztPc");
+                    ytplayer.loadVideoById(video_url);
                     ytplayer.playVideo();
                 }
             }
-            function onytplayerStateChange(newState) {
-                //alert("Player's new state: " + newState+"mesaaaaa: "+mesa_id);
-                if(newState==0){           
-                    //alert("oyeeeeeeeCompletadooooooo!"+mesaid+"mesaaaa:identif: "+mesa_id);
+            function onytplayerStateChange(newState) {                
+                if(newState==0){                               
                     actualizar_intervalo_estado(newState);
                 }
             }
             
         </script>
-        <a href="javascript:void(0);" onclick="play();">Next</a>
+    </head>
+    <!-- -->
+    <body onload="init(); "> 
+        <p>
+            Hola usuario: <strong><?php echo $sf_user->getAttribute('userid') ?></strong>.
+        </p>    
+        <div id="ytapiplayer">
+            You need Flash player 8+ and JavaScript enabled to view this video.
+        </div>
+        
+        <a href="javascript:void(0);" onclick="play('I9cCPQVPv8o&ob');">Same-Different</a>
         <h3>WebSocket v2.00</h3>
         <div id="prueba"></div>
         <div id="log"></div>

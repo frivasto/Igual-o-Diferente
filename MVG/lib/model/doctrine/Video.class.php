@@ -12,5 +12,11 @@
  */
 class Video extends BaseVideo
 {
-  
+    public static function getVideoxId($id_video){
+        $video=Doctrine_Core::getTable('Video')
+                            ->createQuery('v')
+                            ->where('v.id=?',$id_video)                            
+                            ->fetchOne();
+        return $video;                 
+     }
 }
