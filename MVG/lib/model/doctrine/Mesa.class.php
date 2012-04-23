@@ -28,7 +28,7 @@ class Mesa extends BaseMesa
                             ->fetchOne();
         return $mesa;                 
      }
-     public static function obtenerParejaJuego($user_actual){        
+     public static function obtenerParejaJuego($user_actual,$mesa_id){        
             $jugador_pareja_id = 0;
             $jugador_actual = Jugador::getJugadorByUserId($user_actual);
 
@@ -73,28 +73,42 @@ class Mesa extends BaseMesa
 
                     //JUGADOR ENCONTRADO
                     $jugador_pareja_id = $jug_partner->getId();
+                    echo "mesaa_incompleta ".$id_mesa; die();
                 }
             } else { // Crearme una mesa y buscarme quien sera mi competidor---Crear Mesa para ambos
                 $jugadores = Jugador::getJugadoresDisponibles($id_jugador);  //BUSCAR JUGADORES DISPONIBLES sin incluir ACTUAL                
-                if (!empty($jugadores)) {                     
-                    // Existe con quien jugar, setearmelo de una
-                    $mesa = new Mesa(); //NUEVA MESA
-                    $mesa->setJugador1Id($id_jugador); //SET JUG ACTUAL
-                    $mesa->setJugador2Id($jugadores[0]['id']); // El q me escogieron
-                    $mesa->setEstado(1); //COMPLETA
-                    $mesa->save();
-                    $id_mesa = $mesa->getId();
+                if (!empty($jugadores)) {
+                    //No tiene ninguna mesa el jug actual, crearla con el deisponiblke
+                    if($mesa_id==0){
+                        // Existe con quien jugar, setearmelo de una
+                        $mesa = new Mesa(); //NUEVA MESA
+                        $mesa->setJugador1Id($id_jugador); //SET JUG ACTUAL
+                        $mesa->setJugador2Id($jugadores[0]['id']); // El q me escogieron
+                        $mesa->setEstado(1); //COMPLETA
+                        $mesa->save();
+                        $id_mesa = $mesa->getId();
 
-                    $jug_actual = Jugador::getJugadorById($id_jugador);
-                    $jug_actual->setEstado(1); // SETEAR JUG ACTUAL no disponible
-                    $jug_actual->save();
+                        $jug_actual = Jugador::getJugadorById($id_jugador);
+                        $jug_actual->setEstado(1); // SETEAR JUG ACTUAL no disponible
+                        $jug_actual->save();
 
-                    $jug_partner = Jugador::getJugadorById($jugadores[0]['id']);
-                    $jug_partner->setEstado(1); // SETEAR JUG PARTNER no disponible
-                    $jug_partner->save();
-
-                    //JUGADOR ENCONTRADO
-                    $jugador_pareja_id = $jug_partner->getId();
+                        $jug_partner = Jugador::getJugadorById($jugadores[0]['id']);
+                        $jug_partner->setEstado(1); // SETEAR JUG PARTNER no disponible
+                        $jug_partner->save();
+                        
+                        //JUGADOR ENCONTRADO
+                        $jugador_pareja_id = $jug_partner->getId();
+                    }else{
+                        //sólo indicar cual es el compañero de esa mesa
+                        $mesa=Mesa::getMesaxId($mesa_id);
+                        //JUGADOR ENCONTRADO
+                        if($mesa->getEstado()==1){                       
+                            $jugador_pareja_id=$mesa->getJugador2Id();
+                            $id_mesa=$mesa_id;
+                        }
+                    }
+                    
+                    echo "nueva_mesa_con los dos ".$id_mesa; die();
                 } else { // Se quedo la mesa conmigo y estado incompleto
                     $mesa = new Mesa(); //NUEVA MESA
                     $mesa->setJugador1Id($id_jugador);
@@ -109,6 +123,7 @@ class Mesa extends BaseMesa
 
                     //JUGADOR ENCONTRADO
                     $jugador_pareja_id = 0;
+                    echo "nueva_mesa ".$id_mesa; die();
                 }
             }           
             //-----------------------------------------------------------------------------------------

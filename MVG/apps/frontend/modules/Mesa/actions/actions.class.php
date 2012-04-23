@@ -30,7 +30,7 @@ class MesaActions extends sfActions {
         //MIENTRAS NO HAYA PASADO TIEMPO ESPERA Y JUG REAL NO CONSEGUIDO        
         while ($min<=0.35 && $jugador_pareja_id == 0 && !$esta_completa) {
             //OBTENER PAREJA REAL
-            $mesa_y_jug=Mesa::obtenerParejaJuego($user_actual);
+            $mesa_y_jug=Mesa::obtenerParejaJuego($user_actual,$mesa_id);
             $jugador_pareja_id=$mesa_y_jug[0];
             $mesa_id=$mesa_y_jug[1];
             $mesa_tmp=Mesa::getMesaxId($mesa_id);
