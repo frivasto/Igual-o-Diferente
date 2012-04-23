@@ -23,15 +23,19 @@ class MesaActions extends sfActions {
         $mesa_id=0;       
         $date1 = time();
         $min = 0;
+        $esta_completa=false;
         
         //$jugadorObj=Jugador::getJugadorByUserId($user_actual);
         //&& $jugadorObj->getEstado()!=1        
         //MIENTRAS NO HAYA PASADO TIEMPO ESPERA Y JUG REAL NO CONSEGUIDO        
-        while ($min<=0.35 && $jugador_pareja_id == 0) {
+        while ($min<=0.35 && $jugador_pareja_id == 0 && !$esta_completa) {
             //OBTENER PAREJA REAL
             $mesa_y_jug=Mesa::obtenerParejaJuego($user_actual);
             $jugador_pareja_id=$mesa_y_jug[0];
             $mesa_id=$mesa_y_jug[1];
+            $mesa_tmp=Mesa::getMesaxId($mesa_id);
+            if($mesa_tmp->getEstado()==1)
+                $esta_completa=true;
             $date2 = time();
             $min = ($date2 - $date1) / 60;           
         }       
@@ -68,10 +72,10 @@ class MesaActions extends sfActions {
         }
             
         //PONER EN SESSION EL MODO DE JUGADA        
-        $this->getUser()->setAttribute('modoJugada', $modoJuego);
+        $this->getUser()->setAttribute('modoJugada', $modoJugada);
 
         //PONER EN SESSION LA MESAID       
-        $this->getUser()->setAttribute('mesaid', $mesaid_session);        
+        $this->getUser()->setAttribute('mesaid', $mesa_id);        
         
         //REDIRECCIONAR A PÁGINA JUEGO
         $this->redirect('Mesa/new');

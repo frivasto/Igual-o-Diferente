@@ -76,8 +76,7 @@ class Mesa extends BaseMesa
                 }
             } else { // Crearme una mesa y buscarme quien sera mi competidor---Crear Mesa para ambos
                 $jugadores = Jugador::getJugadoresDisponibles($id_jugador);  //BUSCAR JUGADORES DISPONIBLES sin incluir ACTUAL                
-                if (!empty($jugadores)) { 
-                    /*
+                if (!empty($jugadores)) {                     
                     // Existe con quien jugar, setearmelo de una
                     $mesa = new Mesa(); //NUEVA MESA
                     $mesa->setJugador1Id($id_jugador); //SET JUG ACTUAL
@@ -95,7 +94,7 @@ class Mesa extends BaseMesa
                     $jug_partner->save();
 
                     //JUGADOR ENCONTRADO
-                    $jugador_pareja_id = $jug_partner->getId();*/
+                    $jugador_pareja_id = $jug_partner->getId();
                 } else { // Se quedo la mesa conmigo y estado incompleto
                     $mesa = new Mesa(); //NUEVA MESA
                     $mesa->setJugador1Id($id_jugador);
