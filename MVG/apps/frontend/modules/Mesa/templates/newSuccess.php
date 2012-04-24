@@ -42,19 +42,19 @@
             function consulta(status_socket){
                 var request;
                 request = createXMLHttpRequest();
-                request.open('GET','<?php echo url_for('Mesa/emparejar'); ?>'+"?estado="+status_socket,true);
+                request.open('GET','<?php echo url_for('Mesa/consultarIdentificacion'); ?>'+"?estado="+status_socket,true);
                 request.onreadystatechange=function(){                      
                     if(request.readyState==4){
                         if(request.status==200){                             
                             respuestajson=manejador(request);  
-                            if(respuestajson!=null){
-                                //enviar al servidor de sockets
-                                sendMensajes(respuestajson);
+                            if(respuestajson!=null){                                
+                                sendMensajes(respuestajson);//enviar al servidor de sockets
                                 var pruebadiv=document.getElementById("prueba");
                                 pruebadiv.innerHTML="RESPUESTA: "+respuestajson;
                                 var myObject = eval('(' + respuestajson + ')');
                                 var keys=Object.keys(myObject.objeto);
                                 mesa_id=keys[0]; //actualizar mesa_id de este usuario para enviarlo
+                                alert("mesaid= "+mesa_id);
                             }
                         }
                     }
@@ -175,13 +175,12 @@
                                 socket.onopen = function(msg){ 
                                     log("Welcome - status "+this.readyState);
                                     var status_socket=this.readyState;
-                                    //consulta(status_socket); //ajax edita el resultado  y lo envía server sockets        
+                                    consulta(status_socket); //Lo envía server sockets        
                                     connected=true;
                                 };                
                                 socket.onmessage = function(msg){             
                                     var myObject = eval('(' + msg.data + ')');
-                                    //Verificar si mensaje es de tipo conexion o mensaje //Dendiendo del tipo de mensaje enviado 
-                                    /*
+                                    //Verificar si mensaje es de tipo conexion o mensaje //Dendiendo del tipo de mensaje enviado                                     
                                     if(myObject.tipo=="conexion"){
                                         //de tipo CONEXION
                                         if(myObject.objeto.confirmacion=="INCOMPLETO"){
@@ -199,7 +198,7 @@
                                         var key=keys[0];
                                         var value=myObject.objeto[key];
                                         logPartner("Received: "+value);
-                                    } */       
+                                    }     
                                 };
                                 socket.onclose   = function(msg){ log("Disconnected - status "+this.readyState); connected=false;};
                             }
@@ -228,7 +227,7 @@
                     //mostrarlo en la cajita de texto Tu
                     log('Sent: -mesa: '+mesa_id+" - "+msg); 
                     //guardarlo en la base de datos llamar al action por ajax
-                    consulta_guardarEtiqueta(msg);      
+                    //consulta_guardarEtiqueta(msg);      
                 } catch(ex){ log(ex); }
             }
             function quit(){

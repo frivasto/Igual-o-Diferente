@@ -25,7 +25,8 @@ class MesaActions extends sfActions {
         $min = 0;
         $esta_completa=false;
         
-        //$jugadorObj=Jugador::getJugadorByUserId($user_actual);
+        $jugadorObj=Jugador::getJugadorByUserId($user_actual);
+        $jugador_actual_id=$jugadorObj->getId();
         //&& $jugadorObj->getEstado()!=1        
         //MIENTRAS NO HAYA PASADO TIEMPO ESPERA Y JUG REAL NO CONSEGUIDO        
         while ($min<=0.35 && $jugador_pareja_id == 0 && !$esta_completa) {
@@ -52,7 +53,7 @@ class MesaActions extends sfActions {
             $mesa->setJugador2Id($jugadorBOT_id); // El q me escogieron: BOT
             $mesa->setEstado(1); //COMPLETA
             $mesa->save();
-            
+            echo "mesa bot jug ".$jugador_pareja_id." de mesa ".$mesa_id; die();
         } else if ($jugador_pareja_id != 0){
             $modoJugada = 'PAREJAS';                        
         }else{
@@ -70,15 +71,53 @@ class MesaActions extends sfActions {
             $mesa->setColeccionId($coleccion_id); //COMPLETA
             $mesa->save();
         }
+        
+        //GENERAR VIDEOS PARA LA PARTIDA DE ESTA MESA
+        /*if(RelacionMesaVideo::getRelacionMesaVideoXId($mesa_id)!=NULL){
+            //YA EXISTE, CONSULTARLO
+        }else{
+            //CREARLO
+            $respuesta_aleatorio=mt_rand(0,1);
+            if($respuesta_aleatorio==1){
+                //SAME
+                //intervalo o video
+                $video1=$video2=
+            }                
+        }*/
             
         //PONER EN SESSION EL MODO DE JUGADA        
         $this->getUser()->setAttribute('modoJugada', $modoJugada);
 
         //PONER EN SESSION LA MESAID       
-        $this->getUser()->setAttribute('mesaid', $mesa_id);        
+        $this->getUser()->setAttribute('mesaid', $mesa_id);   
+        
+        //PONER EN SESSION JUG ACTUAL ID       
+        $this->getUser()->setAttribute('jugadorid', $jugador_actual_id); 
         
         //REDIRECCIONAR A PÁGINA JUEGO
         $this->redirect('Mesa/new');
+    }
+    
+    public function executeConsultarIdentificacion(sfWebRequest $request){
+        $tmp = $request->getParameter('estado');
+        $estado = isset($tmp) ? $tmp : '';
+        $response = array();        
+        $id_mesa=0;
+        $id_jugador=0;
+        if ($estado != '') {
+            if ($estado == 1) { //estado ok de los sockets 1 OPEN  
+                //OBTENER DE SESSION LA MESAID       
+                $id_mesa=$this->getUser()->getAttribute('mesaid','');   
+                //OBTENER DE SESSION JUG ACTUAL ID       
+                $id_jugador=$this->getUser()->getAttribute('jugadorid','');         
+            }
+        }
+        //Devolver JSON con estos datos
+        $response['tipo'] = "identificacion";
+        $response['objeto'] = array();
+        $response['objeto'][$id_mesa] = $id_jugador;
+        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
+        return $this->renderText(json_encode($response));
     }
 
     //Para ambos modos de jugada, obtener video
