@@ -114,15 +114,15 @@ ItemColeccion:
     Timestampable:
   columns:
     id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
-    intervalo1: { type: integer(4) }
-    intervalo2: { type: integer(4) }
+    video1: { type: integer(4) }
+    video2: { type: integer(4) }
     respuesta_real: { type: boolean }
     coleccion_id: { type: integer(4) }
     
   relations:
     Coleccion: { local: coleccion_id, foreign: id, foreignAlias: itemcoleccion }
-    Intervalo: { local: intervalo1, foreign: id, foreignAlias: itemcoleccionint1 }
-    Intervalo: { local: intervalo2, foreign: id, foreignAlias: itemcoleccionint2 }
+    Video: { local: video1, foreign: id, foreignAlias: itemcoleccionint1 }
+    Video: { local: video2, foreign: id, foreignAlias: itemcoleccionint2 }
 
 
 Coleccion:

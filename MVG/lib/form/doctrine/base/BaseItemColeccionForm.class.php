@@ -16,8 +16,8 @@ abstract class BaseItemColeccionForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'             => new sfWidgetFormInputHidden(),
-      'intervalo1'     => new sfWidgetFormInputText(),
-      'intervalo2'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Intervalo'), 'add_empty' => true)),
+      'video1'         => new sfWidgetFormInputText(),
+      'video2'         => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Video'), 'add_empty' => true)),
       'respuesta_real' => new sfWidgetFormInputCheckbox(),
       'coleccion_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Coleccion'), 'add_empty' => true)),
       'created_at'     => new sfWidgetFormDateTime(),
@@ -26,8 +26,8 @@ abstract class BaseItemColeccionForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'             => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'intervalo1'     => new sfValidatorInteger(array('required' => false)),
-      'intervalo2'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Intervalo'), 'required' => false)),
+      'video1'         => new sfValidatorInteger(array('required' => false)),
+      'video2'         => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Video'), 'required' => false)),
       'respuesta_real' => new sfValidatorBoolean(array('required' => false)),
       'coleccion_id'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Coleccion'), 'required' => false)),
       'created_at'     => new sfValidatorDateTime(),

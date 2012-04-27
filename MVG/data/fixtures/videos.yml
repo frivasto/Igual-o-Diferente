@@ -1,272 +1,627 @@
 ## YAML Template.
 Video:
   video1:
-    url: http://www.youtube.com/watch?v=3QMXJg04lsY
+    url: 3QMXJg04lsY
     categoria: Educacion
   video2:
-    url: 	http://www.youtube.com/watch?v=ANglxq0Qr6g
+    url: 	ANglxq0Qr6g
     categoria: Educacion
   video3:
-    url: 	http://www.youtube.com/watch?v=4S7GBaONq1g
+    url: 	4S7GBaONq1g
     categoria: Educacion
   video4:
-    url: http://www.youtube.com/watch?v=7y57BBwhEEM
+    url: 7y57BBwhEEM
     categoria: Educacion
   video5:
-    url: 	http://www.youtube.com/watch?v=dCcCeig3mgE
+    url: 	dCcCeig3mgE
     categoria: Educacion
   video6:
-    url:  http://www.youtube.com/watch?v=v50qXXKV_c4
+    url:  v50qXXKV_c4
     categoria: Educacion
   video7:
-    url: http://www.youtube.com/watch?v=CiWTUVFKWkI
+    url: CiWTUVFKWkI
     categoria: Educacion
   video8:
-    url: 	http://www.youtube.com/watch?v=4dCO9VBlExE
+    url: 	4dCO9VBlExE
     categoria: Educacion
   video9:
-    url: 	http://www.youtube.com/watch?v=9L8Ve7cbT4o
+    url: 	9L8Ve7cbT4o
     categoria: Educacion
   video10:
-    url: http://www.youtube.com/watch?v=lgpy88oxJDs
+    url: lgpy88oxJDs
     categoria: Educacion
   video11:
-    url: 	http://www.youtube.com/watch?v=kfMyfod5eW8
+    url: 	kfMyfod5eW8
     categoria: Educacion
   video12:
-    url: 	http://www.youtube.com/watch?v=0ug96YW3HC0
+    url: 	0ug96YW3HC0
     categoria: Educacion
   video13:
-    url: http://www.youtube.com/watch?v=DTQx3U31tmg
+    url: DTQx3U31tmg
     categoria: Educacion
   video14:
-    url: 	http://www.youtube.com/watch?v=G_9SRysJM2c
+    url: 	G_9SRysJM2c
     categoria: Educacion
   video15:
-    url: 	http://www.youtube.com/watch?v=Ud1WRI5Cy6Y
+    url: 	Ud1WRI5Cy6Y
     categoria: Educacion
   video16:
-    url: http://www.youtube.com/watch?v=VwTfXGLFqOU
+    url: VwTfXGLFqOU
     categoria: Educacion
   video17:
-    url: 	http://www.youtube.com/watch?v=inRW-G8JJ2U
+    url: 	inRW-G8JJ2U
     categoria: Educacion
   video18:
-    url: 	http://www.youtube.com/watch?v=sQEIk0tBpVo
+    url: 	sQEIk0tBpVo
     categoria: Educacion
   video19:
-    url: http://www.youtube.com/watch?v=OAtSI0LkkGM
+    url: OAtSI0LkkGM
     categoria: Educacion
   video20:
-    url: 	http://www.youtube.com/watch?v=mY_3Nub1qhA
+    url: 	mY_3Nub1qhA
     categoria: Educacion
   video21:
-    url: 	http://www.youtube.com/watch?v=_dSl2IQ1c38
+    url: 	_dSl2IQ1c38
     categoria: Educacion
   video22:
-    url: http://www.youtube.com/watch?v=icEhwasTbZA
+    url: icEhwasTbZA
     categoria: Educacion
   video23:
-    url: 	http://www.youtube.com/watch?v=GH92JwDCnTg
+    url: 	GH92JwDCnTg
     categoria: Educacion
   video24:
-    url: 	http://www.youtube.com/watch?v=bBgZ8WCZsBI
+    url: 	bBgZ8WCZsBI
     categoria: Educacion
   video25:
-    url: http://www.youtube.com/watch?v=SXTNPpP3pQc
+    url: SXTNPpP3pQc
     categoria: Educacion
   video26:
-    url: 	http://www.youtube.com/watch?v=XHid-q5hQ68
+    url: 	XHid-q5hQ68
     categoria: Educacion
   video27:
-    url: 	http://www.youtube.com/watch?v=JsQxXrIZpLQ
+    url: 	JsQxXrIZpLQ
     categoria: Educacion
   video28:
-    url: http://www.youtube.com/watch?v=Yhq_NhsuyJM
+    url: Yhq_NhsuyJM
     categoria: Educacion
   video29:
-    url: 	http://www.youtube.com/watch?v=EG0TaOgupaE
+    url: 	EG0TaOgupaE
     categoria: Educacion
   video30:
-    url: 	http://www.youtube.com/watch?v=Kg1wow6pgps
+    url: 	Kg1wow6pgps
     categoria: Educacion
   video31:
-    url: http://www.youtube.com/watch?v=SEBLt6Kd9EY
+    url: SEBLt6Kd9EY
     categoria: Blooper
   video32:
-    url: 	http://www.youtube.com/watch?v=YnhP3kTdLeo
+    url: 	YnhP3kTdLeo
     categoria: Blooper
   video33:
-    url: 	http://www.youtube.com/watch?v=sd0g59X_IRI
+    url: 	sd0g59X_IRI
     categoria: Blooper
   video34:
-    url: http://www.youtube.com/watch?v=ctJJrBw7e-c
+    url: ctJJrBw7e-c
     categoria: Blooper
   video35:
-    url: 	http://www.youtube.com/watch?v=wf_IIbT8HGk
+    url: 	wf_IIbT8HGk
     categoria: Blooper
   video36:
-    url: 	http://www.youtube.com/watch?v=Hb92wQpPG-s
+    url: 	Hb92wQpPG-s
     categoria: Blooper
   video37:
-    url: http://www.youtube.com/watch?v=89kKUeT2sxk
+    url: 89kKUeT2sxk
     categoria: Blooper
   video38:
-    url: 	http://www.youtube.com/watch?v=u23gEi47_j4
+    url: 	u23gEi47_j4
     categoria: Blooper
   video39:
-    url:  http://www.youtube.com/watch?v=i479N2ei8Us
+    url:  i479N2ei8Us
     categoria: Blooper
   video40:
-    url: http://www.youtube.com/watch?v=eTu6Fq8hC0U
+    url: eTu6Fq8hC0U
     categoria: Blooper
   video41:
-    url: 	http://www.youtube.com/watch?v=lyzxrF8x5Ww
+    url: 	lyzxrF8x5Ww
     categoria: Blooper
   video42:
-    url: 	http://www.youtube.com/watch?v=9d_i--693WE
+    url: 	9d_i--693WE
     categoria: Blooper
   video43:
-    url: http://www.youtube.com/watch?v=cTbu4ZnzNko
+    url: cTbu4ZnzNko
     categoria: Blooper
   video44:
-    url: 	http://www.youtube.com/watch?v=81NeQJWGYJY
+    url: 	81NeQJWGYJY
     categoria: Blooper
   video45:
-    url: 	http://www.youtube.com/watch?v=oDdI4jsnvyc
+    url: 	oDdI4jsnvyc
     categoria: Blooper
   video46:
-    url: http://www.youtube.com/watch?v=cXXm696UbKY
+    url: cXXm696UbKY
     categoria: Blooper
   video47:
-    url: 	http://www.youtube.com/watch?v=ZkWkirlQVxg
+    url: 	ZkWkirlQVxg
     categoria: Blooper
   video48:
-    url: 	http://www.youtube.com/watch?v=lL5Y0ng0uRU
+    url: 	lL5Y0ng0uRU
     categoria: Blooper
   video49:
-    url: http://www.youtube.com/watch?v=CjqvLAs9t1Q
+    url: CjqvLAs9t1Q
     categoria: Blooper
   video50:
-    url: 	http://www.youtube.com/watch?v=sIYzVORJFLI
+    url: 	sIYzVORJFLI
     categoria: Blooper
   video51:
-    url: 	http://www.youtube.com/watch?v=kJY5BRCNAs4
+    url: 	kJY5BRCNAs4
     categoria: Blooper
   video52:
-    url: http://www.youtube.com/watch?v=JhUpejnZ-9Q
+    url: JhUpejnZ-9Q
     categoria: Blooper
   video53:
-    url: 	http://www.youtube.com/watch?v=WahvT8hrnsQ
+    url: 	WahvT8hrnsQ
     categoria: Blooper
   video54:
-    url: 	http://www.youtube.com/watch?v=GJ6OG5fZ7M0
+    url: 	GJ6OG5fZ7M0
     categoria: Blooper
   video55:
-    url: http://www.youtube.com/watch?v=Q2xzt5_ITtY
+    url: Q2xzt5_ITtY
     categoria: Blooper
   video56:
-    url: 	http://www.youtube.com/watch?v=7PokysnUOo4
+    url: 	7PokysnUOo4
     categoria: Blooper
   video57:
-    url: 	http://www.youtube.com/watch?v=HsHfV-Ns8Dg
+    url: 	HsHfV-Ns8Dg
     categoria: Blooper
   video58:
-    url: http://www.youtube.com/watch?v=HMPFf66oDFk
+    url: HMPFf66oDFk
     categoria: Blooper
   video59:
-    url: 	http://www.youtube.com/watch?v=g8gPicK5Mug
+    url: 	g8gPicK5Mug
     categoria: Blooper
   video60:
-    url: 	http://www.youtube.com/watch?v=qJzREZXiXIw
+    url: 	qJzREZXiXIw
     categoria: Blooper
   video61:
-    url: http://www.youtube.com/watch?v=wbqFMgdSeGs
+    url: wbqFMgdSeGs
     categoria: Popfail
   video62:
-    url: 	http://www.youtube.com/watch?v=lwnoVnaFwxM
+    url: 	lwnoVnaFwxM
     categoria: Popfail
   video63:
-    url: 	http://www.youtube.com/watch?v=F-sSooqYisM
+    url: 	F-sSooqYisM
     categoria: Popfail
   video64:
-    url: http://www.youtube.com/watch?v=DNJ6a9Lf_K8
+    url: DNJ6a9Lf_K8
     categoria: Popfail
   video65:
-    url: 	http://www.youtube.com/watch?v=T-NviMJMQGQ
+    url: 	T-NviMJMQGQ
     categoria: Popfail
   video66:
-    url: 	http://www.youtube.com/watch?v=g-RMityCgyo
+    url: 	g-RMityCgyo
     categoria: Popfail
   video67:
-    url: http://www.youtube.com/watch?v=E_emNxk1CKQ
+    url: E_emNxk1CKQ
     categoria: Popfail
   video68:
-    url: 	http://www.youtube.com/watch?v=-vgoa0IAOls
+    url: 	-vgoa0IAOls
     categoria: Popfail
   video69:
-    url: 	http://www.youtube.com/watch?v=wpqzukQJ1bU
+    url: 	wpqzukQJ1bU
     categoria: Popfail
   video70:
-    url: http://www.youtube.com/watch?v=20lgHlQcLs0
+    url: 20lgHlQcLs0
     categoria: Popfail
   video71:
-    url: 	http://www.youtube.com/watch?v=QBt9E3dZlNw
+    url: 	QBt9E3dZlNw
     categoria: Popfail
   video72:
-    url: 	http://www.youtube.com/watch?v=y4xLM9wIM8A
+    url: 	y4xLM9wIM8A
     categoria: Popfail
   video73:
-    url: http://www.youtube.com/watch?v=Q31YDyxbS5k
+    url: Q31YDyxbS5k
     categoria: Popfail
   video74:
-    url: 	http://www.youtube.com/watch?v=Ct-FfReSonw
+    url: 	Ct-FfReSonw
     categoria: Popfail
   video75:
-    url: 	http://www.youtube.com/watch?v=5HyMJpG4hvg
+    url: 	5HyMJpG4hvg
     categoria: Popfail
   video76:
-    url: http://www.youtube.com/watch?v=QT-rQZ6LmKE
+    url: QT-rQZ6LmKE
     categoria: Popfail
   video77:
-    url: 	http://www.youtube.com/watch?v=jOkH55V6HvY
+    url: 	jOkH55V6HvY
     categoria: Popfail
   video78:
-    url: 	http://www.youtube.com/watch?v=Tby-LnyiZUE
+    url: 	Tby-LnyiZUE
     categoria: Popfail
   video79:
-    url: http://www.youtube.com/watch?v=3QMXJg04lsY
+    url: 3QMXJg04lsY
     categoria: Popfail
   video80:
-    url: 	http://www.youtube.com/watch?v=kfVsfOSbJY0
+    url: 	kfVsfOSbJY0
     categoria: Popfail
   video81:
-    url: 	http://www.youtube.com/watch?v=cSfgUQKbl0w
+    url: 	cSfgUQKbl0w
     categoria: Popfail
   video82:
-    url: http://www.youtube.com/watch?v=thhOrlhst0E
+    url: thhOrlhst0E
     categoria: Popfail
   video83:
-    url: 	http://www.youtube.com/watch?v=8-QToIzw7Fk
+    url: 	8-QToIzw7Fk
     categoria: Popfail
   video84:
-    url: 	http://www.youtube.com/watch?v=0AbQpzn6t4c
+    url: 	0AbQpzn6t4c
     categoria: Popfail
   video85:
-    url: http://www.youtube.com/watch?v=OtZyj_UHAcw
+    url: OtZyj_UHAcw
     categoria: Popfail
   video86:
-    url: 	http://www.youtube.com/watch?v=9Sw7z2PWZqU
+    url: 	9Sw7z2PWZqU
     categoria: Popfail
   video87:
-    url: 	http://www.youtube.com/watch?v=8_lTdVNMbIM
+    url: 	8_lTdVNMbIM
     categoria: Popfail
   video88:
-    url: http://www.youtube.com/watch?v=OlR_CQ3NPvI
+    url: OlR_CQ3NPvI
     categoria: Popfail
   video89:
-    url: 	http://www.youtube.com/watch?v=SSA3ydf06yg
+    url: 	SSA3ydf06yg
     categoria: Popfail
   video90:
-    url: 	http://www.youtube.com/watch?v=or2GH3CHXqY
+    url: 	or2GH3CHXqY
     categoria: Popfail
+
+Coleccion:
+  coleccion1:
+    id: 1
+  coleccion2:
+    id: 2
+  coleccion3:
+    id: 3
+  coleccion4:
+    id: 4
+  coleccion5:
+    id: 5  
+  coleccion6:
+    id: 6
+  coleccion7:
+    id: 7
+  coleccion8:
+    id: 8
+  coleccion9:
+    id: 9
+  coleccion10:
+    id: 10
+  coleccion11:
+    id: 11
+  coleccion12:
+    id: 12
+  coleccion13:
+    id: 13  
+    
+ItemColeccion:
+  itemcoleccion1:    
+    video1: 1
+    video2: 1
+    respuesta_real: 1
+    coleccion_id: 1
+  itemcoleccion2:    
+    video1: 2
+    video2: 31
+    respuesta_real: 0
+    coleccion_id: 1
+  itemcoleccion3:    
+    video1: 3
+    video2: 61
+    respuesta_real: 0
+    coleccion_id: 1
+  itemcoleccion4:    
+    video1: 62
+    video2: 32
+    respuesta_real: 0
+    coleccion_id: 1
+  itemcoleccion5:    
+    video1: 63
+    video2: 63
+    respuesta_real: 1
+    coleccion_id: 1
+  itemcoleccion6:    
+    video1: 4
+    video2: 4
+    respuesta_real: 1
+    coleccion_id: 2
+  itemcoleccion7:    
+    video1: 5
+    video2: 33
+    respuesta_real: 0
+    coleccion_id: 2
+  itemcoleccion8:    
+    video1: 6
+    video2: 64
+    respuesta_real: 0
+    coleccion_id: 2
+  itemcoleccion9:    
+    video1: 65
+    video2: 65
+    respuesta_real: 1
+    coleccion_id: 2
+  itemcoleccion10:    
+    video1: 66
+    video2: 34
+    respuesta_real: 0
+    coleccion_id: 2
+  itemcoleccion11:    
+    video1: 7
+    video2: 35
+    respuesta_real: 0
+    coleccion_id: 3
+  itemcoleccion12:    
+    video1: 8
+    video2: 8
+    respuesta_real: 1
+    coleccion_id: 3
+  itemcoleccion13:    
+    video1: 67
+    video2: 36
+    respuesta_real: 0
+    coleccion_id: 3
+  itemcoleccion14:    
+    video1: 68
+    video2: 68
+    respuesta_real: 1
+    coleccion_id: 3
+  itemcoleccion15:    
+    video1: 37
+    video2: 9
+    respuesta_real: 0
+    coleccion_id: 3
+  itemcoleccion16:    
+    video1: 10
+    video2: 10
+    respuesta_real: 1
+    coleccion_id: 4
+  itemcoleccion17:    
+    video1: 69
+    video2: 69
+    respuesta_real: 1
+    coleccion_id: 4
+  itemcoleccion18:    
+    video1: 11
+    video2: 38
+    respuesta_real: 0
+    coleccion_id: 4
+  itemcoleccion19:    
+    video1: 70
+    video2: 39
+    respuesta_real: 0
+    coleccion_id: 4
+  itemcoleccion20:    
+    video1: 40
+    video2: 40
+    respuesta_real: 1
+    coleccion_id: 4
+  itemcoleccion21:    
+    video1: 41
+    video2: 41
+    respuesta_real: 1
+    coleccion_id: 5
+  itemcoleccion22:    
+    video1: 12
+    video2: 71
+    respuesta_real: 0
+    coleccion_id: 5
+  itemcoleccion23:    
+    video1: 72
+    video2: 13
+    respuesta_real: 0
+    coleccion_id: 5
+  itemcoleccion24:    
+    video1: 42
+    video2: 72
+    respuesta_real: 0
+    coleccion_id: 5
+  itemcoleccion25:    
+    video1: 73
+    video2: 43
+    respuesta_real: 0
+    coleccion_id: 5 
+  itemcoleccion26:    
+    video1: 14
+    video2: 44
+    respuesta_real: 0
+    coleccion_id: 6
+  itemcoleccion27:    
+    video1: 15
+    video2: 15
+    respuesta_real: 1
+    coleccion_id: 6
+  itemcoleccion28:    
+    video1: 45
+    video2: 45
+    respuesta_real: 1
+    coleccion_id: 6
+  itemcoleccion29:    
+    video1: 74
+    video2: 74
+    respuesta_real: 1
+    coleccion_id: 6
+  itemcoleccion30:    
+    video1: 75
+    video2: 46
+    respuesta_real: 0
+    coleccion_id: 6
+  itemcoleccion31:    
+    video1: 16
+    video2: 47
+    respuesta_real: 0
+    coleccion_id: 7
+  itemcoleccion32:    
+    video1: 76
+    video2: 76
+    respuesta_real: 1
+    coleccion_id: 7
+  itemcoleccion33:    
+    video1: 48
+    video2: 48
+    respuesta_real: 1
+    coleccion_id: 7
+  itemcoleccion34:    
+    video1: 49
+    video2: 77
+    respuesta_real: 0
+    coleccion_id: 7
+  itemcoleccion35:    
+    video1: 17
+    video2: 17
+    respuesta_real: 1
+    coleccion_id: 7 
+  itemcoleccion36:    
+    video1: 50
+    video2: 50
+    respuesta_real: 1
+    coleccion_id: 8
+  itemcoleccion37:    
+    video1: 78
+    video2: 18
+    respuesta_real: 0
+    coleccion_id: 8
+  itemcoleccion38:    
+    video1: 79
+    video2: 79
+    respuesta_real: 1
+    coleccion_id: 8
+  itemcoleccion39:    
+    video1: 51
+    video2: 19
+    respuesta_real: 0
+    coleccion_id: 8
+  itemcoleccion40:    
+    video1: 20
+    video2: 20
+    respuesta_real: 1
+    coleccion_id: 8 
+  itemcoleccion41:    
+    video1: 52
+    video2: 80
+    respuesta_real: 0
+    coleccion_id: 9
+  itemcoleccion42:    
+    video1: 53
+    video2: 52
+    respuesta_real: 0
+    coleccion_id: 9
+  itemcoleccion43:    
+    video1: 81
+    video2: 81
+    respuesta_real: 1
+    coleccion_id: 9
+  itemcoleccion44:    
+    video1: 54
+    video2: 54
+    respuesta_real: 1
+    coleccion_id: 9
+  itemcoleccion45:    
+    video1: 21
+    video2: 82
+    respuesta_real: 0
+    coleccion_id: 9  
+  itemcoleccion46:    
+    video1: 83
+    video2: 55
+    respuesta_real: 0
+    coleccion_id: 10
+  itemcoleccion47:    
+    video1: 56
+    video2: 56
+    respuesta_real: 1
+    coleccion_id: 10
+  itemcoleccion48:    
+    video1: 84
+    video2: 84
+    respuesta_real: 1
+    coleccion_id: 10
+  itemcoleccion49:    
+    video1: 22
+    video2: 22
+    respuesta_real: 1
+    coleccion_id: 10
+  itemcoleccion50:    
+    video1: 23
+    video2: 23
+    respuesta_real: 1
+    coleccion_id: 10
+  itemcoleccion51:    
+    video1: 24
+    video2: 24
+    respuesta_real: 1
+    coleccion_id: 11 
+  itemcoleccion52:    
+    video1: 25
+    video2: 57
+    respuesta_real: 0
+    coleccion_id: 11 
+  itemcoleccion53:    
+    video1: 86
+    video2: 58
+    respuesta_real: 0
+    coleccion_id: 11   
+  itemcoleccion54:    
+    video1: 59
+    video2: 59
+    respuesta_real: 1
+    coleccion_id: 11   
+  itemcoleccion55:    
+    video1: 26
+    video2: 26
+    respuesta_real: 1
+    coleccion_id: 11 
+  itemcoleccion56:    
+    video1: 27
+    video2: 87
+    respuesta_real: 0
+    coleccion_id: 12 
+  itemcoleccion57:    
+    video1: 88
+    video2: 88
+    respuesta_real: 1
+    coleccion_id: 12 
+  itemcoleccion58:    
+    video1: 28
+    video2: 60
+    respuesta_real: 0
+    coleccion_id: 12   
+  itemcoleccion59:    
+    video1: 29
+    video2: 89
+    respuesta_real: 0
+    coleccion_id: 12   
+  itemcoleccion60:    
+    video1: 30
+    video2: 30
+    respuesta_real: 1
+    coleccion_id: 12 
+  itemcoleccion61:    
+    video1: 89
+    video2: 90
+    respuesta_real: 0
+    coleccion_id: 13 
+  itemcoleccion62:    
+    video1: 90
+    video2: 30
+    respuesta_real: 0
+    coleccion_id: 13 
+  itemcoleccion63:    
+    video1: 60
+    video2: 60
+    respuesta_real: 1
+    coleccion_id: 13   
+  itemcoleccion64:    
+    video1: 59
+    video2: 30
+    respuesta_real: 0
+    coleccion_id: 13   
+  itemcoleccion65:    
+    video1: 85
+    video2: 25
+    respuesta_real: 0
+    coleccion_id: 13  

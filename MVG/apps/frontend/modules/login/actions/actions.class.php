@@ -36,7 +36,8 @@ class loginActions extends sfActions
             $this->getUser()->setAttribute('mesaid','0');
             $this->redirect('Mesa/index');
          } catch (FacebookApiException $e) {
-            error_log($e);
+            error_log($e);         
+            $this->logMessage('help me!'.$e, 'info');
             $user = null;
           }
         }

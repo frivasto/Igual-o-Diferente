@@ -12,5 +12,12 @@
  */
 class ItemColeccion extends BaseItemColeccion
 {
-
+     
+     public static function getItemsColeccion($coleccion_id){         
+        $items_coleccion=Doctrine_Core::getTable('ItemColeccion')
+                            ->createQuery('item')
+                            ->where('item.coleccion_id=?',$coleccion_id)                            
+                            ->fetchArray();
+        return $items_coleccion;                 
+     }
 }

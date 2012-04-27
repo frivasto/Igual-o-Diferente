@@ -22,4 +22,11 @@ class RelacionMesaVideo extends BaseRelacionMesaVideo
                     ->fetchOne();
         return $relacion_mesa_vid;        
     }
+    public static function getRelacionMesaVideoXId($id_mesa){
+        $relacion_mesa_vid=Doctrine_Core::getTable('RelacionMesaVideo')
+                    ->createQuery('r')                                      
+                    ->where('r.mesa_id = ?',$id_mesa)                   
+                    ->fetchOne();
+        return $relacion_mesa_vid;        
+    }
 }

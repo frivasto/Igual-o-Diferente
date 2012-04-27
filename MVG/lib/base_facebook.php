@@ -1069,7 +1069,7 @@ abstract class BaseFacebook
       error_log($msg);
     }
     // uncomment this if you want to see the errors on the page
-    // print 'error_log: '.$msg."\n";
+    print 'error_log: '.$msg."\n";
     // @codeCoverageIgnoreEnd
   }
 
