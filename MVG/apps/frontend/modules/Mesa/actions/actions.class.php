@@ -52,14 +52,10 @@ class MesaActions extends sfActions {
             $modoJugada = 'PAREJAS';
         }
         //PONER EN SESSION EL MODO DE JUGADA
-        $modoJuego = $this->getUser()->getAttribute('modoJugada', "");
-        $modoJuego = $modoJugada;
-        $this->getUser()->setAttribute('modoJugada', $modoJuego);
+        $this->getUser()->setAttribute('modoJugada', $modoJugada);
 
         //PONER EN SESSION LA MESAID
-        $mesaid_session = $this->getUser()->getAttribute('mesaid', "");
-        $mesaid_session = $mesa_id;
-        $this->getUser()->setAttribute('mesaid', $mesaid_session);
+        $this->getUser()->setAttribute('mesaid', $mesa_id);
 
         echo 'Page generated in ' . $total_time . ' seconds.';
         $this->redirect('Mesa/new');
