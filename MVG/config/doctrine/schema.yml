@@ -7,7 +7,6 @@ Jugador:
     user_id:   { type: string(255), notnull: true, unique: true }
     nombre:   { type: string(255), notnull: false }
     #DISPONIBLE 0 JUGADOR
-    estado:   { type: integer(1), default:0 }     
     eliminado: { type: boolean, default: 0 }
  
 Video:
@@ -30,7 +29,6 @@ Intervalo:
     video_id:   { type: integer(4) }
     inicio: { type: time }
     fin: { type: time }
-    total_tags: { type: integer(4) }
     eliminado: { type: boolean, default: 0 }
   relations:
     Video: { local: video_id, foreign: id, foreignAlias: IntervaloVideo }
@@ -53,13 +51,13 @@ Mesa:
     token:   { type: string(255), notnull: true, unique: false }
     jugador1_id:   { type: integer(4) }
     jugador2_id:   { type: integer(4) }
-    tiempo: { type: time }
+    tiempo_emparejar: { type:  integer(4) }
     coleccion_id: { type: integer(4) }
     estado:   { type: integer(1) } 
     eliminado: { type: boolean, default: 0 }
   relations:
-    Jugador: { local: jugador1_id, foreign: id, foreignAlias: JugadorMesa1 }
-    Jugador: { local: jugador2_id, foreign: id, foreignAlias: JugadorMesa2 }
+    Jugador1: { local: jugador1_id, foreign: id, foreignAlias: JugadorMesa1 }
+    Jugador2: { local: jugador2_id, foreign: id, foreignAlias: JugadorMesa2 }
 
 
 

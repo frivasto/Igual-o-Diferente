@@ -16,20 +16,23 @@ class MesaActions extends sfActions {
     }
 
     //Observacion ESTADO: MESA 0:Incompleta 1:Completa JUGADOR 0:Disponible 1:No disponible Ocupado RESPUESTAREAL EN RELACIONMESAVIDEO 1:Same 0:Different    
-    public function executeEmparejar(sfWebRequest $request) {                
+    public function executeEmparejar(sfWebRequest $request) {
+
+        
         $jugador_pareja_id = 0;
         $modoJugada = '';
         $user_actual = $this->getUser()->getAttribute('userid');  //sacar de session el user_id único de facebook
         $mesa_id=0;       
-        $date1 = time();
+      //  $date1 = time();
         $min = 0;
+        $date1 = 0;
+        $date2 = 0;
         $esta_completa=false;
+        $mesa_tmp=0;
         
-        $jugadorObj=Jugador::getJugadorByUserId($user_actual);
-        $jugador_actual_id=$jugadorObj->getId();
         //&& $jugadorObj->getEstado()!=1        
         //MIENTRAS NO HAYA PASADO TIEMPO ESPERA Y JUG REAL NO CONSEGUIDO        
-        while ($min<=0.35 && $jugador_pareja_id == 0 && !$esta_completa) {
+        while ($min<=10 && $jugador_pareja_id == 0 && !$esta_completa) {
             //OBTENER PAREJA REAL
             $mesa_y_jug=Mesa::obtenerParejaJuego($user_actual,$mesa_id);
             $jugador_pareja_id=$mesa_y_jug[0];
@@ -37,10 +40,16 @@ class MesaActions extends sfActions {
             $mesa_tmp=Mesa::getMesaxId($mesa_id);
             if($mesa_tmp->getEstado()==1)
                 $esta_completa=true;
-            $date2 = time();
-            $min = ($date2 - $date1) / 60;           
+            $date1 = $mesa_tmp->getTiempoEmparejar();
+            $date2= time();
+            //$min = round(abs(strtotime($date2) - strtotime($date1)) / 60,2);
+            $min = ($date2 - $date1);
         }       
-        //NUNCA CONSIGUIÓ JUG REAL        
+        //NUNCA CONSIGUIÓ JUG REAL
+
+        $jugadorObj=Jugador::getJugadorByUserId($user_actual);
+        $jugador_actual_id=$jugadorObj->getId();
+        
         if ($jugador_pareja_id == 0) {
             $modoJugada = 'BOT';
             //DEVOLVER EL JUG BOT
@@ -53,7 +62,8 @@ class MesaActions extends sfActions {
             $mesa->setJugador2Id($jugadorBOT_id); // El q me escogieron: BOT
             $mesa->setEstado(1); //COMPLETA
             $mesa->save();
-            echo "mesa bot jug ".$jugador_pareja_id." de mesa ".$mesa_id; die();
+            //echo "mesa bot jug ".$jugador_pareja_id." de mesa ".$mesa_id. " min:".$min ."_jugador:". $user_actual. "_estado_mesa:".$mesa_tmp->getEstado() ."clases: ".get_class($min).get_class($date1).get_class($date2); die();
+            echo "mesa bot jug ".$jugador_pareja_id." de mesa ".$mesa_id. " min:".$min ."_jugador:". $user_actual. "_estado_mesa:".$mesa_tmp->getEstado() ."clases: ".$date1; die();
         } else if ($jugador_pareja_id != 0){
             $modoJugada = 'PAREJAS';                        
         }else{
@@ -61,16 +71,16 @@ class MesaActions extends sfActions {
         }
                 
         //PONER EN SESSION LA COLECCION DE VIDEOS PARA TODO EL JUEGO
-        $mesa = Mesa::getMesaxId($mesa_id);
-        $coleccion_id=$mesa->getColeccionId(); //COMPLETA
-        if($coleccion_id==NULL){            
-            $coleccion_id=Coleccion::obtenerColeccionAleatoria();
-            $item_colecciones_array= ItemColeccion::getItemsColeccion($coleccion_id);
-            $this->getUser()->setAttribute('colecciones_item', $item_colecciones_array);
-            //setear esta coleccion generada en la mesa                        
-            $mesa->setColeccionId($coleccion_id); //COMPLETA
-            $mesa->save();
-        }
+//        $mesa = Mesa::getMesaxId($mesa_id);
+//        $coleccion_id=$mesa->getColeccionId(); //COMPLETA
+//        if($coleccion_id==NULL){
+//            $coleccion_id=Coleccion::obtenerColeccionAleatoria();
+//            $item_colecciones_array= ItemColeccion::getItemsColeccion($coleccion_id);
+//            $this->getUser()->setAttribute('colecciones_item', $item_colecciones_array);
+//            //setear esta coleccion generada en la mesa
+//            $mesa->setColeccionId($coleccion_id); //COMPLETA
+//            $mesa->save();
+//        }
         
         //GENERAR VIDEOS PARA LA PARTIDA DE ESTA MESA
         /*if(RelacionMesaVideo::getRelacionMesaVideoXId($mesa_id)!=NULL){

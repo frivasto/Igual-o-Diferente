@@ -11,7 +11,6 @@
  * @property string $nombre
  * @property integer $estado
  * @property boolean $eliminado
- * @property Doctrine_Collection $JugadorMesa2
  * @property Doctrine_Collection $JugadorMesaVideo
  * 
  * @method integer             getId()               Returns the current record's "id" value
@@ -20,7 +19,6 @@
  * @method string              getNombre()           Returns the current record's "nombre" value
  * @method integer             getEstado()           Returns the current record's "estado" value
  * @method boolean             getEliminado()        Returns the current record's "eliminado" value
- * @method Doctrine_Collection getJugadorMesa2()     Returns the current record's "JugadorMesa2" collection
  * @method Doctrine_Collection getJugadorMesaVideo() Returns the current record's "JugadorMesaVideo" collection
  * @method Jugador             setId()               Sets the current record's "id" value
  * @method Jugador             setToken()            Sets the current record's "token" value
@@ -28,7 +26,6 @@
  * @method Jugador             setNombre()           Sets the current record's "nombre" value
  * @method Jugador             setEstado()           Sets the current record's "estado" value
  * @method Jugador             setEliminado()        Sets the current record's "eliminado" value
- * @method Jugador             setJugadorMesa2()     Sets the current record's "JugadorMesa2" collection
  * @method Jugador             setJugadorMesaVideo() Sets the current record's "JugadorMesaVideo" collection
  * 
  * @package    MusicVideoGame
@@ -79,10 +76,6 @@ abstract class BaseJugador extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Mesa as JugadorMesa2', array(
-             'local' => 'id',
-             'foreign' => 'jugador2_id'));
-
         $this->hasMany('RelacionMesaVideo as JugadorMesaVideo', array(
              'local' => 'id',
              'foreign' => 'jugador_id'));

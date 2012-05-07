@@ -9,33 +9,30 @@
  * @property string $token
  * @property integer $jugador1_id
  * @property integer $jugador2_id
- * @property time $tiempo
+ * @property integer $tiempo_emparejar
  * @property integer $coleccion_id
  * @property integer $estado
  * @property boolean $eliminado
- * @property Jugador $Jugador
  * @property Doctrine_Collection $MesaMesaVideo
  * 
- * @method integer             getId()            Returns the current record's "id" value
- * @method string              getToken()         Returns the current record's "token" value
- * @method integer             getJugador1Id()    Returns the current record's "jugador1_id" value
- * @method integer             getJugador2Id()    Returns the current record's "jugador2_id" value
- * @method time                getTiempo()        Returns the current record's "tiempo" value
- * @method integer             getColeccionId()   Returns the current record's "coleccion_id" value
- * @method integer             getEstado()        Returns the current record's "estado" value
- * @method boolean             getEliminado()     Returns the current record's "eliminado" value
- * @method Jugador             getJugador()       Returns the current record's "Jugador" value
- * @method Doctrine_Collection getMesaMesaVideo() Returns the current record's "MesaMesaVideo" collection
- * @method Mesa                setId()            Sets the current record's "id" value
- * @method Mesa                setToken()         Sets the current record's "token" value
- * @method Mesa                setJugador1Id()    Sets the current record's "jugador1_id" value
- * @method Mesa                setJugador2Id()    Sets the current record's "jugador2_id" value
- * @method Mesa                setTiempo()        Sets the current record's "tiempo" value
- * @method Mesa                setColeccionId()   Sets the current record's "coleccion_id" value
- * @method Mesa                setEstado()        Sets the current record's "estado" value
- * @method Mesa                setEliminado()     Sets the current record's "eliminado" value
- * @method Mesa                setJugador()       Sets the current record's "Jugador" value
- * @method Mesa                setMesaMesaVideo() Sets the current record's "MesaMesaVideo" collection
+ * @method integer             getId()               Returns the current record's "id" value
+ * @method string              getToken()            Returns the current record's "token" value
+ * @method integer             getJugador1Id()       Returns the current record's "jugador1_id" value
+ * @method integer             getJugador2Id()       Returns the current record's "jugador2_id" value
+ * @method integer             getTiempoEmparejar()  Returns the current record's "tiempo_emparejar" value
+ * @method integer             getColeccionId()      Returns the current record's "coleccion_id" value
+ * @method integer             getEstado()           Returns the current record's "estado" value
+ * @method boolean             getEliminado()        Returns the current record's "eliminado" value
+ * @method Doctrine_Collection getMesaMesaVideo()    Returns the current record's "MesaMesaVideo" collection
+ * @method Mesa                setId()               Sets the current record's "id" value
+ * @method Mesa                setToken()            Sets the current record's "token" value
+ * @method Mesa                setJugador1Id()       Sets the current record's "jugador1_id" value
+ * @method Mesa                setJugador2Id()       Sets the current record's "jugador2_id" value
+ * @method Mesa                setTiempoEmparejar()  Sets the current record's "tiempo_emparejar" value
+ * @method Mesa                setColeccionId()      Sets the current record's "coleccion_id" value
+ * @method Mesa                setEstado()           Sets the current record's "estado" value
+ * @method Mesa                setEliminado()        Sets the current record's "eliminado" value
+ * @method Mesa                setMesaMesaVideo()    Sets the current record's "MesaMesaVideo" collection
  * 
  * @package    MusicVideoGame
  * @subpackage model
@@ -68,8 +65,9 @@ abstract class BaseMesa extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('tiempo', 'time', null, array(
-             'type' => 'time',
+        $this->hasColumn('tiempo_emparejar', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => 4,
              ));
         $this->hasColumn('coleccion_id', 'integer', 4, array(
              'type' => 'integer',
@@ -88,10 +86,6 @@ abstract class BaseMesa extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('Jugador', array(
-             'local' => 'jugador2_id',
-             'foreign' => 'id'));
-
         $this->hasMany('RelacionMesaVideo as MesaMesaVideo', array(
              'local' => 'id',
              'foreign' => 'mesa_id'));
