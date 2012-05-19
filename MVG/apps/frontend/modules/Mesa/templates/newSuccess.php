@@ -1,4 +1,6 @@
 <script type="text/javascript">
+//jQuery.noConflict();
+( function($) {
 $(document).ready(function() {
     alert('doing');
     var a1=document.getElementById("cmd_enviar");
@@ -29,7 +31,7 @@ $(document).ready(function() {
     $('.alert').css('background','transparent');
     alert('doing2');
 });
-
+} ) ( jQuery );
 function getHoraMinSec(){
     var hora=$("#time #hour:first").text();
     var minuto=$("#time #minute:first").text();

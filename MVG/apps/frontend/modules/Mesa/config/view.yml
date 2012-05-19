@@ -1,4 +1,4 @@
 ## YAML Template.
 newSuccess:
-  javascripts: [jquery.chrony.min.js]
-  stylesheets: [jquery-ui-1.8.18.custom.css,newmesa.css]
+  #javascripts: []
+  stylesheets: [newmesa.css]
