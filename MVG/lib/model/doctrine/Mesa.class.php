@@ -115,56 +115,133 @@ class Mesa extends BaseMesa
             return $mesa_jugador;
      }
      public static function Emparejar($user_actual){
-
-        $jugador_pareja_id = 0;
+         
+         
+         $jugador_pareja_id = 0;
         $modoJugada = '';
-         $mesa_id=0;
+        
+        $mesa_id=0;       
       //  $date1 = time();
         $min = 0;
         $date1 = 0;
         $date2 = 0;
         $esta_completa=false;
-        $mesa_tmp=0;
-
-            //MIENTRAS NO HAYA PASADO TIEMPO ESPERA Y JUG REAL NO CONSEGUIDO
-            while ($min<=10 && $jugador_pareja_id == 0 && !$esta_completa) {
-                //OBTENER PAREJA REAL
-                $mesa_y_jug=Mesa::obtenerParejaJuego($user_actual,$mesa_id);
-                $jugador_pareja_id=$mesa_y_jug[0];
-                $mesa_id=$mesa_y_jug[1];
-                $mesa_tmp=Mesa::getMesaxId($mesa_id);
-                if($mesa_tmp->getEstado()==1)
-                    $esta_completa=true;
-                $date1 = $mesa_tmp->getTiempoEmparejar();
-                $date2= time();
-                //$min = round(abs(strtotime($date2) - strtotime($date1)) / 60,2);
-                $min = ($date2 - $date1);
-            }
-            //NUNCA CONSIGUIÓ JUG REAL
-
-            $jugadorObj=Jugador::getJugadorByUserId($user_actual);
-            $jugador_actual_id=$jugadorObj->getId();
-
-            if ($jugador_pareja_id == 0) {
-                $modoJugada = 'BOT';
-                //DEVOLVER EL JUG BOT
-                $jugadorBOT = Jugador::getJugador('BOT-001', 'BOT');
-                if (!empty($jugadorBOT)) {
-                    $jugadorBOT_id = $jugadorBOT->getId();
-                }
-                //ponerlo en la mesa de jugador actual
-                $mesa = Mesa::getMesaxId($mesa_id);
-                $mesa->setJugador2Id($jugadorBOT_id); // El q me escogieron: BOT
-                $mesa->setEstado(1); //COMPLETA
-                $mesa->save();
-                //echo "mesa bot jug ".$jugador_pareja_id." de mesa ".$mesa_id. " min:".$min ."_jugador:". $user_actual. "_estado_mesa:".$mesa_tmp->getEstado() ."clases: ".get_class($min).get_class($date1).get_class($date2); die();
-                echo "mesa bot jug ".$jugador_pareja_id." de mesa ".$mesa_id. " min:".$min ."_jugador:". $user_actual. "_estado_mesa:".$mesa_tmp->getEstado() ."clases: ".$date1; die();
-            } else if ($jugador_pareja_id != 0){
-                $modoJugada = 'PAREJAS';
+        $mesa_tmp=NULL;
+        
+        //&& $jugadorObj->getEstado()!=1        
+        //MIENTRAS NO HAYA PASADO TIEMPO ESPERA Y JUG REAL NO CONSEGUIDO        
+        while ($min<=10 && $jugador_pareja_id == 0 && !$esta_completa) {
+            //OBTENER PAREJA REAL
+            $mesa_y_jug=Mesa::obtenerParejaJuego($user_actual,$mesa_id);
+            $jugador_pareja_id=$mesa_y_jug[0];
+            $mesa_id=$mesa_y_jug[1];
+            $mesa_tmp=Mesa::getMesaxId($mesa_id);
+            if($mesa_tmp->getEstado()==1)
+                $esta_completa=true;
+            $date1 = $mesa_tmp->getTiempoEmparejar();
+            $date2= time();
+            //$min = round(abs(strtotime($date2) - strtotime($date1)) / 60,2);
+            $min = ($date2 - $date1);
+        }       
+        
+        //NUNCA CONSIGUIÓ JUG REAL
+        $jugadorObj=Jugador::getJugadorByUserId($user_actual);
+        $jugador_actual_id=$jugadorObj->getId();
+        
+        //OBTENER JUGADOR COMPANIERO DE MESA ID (x condicion no devuielve el correcto)
+        //************ SELECT `jugador1_id` FROM `mesa` WHERE `jugador2_id`=2 UNION SELECT `jugador2_id` FROM `mesa` WHERE `jugador1_id`=2
+        $jugador1=$mesa_tmp->getJugador1Id();
+        $jugador2=$mesa_tmp->getJugador2Id();
+        if($jugador1!=NULL && $jugador2!=NULL){
+            if($jugador1==$jugador_actual_id){
+                //REENPLAZAR JUG_PAREJA_ID
+                $jugador_pareja_id=$jugador2;
             }else{
-                $modoJugada = 'ERROR';
+                $jugador_pareja_id=$jugador1;
             }
-
+        }else{
+            //PARA QUE LE ASIGNEN BOT
+            $jugador_pareja_id=0; 
+        }
+        //**************************************
+                
+        if ($jugador_pareja_id == 0) {
+            $modoJugada = 'BOT';
+            //DEVOLVER EL JUG BOT
+            $jugadorBOT = Jugador::getJugador('BOT-001', 'BOT');           
+            if (!empty($jugadorBOT)) {
+                $jugadorBOT_id = $jugadorBOT->getId();
+            }
+            //ponerlo en la mesa de jugador actual            
+            $mesa = Mesa::getMesaxId($mesa_id);
+            $mesa->setJugador2Id($jugadorBOT_id); // El q me escogieron: BOT
+            $mesa->setEstado(1); //COMPLETA
+            $mesa->save();
+            
+            //echo "mesa bot jug ".$jugador_pareja_id." de mesa ".$mesa_id. " min:".$min ."_jugador:". $user_actual. "_estado_mesa:".$mesa_tmp->getEstado() ."clases: ".get_class($min).get_class($date1).get_class($date2); die();
+            echo "mesa bot jug ".$jugador_pareja_id." de mesa ".$mesa_id. " min:".$min ."_jugador:". $user_actual. "_estado_mesa:".$mesa_tmp->getEstado() ."clases: ".$date1; die();
+            $jugador_pareja_id=$jugadorBOT_id; //PAREJA ES EL 
+            
+            //GENERAR SET DE VIDEOS DE ESTA MESA COMPLETANDO PARA ESTE JUGADOR PAREJA O JUGADOR BOT
+            RelacionMesaVideo::generarSetVideos($mesa_id,$jugador_pareja_id);
+            
+        } else if ($jugador_pareja_id != 0){
+            $modoJugada = 'PAREJAS';               
+        }else{
+            $modoJugada = 'ERROR';
+        }
+//         
+//         
+//
+//        $jugador_pareja_id = 0;
+//        $modoJugada = '';
+//         $mesa_id=0;
+//      //  $date1 = time();
+//        $min = 0;
+//        $date1 = 0;
+//        $date2 = 0;
+//        $esta_completa=false;
+//        $mesa_tmp=0;
+//
+//            //MIENTRAS NO HAYA PASADO TIEMPO ESPERA Y JUG REAL NO CONSEGUIDO
+//            while ($min<=10 && $jugador_pareja_id == 0 && !$esta_completa) {
+//                //OBTENER PAREJA REAL
+//                $mesa_y_jug=Mesa::obtenerParejaJuego($user_actual,$mesa_id);
+//                $jugador_pareja_id=$mesa_y_jug[0];
+//                $mesa_id=$mesa_y_jug[1];
+//                $mesa_tmp=Mesa::getMesaxId($mesa_id);
+//                if($mesa_tmp->getEstado()==1)
+//                    $esta_completa=true;
+//                $date1 = $mesa_tmp->getTiempoEmparejar();
+//                $date2= time();
+//                //$min = round(abs(strtotime($date2) - strtotime($date1)) / 60,2);
+//                $min = ($date2 - $date1);
+//            }
+//            //NUNCA CONSIGUIÓ JUG REAL
+//
+//            $jugadorObj=Jugador::getJugadorByUserId($user_actual);
+//            $jugador_actual_id=$jugadorObj->getId();
+//
+//            if ($jugador_pareja_id == 0) {
+//                $modoJugada = 'BOT';
+//                //DEVOLVER EL JUG BOT
+//                $jugadorBOT = Jugador::getJugador('BOT-001', 'BOT');
+//                if (!empty($jugadorBOT)) {
+//                    $jugadorBOT_id = $jugadorBOT->getId();
+//                }
+//                //ponerlo en la mesa de jugador actual
+//                $mesa = Mesa::getMesaxId($mesa_id);
+//                $mesa->setJugador2Id($jugadorBOT_id); // El q me escogieron: BOT
+//                $mesa->setEstado(1); //COMPLETA
+//                $mesa->save();
+//                //echo "mesa bot jug ".$jugador_pareja_id." de mesa ".$mesa_id. " min:".$min ."_jugador:". $user_actual. "_estado_mesa:".$mesa_tmp->getEstado() ."clases: ".get_class($min).get_class($date1).get_class($date2); die();
+//                echo "mesa bot jug ".$jugador_pareja_id." de mesa ".$mesa_id. " min:".$min ."_jugador:". $user_actual. "_estado_mesa:".$mesa_tmp->getEstado() ."clases: ".$date1; die();
+//            } else if ($jugador_pareja_id != 0){
+//                $modoJugada = 'PAREJAS';
+//            }else{
+//                $modoJugada = 'ERROR';
+    //        }
+//
             $respuesta['modoJugada'] = $modoJugada;
             $respuesta['mesaid'] = $mesa_id;
             $respuesta['jugadorid'] = $jugador_actual_id ;

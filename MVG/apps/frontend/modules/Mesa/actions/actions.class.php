@@ -17,6 +17,9 @@ class MesaActions extends sfActions {
 
     //EMPAREJAR Y GENERAR SET DE VIDEOS DE LA MESA Observacion ESTADO: MESA 0:Incompleta 1:Completa JUGADOR 0:Disponible 1:No disponible Ocupado RESPUESTAREAL EN RELACIONMESAVIDEO 1:Same 0:Different    
     public function executeEmparejar(sfWebRequest $request) {
+        
+        
+        
         $jugador_pareja_id = 0;
         $modoJugada = '';
         $user_actual = $this->getUser()->getAttribute('userid');  //sacar de session el user_id único de facebook

@@ -169,6 +169,6 @@ body{
         border-color:#7A991A;
         border-width:5px;
 }
-textarea{
-        margin: 20px; height: 150px; overflow: auto;  border-style:none;
+#log, #logpartner{
+        margin: 20px; height: 150px; overflow: auto;  border-style:none; background-color: white;
 }
