@@ -169,6 +169,7 @@
 </style>
 <script type="text/javascript">
 $(document).ready(function() { 
+alert('doing');
 	$("#cmd_enviar").button().click(function(){ getHoraMinSec(); });
 	$("#same_different").buttonset();
 	$("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185})
@@ -188,7 +189,8 @@ $(document).ready(function() {
 	
 	$( "#dialog_result" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});	
 	$('.alert div.ui-dialog-titlebar').hide();//transparent
-	$('.alert').css('background','transparent')
+	$('.alert').css('background','transparent');
+	alert('doing2');
 });
 
 function getHoraMinSec(){

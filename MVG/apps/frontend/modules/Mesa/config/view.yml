@@ -1,4 +1,4 @@
 ## YAML Template.
 newSuccess:
-  javascripts: [prototype.js]
-  stylesheets: [gamestyle.css]
+  #javascripts: []
+  stylesheets: [newmesa.css]

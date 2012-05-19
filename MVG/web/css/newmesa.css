@@ -1,0 +1,174 @@
+/* 
+    Document   : newmesa
+    Created on : 16/05/2012, 03:08:31 AM
+    Author     : dell user
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+body{
+        font-family: Arial, Helvetica, sans-serif;
+}
+#wrapper{
+        /*resolucion 800x600*/
+        background:#ffffff url('/images/bg_fondo_800x1px.jpg') repeat-y left top;
+        min-height:600px;
+        width:800px;
+        margin:0 auto;
+}
+#header{
+        height:150px; /*100*/
+        /*background: #A690AF;*/
+        width:91%;
+        /*margin: 10px;*/
+        margin: 10px 0px 0px 30px;
+        position: relative;
+}
+#header h1, p{
+        color:white;
+        text-align: center;
+}
+#header h1{
+        padding: 68px 0px 0px 0px; /*35*/
+        font-weight:bold;
+        margin: 10px 10px 0px 10px;
+        font-size:60px; /*40*/
+}
+#header p{
+        font-size:10px;
+        margin: 0px;
+}
+#content_side1{
+        min-height:200px;
+        width:20%;
+        /*background: rgb(253,223,255);*/
+        margin: 10px 0px 0px 30px;
+        float:left;
+        position: relative;
+        top: 50px;
+}
+#content_side1 #chat_jug, #content_side2 #chat_partner{
+        background:transparent url('/images/jugador_chat_img.png') no-repeat left top;
+        min-height:198px;
+        width:100%;
+}
+#content_side1 h3, #content_side2 h3{
+        color:white;
+        text-align: center;
+        margin: 0px;
+}
+#content1{
+        min-height:400px;
+        width:50%;
+        /*background: rgb(253,223,255);*/
+        margin: 10px 10px 0px 10px;
+        float:left;
+}
+#timer_content{
+        background:transparent url('/images/tiempo_fondo_img.png') no-repeat left top;
+        min-height:150px;
+        width:100%;
+
+        position: absolute;
+        top: 0px;
+        left: 620px;
+}
+#puntos_content{
+        background:transparent url('/images/puntos_fondo_img.png') no-repeat left top;
+        min-height:150px;
+        width:100%;
+
+        position: absolute;
+        top: 0px;
+        left: -30px;
+}
+#puntos_content h3, #timer_content h3{
+        color:white;
+        padding-left:20px;
+        margin-bottom:0px;
+}
+#puntos_content h3{
+        color:white;
+        padding-left:22px;
+}
+.content_text{
+        color:white;
+        padding:0px;
+        /*font-size:40px;*/
+        font-size:30px;
+        margin:0px;
+        font-weight:bold;
+        padding-left:18px;
+}
+#video_principal{
+        /*resolucion 800x600*/
+        background:transparent url('/images/v_plasma4_img.png') no-repeat left top;
+        height:273px;
+        width:100%;
+}
+#video_principal iframe{
+        /*position: relative;
+        top: 0px;
+        left: 50px;*/
+        position: relative;
+        top: 15px;
+        left: 20px;
+}
+#same_different{
+        position: relative;	left: 25%;
+        font-size: 12px;
+}
+#content_side2{
+        min-height:200px;
+        width:20%;
+        /*background: rgb(253,223,255);*/
+        margin: 10px 0px 0px 0px;
+        float:left;
+        position: relative;
+        top: 50px;
+}
+#content1 h3, #content1 p{
+        /*color: rgb(78,1,82);*/
+        /*padding:10px;*/
+        margin:0px;
+        text-align: center;
+}
+#content1 #jugar_again{
+        margin:30px
+}
+#content1 ul
+{
+        list-style-type:none;
+        margin:0;
+        padding:0;
+}
+#content1 a:link, #content1 a:visited
+{
+        display:block;
+        font-weight:bold;
+        color:#FFFFFF;
+        background-color:#98bf21;
+        border-style:none solid none none;
+        border-color:#399;
+        border-width:5px;
+        /*width:120px;*/
+        text-align:left;
+        padding:4px 4px 4px 10px;
+        text-decoration:none;
+        /*text-transform:uppercase;*/
+}
+#content1 a:hover, #content1 a:active
+{
+        background-color:#399;/*#7A991A*/
+        border-style:none solid none none;
+        border-color:#7A991A;
+        border-width:5px;
+}
+textarea{
+        margin: 20px; height: 150px; overflow: auto;  border-style:none;
+}
