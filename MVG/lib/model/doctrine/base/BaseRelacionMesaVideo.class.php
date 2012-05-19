@@ -11,7 +11,6 @@
  * @property integer $jugador_id
  * @property integer $num_round
  * @property integer $intervalo_id
- * @property integer $video_intervalo_estado
  * @property boolean $respuesta_real
  * @property boolean $eliminado
  * @property Mesa $Mesa
@@ -25,7 +24,6 @@
  * @method integer             getJugadorId()                          Returns the current record's "jugador_id" value
  * @method integer             getNumRound()                           Returns the current record's "num_round" value
  * @method integer             getIntervaloId()                        Returns the current record's "intervalo_id" value
- * @method integer             getVideoIntervaloEstado()               Returns the current record's "video_intervalo_estado" value
  * @method boolean             getRespuestaReal()                      Returns the current record's "respuesta_real" value
  * @method boolean             getEliminado()                          Returns the current record's "eliminado" value
  * @method Mesa                getMesa()                               Returns the current record's "Mesa" value
@@ -38,7 +36,6 @@
  * @method RelacionMesaVideo   setJugadorId()                          Sets the current record's "jugador_id" value
  * @method RelacionMesaVideo   setNumRound()                           Sets the current record's "num_round" value
  * @method RelacionMesaVideo   setIntervaloId()                        Sets the current record's "intervalo_id" value
- * @method RelacionMesaVideo   setVideoIntervaloEstado()               Sets the current record's "video_intervalo_estado" value
  * @method RelacionMesaVideo   setRespuestaReal()                      Sets the current record's "respuesta_real" value
  * @method RelacionMesaVideo   setEliminado()                          Sets the current record's "eliminado" value
  * @method RelacionMesaVideo   setMesa()                               Sets the current record's "Mesa" value
@@ -84,10 +81,6 @@ abstract class BaseRelacionMesaVideo extends sfDoctrineRecord
         $this->hasColumn('intervalo_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
-             ));
-        $this->hasColumn('video_intervalo_estado', 'integer', 1, array(
-             'type' => 'integer',
-             'length' => 1,
              ));
         $this->hasColumn('respuesta_real', 'boolean', null, array(
              'type' => 'boolean',

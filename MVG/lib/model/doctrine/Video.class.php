@@ -18,5 +18,5 @@ class Video extends BaseVideo
                             ->where('v.id=?',$id_video)                            
                             ->fetchOne();
         return $video;                 
-     }
+     }     
 }

@@ -13,29 +13,27 @@ abstract class BaseRelacionMesaVideoFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'token'                  => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'mesa_id'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Mesa'), 'add_empty' => true)),
-      'jugador_id'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Jugador'), 'add_empty' => true)),
-      'num_round'              => new sfWidgetFormFilterInput(),
-      'intervalo_id'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Intervalo'), 'add_empty' => true)),
-      'video_intervalo_estado' => new sfWidgetFormFilterInput(),
-      'respuesta_real'         => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
-      'eliminado'              => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
-      'created_at'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
-      'updated_at'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'token'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'mesa_id'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Mesa'), 'add_empty' => true)),
+      'jugador_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Jugador'), 'add_empty' => true)),
+      'num_round'      => new sfWidgetFormFilterInput(),
+      'intervalo_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Intervalo'), 'add_empty' => true)),
+      'respuesta_real' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'eliminado'      => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'created_at'     => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'updated_at'     => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
     ));
 
     $this->setValidators(array(
-      'token'                  => new sfValidatorPass(array('required' => false)),
-      'mesa_id'                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Mesa'), 'column' => 'id')),
-      'jugador_id'             => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Jugador'), 'column' => 'id')),
-      'num_round'              => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'intervalo_id'           => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Intervalo'), 'column' => 'id')),
-      'video_intervalo_estado' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'respuesta_real'         => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
-      'eliminado'              => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
-      'created_at'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
-      'updated_at'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
+      'token'          => new sfValidatorPass(array('required' => false)),
+      'mesa_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Mesa'), 'column' => 'id')),
+      'jugador_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Jugador'), 'column' => 'id')),
+      'num_round'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'intervalo_id'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Intervalo'), 'column' => 'id')),
+      'respuesta_real' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'eliminado'      => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'created_at'     => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
+      'updated_at'     => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
     ));
 
     $this->widgetSchema->setNameFormat('relacion_mesa_video_filters[%s]');
@@ -55,17 +53,16 @@ abstract class BaseRelacionMesaVideoFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'                     => 'Number',
-      'token'                  => 'Text',
-      'mesa_id'                => 'ForeignKey',
-      'jugador_id'             => 'ForeignKey',
-      'num_round'              => 'Number',
-      'intervalo_id'           => 'ForeignKey',
-      'video_intervalo_estado' => 'Number',
-      'respuesta_real'         => 'Boolean',
-      'eliminado'              => 'Boolean',
-      'created_at'             => 'Date',
-      'updated_at'             => 'Date',
+      'id'             => 'Number',
+      'token'          => 'Text',
+      'mesa_id'        => 'ForeignKey',
+      'jugador_id'     => 'ForeignKey',
+      'num_round'      => 'Number',
+      'intervalo_id'   => 'ForeignKey',
+      'respuesta_real' => 'Boolean',
+      'eliminado'      => 'Boolean',
+      'created_at'     => 'Date',
+      'updated_at'     => 'Date',
     );
   }
 }

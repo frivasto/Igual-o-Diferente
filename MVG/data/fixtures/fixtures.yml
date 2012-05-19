@@ -21,6 +21,4 @@ Jugador:
     id: 1
     user_id: 'BOT-001'
     nombre: BOT
-    #OCUPADO siempre Bot para que no lo encunetrebn rápido como disponible
-    estado: 1
   

@@ -5,8 +5,7 @@ Jugador:
     id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
     token:   { type: string(255), notnull: true, unique: false }
     user_id:   { type: string(255), notnull: true, unique: true }
-    nombre:   { type: string(255), notnull: false }
-    #DISPONIBLE 0 JUGADOR
+    nombre:   { type: string(255), notnull: false }    
     eliminado: { type: boolean, default: 0 }
  
 Video:
@@ -33,7 +32,6 @@ Intervalo:
   relations:
     Video: { local: video_id, foreign: id, foreignAlias: IntervaloVideo }
 
-
 Etiqueta:
   actAs:
     Timestampable:
@@ -59,8 +57,6 @@ Mesa:
     Jugador1: { local: jugador1_id, foreign: id, foreignAlias: JugadorMesa1 }
     Jugador2: { local: jugador2_id, foreign: id, foreignAlias: JugadorMesa2 }
 
-
-
 RelacionMesaVideo:
   actAs:
     Timestampable:
@@ -70,15 +66,13 @@ RelacionMesaVideo:
     mesa_id:   { type: integer(4) }    
     jugador_id:   { type: integer(4) }
     num_round:   { type: integer(4) }
-    intervalo_id: { type: integer(4) }  
-    video_intervalo_estado: { type: integer(1) }
+    intervalo_id: { type: integer(4) }
     respuesta_real: { type: boolean, default: 0 }
     eliminado: { type: boolean, default: 0 }
   relations:
     Mesa: { local: mesa_id, foreign: id, foreignAlias: MesaMesaVideo }    
     Jugador: { local: jugador_id, foreign: id, foreignAlias: JugadorMesaVideo }
     Intervalo: { local: intervalo_id, foreign: id, foreignAlias: MesaVideoIntervalo }
-
 
 InstanciaEtiqueta:
   actAs:
@@ -91,8 +85,7 @@ InstanciaEtiqueta:
     tiempo: { type: time }
     eliminado: { type: boolean, default: 0 }
   relations:
-    RelacionMesaVideo: { local: relacionmesavideo_id, foreign: id, foreignAlias: InstanciaEtiquetaRelacionMesaVideo }
-    
+    RelacionMesaVideo: { local: relacionmesavideo_id, foreign: id, foreignAlias: InstanciaEtiquetaRelacionMesaVideo }    
 
 Decision:
   actAs:
@@ -106,25 +99,16 @@ Decision:
     eliminado: { type: boolean, default: 0 }
   relations:
     RelacionMesaVideo: { local: relacionmesavideo_id, foreign: id, foreignAlias: InstanciaEtiquetaRelacionMesaVideo }
-
-ItemColeccion:
-  actAs:
-    Timestampable:
-  columns:
-    id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
-    video1: { type: integer(4) }
-    video2: { type: integer(4) }
-    respuesta_real: { type: boolean }
-    coleccion_id: { type: integer(4) }
     
-  relations:
-    Coleccion: { local: coleccion_id, foreign: id, foreignAlias: itemcoleccion }
-    Video: { local: video1, foreign: id, foreignAlias: itemcoleccionint1 }
-    Video: { local: video2, foreign: id, foreignAlias: itemcoleccionint2 }
-
-
-Coleccion:
+Puntaje:
   actAs:
     Timestampable:
   columns:
     id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
+    token:   { type: string(255), notnull: true, unique: false }
+    mesa_id:   { type: integer(4) }    
+    jugador_id:   { type: integer(4) }
+    puntaje:   { type: integer(4), default: 0 }
+  relations:
+    Mesa: { local: mesa_id, foreign: id, foreignAlias: MesaPuntaje }    
+    Jugador: { local: jugador_id, foreign: id, foreignAlias: JugadorPuntaje }

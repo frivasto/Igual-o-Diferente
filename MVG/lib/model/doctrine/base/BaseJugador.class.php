@@ -9,24 +9,24 @@
  * @property string $token
  * @property string $user_id
  * @property string $nombre
- * @property integer $estado
  * @property boolean $eliminado
  * @property Doctrine_Collection $JugadorMesaVideo
+ * @property Doctrine_Collection $JugadorPuntaje
  * 
  * @method integer             getId()               Returns the current record's "id" value
  * @method string              getToken()            Returns the current record's "token" value
  * @method string              getUserId()           Returns the current record's "user_id" value
  * @method string              getNombre()           Returns the current record's "nombre" value
- * @method integer             getEstado()           Returns the current record's "estado" value
  * @method boolean             getEliminado()        Returns the current record's "eliminado" value
  * @method Doctrine_Collection getJugadorMesaVideo() Returns the current record's "JugadorMesaVideo" collection
+ * @method Doctrine_Collection getJugadorPuntaje()   Returns the current record's "JugadorPuntaje" collection
  * @method Jugador             setId()               Sets the current record's "id" value
  * @method Jugador             setToken()            Sets the current record's "token" value
  * @method Jugador             setUserId()           Sets the current record's "user_id" value
  * @method Jugador             setNombre()           Sets the current record's "nombre" value
- * @method Jugador             setEstado()           Sets the current record's "estado" value
  * @method Jugador             setEliminado()        Sets the current record's "eliminado" value
  * @method Jugador             setJugadorMesaVideo() Sets the current record's "JugadorMesaVideo" collection
+ * @method Jugador             setJugadorPuntaje()   Sets the current record's "JugadorPuntaje" collection
  * 
  * @package    MusicVideoGame
  * @subpackage model
@@ -62,11 +62,6 @@ abstract class BaseJugador extends sfDoctrineRecord
              'notnull' => false,
              'length' => 255,
              ));
-        $this->hasColumn('estado', 'integer', 1, array(
-             'type' => 'integer',
-             'default' => 0,
-             'length' => 1,
-             ));
         $this->hasColumn('eliminado', 'boolean', null, array(
              'type' => 'boolean',
              'default' => 0,
@@ -77,6 +72,10 @@ abstract class BaseJugador extends sfDoctrineRecord
     {
         parent::setUp();
         $this->hasMany('RelacionMesaVideo as JugadorMesaVideo', array(
+             'local' => 'id',
+             'foreign' => 'jugador_id'));
+
+        $this->hasMany('Puntaje as JugadorPuntaje', array(
              'local' => 'id',
              'foreign' => 'jugador_id'));
 

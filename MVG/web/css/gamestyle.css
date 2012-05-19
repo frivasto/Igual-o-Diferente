@@ -1,0 +1,12 @@
+/* 
+    Document   : gamestyle
+    Created on : 10-may-2012, 7:23:54
+    Author     : Salvatierra
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+html,body{font:normal 0.9em arial,helvetica;}
+#log {width:220px; height:200px; border:1px solid #7F9DB9; overflow:auto; float:left; margin-right: 10px;}
+#logpartner {width:220px; height:200px; border:1px solid #7F9DB9; overflow:auto;}
+#msg {width:330px;}

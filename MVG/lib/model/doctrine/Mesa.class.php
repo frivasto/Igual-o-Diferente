@@ -62,16 +62,24 @@ class Mesa extends BaseMesa
                    
                     //JUGADOR ENCONTRADO
                     $jugador_pareja_id = $jug_partner->getId();
+                    
+                    //SET DE VIDEOS DE ESTA MESA Y JUGADOR 2
+                    RelacionMesaVideo::generarSetVideos($id_mesa,$id_jugador); 
+                    
                     //echo "mesaa_incompleta ".$id_mesa; die();
                 }else{
                     if($id_mesa==0){
-                           $mesa = new Mesa(); //NUEVA MESA
+                           //NUEVA MESA
+                           $mesa = new Mesa(); 
                            $mesa->setJugador1Id($id_jugador);
-                            $mesa->setEstado(0); //Incompleta
-                            $mesa->setTiempoEmparejar(time());
-                            $mesa->save();
-                            $id_mesa = $mesa->getId();
-                            $jugador_pareja_id = 0;
+                           $mesa->setEstado(0); //Incompleta
+                           $mesa->setTiempoEmparejar(time());
+                           $mesa->save();
+                           $id_mesa = $mesa->getId();
+                           $jugador_pareja_id = 0;
+                            
+                           //SET DE VIDEOS DE ESTA MESA Y JUGADOR INICIAL
+                           RelacionMesaVideo::generarSetVideos($id_mesa,$id_jugador);
                     }
                 }
 
@@ -86,7 +94,9 @@ class Mesa extends BaseMesa
 
                         //JUGADOR ENCONTRADO
                         $jugador_pareja_id = 0;
-                        //echo "nueva_mesa ".$id_mesa; die();  
+                        
+                        //SET DE VIDEOS DE ESTA MESA Y JUGADOR INICIAL
+                        RelacionMesaVideo::generarSetVideos($id_mesa,$id_jugador);                        
                     }else{
                         //sólo indicar cual es el compañero de esa mesa
                         $mesa=Mesa::getMesaxId($mesa_id_jugador1);

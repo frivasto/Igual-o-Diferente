@@ -12,23 +12,38 @@
  */
 class Intervalo extends BaseIntervalo
 {  
-    public static function getFragmentoVideosOrdenadosXTags(){
-        $intervalos_videos=Doctrine_Core::getTable('Intervalo')
+    public static function obtenerIntervaloAleatorio($array_excluidos){
+         //intervalos ORDENADADOS por total tags
+         $intervalos_videos=self::getFragmentoVideosOrdenadosXTags($array_excluidos);
+         $tam_intervalos_videos = count($intervalos_videos);
+         //Obtener aleatorio
+         $id_array = mt_rand(0, $tam_intervalos_videos - 1);
+         //$intervalo_jug = $intervalos_videos[$id_array]['id'];         
+         $intervalo_jug = $intervalos_videos[$id_array]['id']; 
+         return $intervalo_jug;
+     }
+     public static function getFragmentoVideosOrdenadosXTags($array_excluidos){
+        /*$intervalos_videos=Doctrine_Core::getTable('Intervalo')
                             ->createQuery('i')
-                            ->orderBy('i.total_tags')         
-                            ->limit(5)
-                            ->fetchArray();
-        //->fetchArray();
+                            ->whereNotIn('i.id',$array_excluidos)
+                            //->orderBy('i.total_tags')                                     
+                            ->fetchArray(); */
+        $intervalos_videos = Doctrine_Query::create()
+                            ->select('i.id, COUNT(e.id) AS conteo')
+                            ->from('Intervalo i')
+                            ->leftJoin('i.MesaVideoIntervalo r ON i.id=r.intervalo_id')	
+                            ->leftJoin('r.InstanciaEtiquetaRelacionMesaVideo e ON e.relacionmesavideo_id=r.id')			
+                            ->whereNotIn('i.id',$array_excluidos)
+                            ->groupBy('i.id')
+                            ->orderBy('conteo')
+                            ->fetchArray();          
         return $intervalos_videos; 
-    }
-    public static function getFragmentoVideosOrdenadosXTagsExcluyendo($id_intervalo_excluir){
-        $intervalos_videos=Doctrine_Core::getTable('Intervalo')
-                            ->createQuery('i')
-                            ->where('i.id != ?',$id_intervalo_excluir)
-                            ->orderBy('i.total_tags')         
-                            ->limit(5)
-                            ->fetchArray();
-        //->fetchArray();
-        return $intervalos_videos; 
+    }    
+    public static function getIntervaloXId($id_intervalo){
+        $intervalo_video=Doctrine_Core::getTable('Intervalo')
+                    ->createQuery('i')                                      
+                    ->where('i.id = ?',$id_intervalo)
+                    ->fetchOne();
+        return $intervalo_video;        
     }
 }

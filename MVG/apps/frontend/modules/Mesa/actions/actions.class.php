@@ -15,10 +15,8 @@ class MesaActions extends sfActions {
                 ->execute();
     }
 
-    //Observacion ESTADO: MESA 0:Incompleta 1:Completa JUGADOR 0:Disponible 1:No disponible Ocupado RESPUESTAREAL EN RELACIONMESAVIDEO 1:Same 0:Different    
+    //EMPAREJAR Y GENERAR SET DE VIDEOS DE LA MESA Observacion ESTADO: MESA 0:Incompleta 1:Completa JUGADOR 0:Disponible 1:No disponible Ocupado RESPUESTAREAL EN RELACIONMESAVIDEO 1:Same 0:Different    
     public function executeEmparejar(sfWebRequest $request) {
-
-        
         $jugador_pareja_id = 0;
         $modoJugada = '';
         $user_actual = $this->getUser()->getAttribute('userid');  //sacar de session el user_id único de facebook
@@ -28,7 +26,7 @@ class MesaActions extends sfActions {
         $date1 = 0;
         $date2 = 0;
         $esta_completa=false;
-        $mesa_tmp=0;
+        $mesa_tmp=NULL;
         
         //&& $jugadorObj->getEstado()!=1        
         //MIENTRAS NO HAYA PASADO TIEMPO ESPERA Y JUG REAL NO CONSEGUIDO        
@@ -45,11 +43,28 @@ class MesaActions extends sfActions {
             //$min = round(abs(strtotime($date2) - strtotime($date1)) / 60,2);
             $min = ($date2 - $date1);
         }       
+        
         //NUNCA CONSIGUIÓ JUG REAL
-
         $jugadorObj=Jugador::getJugadorByUserId($user_actual);
         $jugador_actual_id=$jugadorObj->getId();
         
+        //OBTENER JUGADOR COMPANIERO DE MESA ID (x condicion no devuielve el correcto)
+        //************ SELECT `jugador1_id` FROM `mesa` WHERE `jugador2_id`=2 UNION SELECT `jugador2_id` FROM `mesa` WHERE `jugador1_id`=2
+        $jugador1=$mesa_tmp->getJugador1Id();
+        $jugador2=$mesa_tmp->getJugador2Id();
+        if($jugador1!=NULL && $jugador2!=NULL){
+            if($jugador1==$jugador_actual_id){
+                //REENPLAZAR JUG_PAREJA_ID
+                $jugador_pareja_id=$jugador2;
+            }else{
+                $jugador_pareja_id=$jugador1;
+            }
+        }else{
+            //PARA QUE LE ASIGNEN BOT
+            $jugador_pareja_id=0; 
+        }
+        //**************************************
+                
         if ($jugador_pareja_id == 0) {
             $modoJugada = 'BOT';
             //DEVOLVER EL JUG BOT
@@ -62,39 +77,33 @@ class MesaActions extends sfActions {
             $mesa->setJugador2Id($jugadorBOT_id); // El q me escogieron: BOT
             $mesa->setEstado(1); //COMPLETA
             $mesa->save();
+            
             //echo "mesa bot jug ".$jugador_pareja_id." de mesa ".$mesa_id. " min:".$min ."_jugador:". $user_actual. "_estado_mesa:".$mesa_tmp->getEstado() ."clases: ".get_class($min).get_class($date1).get_class($date2); die();
             echo "mesa bot jug ".$jugador_pareja_id." de mesa ".$mesa_id. " min:".$min ."_jugador:". $user_actual. "_estado_mesa:".$mesa_tmp->getEstado() ."clases: ".$date1; die();
+            $jugador_pareja_id=$jugadorBOT_id; //PAREJA ES EL 
+            
+            //GENERAR SET DE VIDEOS DE ESTA MESA COMPLETANDO PARA ESTE JUGADOR PAREJA O JUGADOR BOT
+            RelacionMesaVideo::generarSetVideos($mesa_id,$jugador_pareja_id);
+            
         } else if ($jugador_pareja_id != 0){
-            $modoJugada = 'PAREJAS';                        
+            $modoJugada = 'PAREJAS';               
         }else{
             $modoJugada = 'ERROR';
         }
-                
-        //PONER EN SESSION LA COLECCION DE VIDEOS PARA TODO EL JUEGO
-//        $mesa = Mesa::getMesaxId($mesa_id);
-//        $coleccion_id=$mesa->getColeccionId(); //COMPLETA
-//        if($coleccion_id==NULL){
-//            $coleccion_id=Coleccion::obtenerColeccionAleatoria();
-//            $item_colecciones_array= ItemColeccion::getItemsColeccion($coleccion_id);
-//            $this->getUser()->setAttribute('colecciones_item', $item_colecciones_array);
-//            //setear esta coleccion generada en la mesa
-//            $mesa->setColeccionId($coleccion_id); //COMPLETA
-//            $mesa->save();
-//        }
         
-        //GENERAR VIDEOS PARA LA PARTIDA DE ESTA MESA
-        /*if(RelacionMesaVideo::getRelacionMesaVideoXId($mesa_id)!=NULL){
-            //YA EXISTE, CONSULTARLO
-        }else{
-            //CREARLO
-            $respuesta_aleatorio=mt_rand(0,1);
-            if($respuesta_aleatorio==1){
-                //SAME
-                //intervalo o video
-                $video1=$video2=
-            }                
-        }*/
-            
+                        
+        //OBTENER EL ARRAY DE RELACIONESMESAVIDEO EN FORMATO LISTO PARA JSON
+        $set_intervalos_videos=RelacionMesaVideo::toJsonArray($mesa_id,$jugador_actual_id);
+        
+        //echo "jugador es: ".$jugador_actual_id." partner: ".$jugador_pareja_id;
+        //print_r($set_intervalos_videos); 
+        //echo $set_intervalos_videos[0][1]['url']; die();
+        //$json_arr=json_encode($set_intervalos_videos);
+        //echo $json_arr; die();
+        
+        //PONER EN SESSION LOS INTERVALOS DE VIDEOS PARA EL JUEGO
+        $this->getUser()->setAttribute('set_intervalos_videos', $set_intervalos_videos);
+    
         //PONER EN SESSION EL MODO DE JUGADA        
         $this->getUser()->setAttribute('modoJugada', $modoJugada);
 
@@ -104,55 +113,106 @@ class MesaActions extends sfActions {
         //PONER EN SESSION JUG ACTUAL ID       
         $this->getUser()->setAttribute('jugadorid', $jugador_actual_id); 
         
+        //PONER EN SESSION ROUND       
+        $this->getUser()->setAttribute('round_actual', 1);
+        
         //REDIRECCIONAR A PÁGINA JUEGO
         $this->redirect('Mesa/new');
     }
     
-    public function executeConsultarIdentificacion(sfWebRequest $request){
-        $tmp = $request->getParameter('estado');
-        $estado = isset($tmp) ? $tmp : '';
-        $response = array();        
-        $id_mesa=0;
-        $id_jugador=0;
-        if ($estado != '') {
-            if ($estado == 1) { //estado ok de los sockets 1 OPEN  
-                //OBTENER DE SESSION LA MESAID       
-                $id_mesa=$this->getUser()->getAttribute('mesaid','');   
-                //OBTENER DE SESSION JUG ACTUAL ID       
-                $id_jugador=$this->getUser()->getAttribute('jugadorid','');         
-            }
-        }
-        //Devolver JSON con estos datos
-        $response['tipo'] = "identificacion";
-        $response['objeto'] = array();
-        $response['objeto'][$id_mesa] = $id_jugador;
-        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
-        return $this->renderText(json_encode($response));
-    }
-
-    //Para ambos modos de jugada, obtener video
+    //OBTENER VIDEO DEL ROUND Para ambos modos de jugada, obtener video
     public function executeObtenerVideoRound(sfWebRequest $request) {
         $tmp = $request->getParameter('round_index');
         $round_index = isset($tmp) ? $tmp : '';
 
-        $tmp = $request->getParameter('jugador_index');
-        $jugador_index = isset($tmp) ? $tmp : '';
-
         $url_video='';
-        $respuesta_real='';        
-        //SACAR LOS VIDEOS DE SESSION  ROUND Y JUG (1 o 2) (DETERMINARLO O YA SE PONGFA ANTES)     
-        $item_colecciones_array = $this->getUser()->getAttribute('colecciones_item', "");
-        if($round_index!=0 && $jugador_index!=0){
-            $id_video=$item_colecciones_array[$round_index]['video'.$jugador_index];
-            $url_video=Video::getVideoxId($id_video)->getUrl();
-            $respuesta_real=$item_colecciones_array[$round_index]['respuesta_real'];
+        $respuesta_real=''; 
+        $inicio_video=0;
+        $fin_video=0;
+        
+        //SACAR LOS VIDEOS DE SESSION ROUND   
+        $set_intervalos_videos = $this->getUser()->getAttribute('set_intervalos_videos', "");
+        if($round_index>=0){
+            $respuesta_real=$set_intervalos_videos[$round_index][0];
+            $url_video=$set_intervalos_videos[$round_index][1]['url'];
+            $inicio_video=$set_intervalos_videos[$round_index][1]['ini'];
+            $fin_video=$set_intervalos_videos[$round_index][1]['fin'];            
         }
         //Devolver JSON con estos datos
         $response = array();        
         $response['video_url'] = $url_video;
-        $response['respuesta_real'] = $respuesta_real;        
+        $response['inicio'] = $inicio_video;
+        $response['fin'] = $fin_video;
+        $response['respuesta_real'] = $respuesta_real; 
+        
         $this->getResponse()->setHttpHeader('Content-type', 'application/json');
         return $this->renderText(json_encode($response));
+    }
+    
+    public function executeInsertarDecision(sfWebRequest $request) {
+        $tmp = $request->getParameter('respuesta');
+        $respuesta = isset($tmp) ? $tmp : '';
+
+        $tmp = $request->getParameter('hora');
+        $hora = isset($tmp) ? $tmp : '';
+
+        $tmp = $request->getParameter('minuto');
+        $minuto = isset($tmp) ? $tmp : '';
+
+        $tmp = $request->getParameter('segundo');
+        $segundo = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('mesa_id');
+        $mesa_id = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('jug_id');
+        $jug_id = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('round_num');
+        $round_num = isset($tmp) ? $tmp : '';
+
+        $id_decision = 0;
+        if ($respuesta != '' && $hora != '' && $minuto != '' && $segundo != '') {            
+            $decision = new Decision();
+            $relacionmesavideo= RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $jug_id, $round_num);
+            if($relacionmesavideo!=NULL){
+                $relacionmesavideo_id=$relacionmesavideo->getId();            
+                $decision->setRelacionmesavideoId($relacionmesavideo_id);
+                $decision->setRespuesta($respuesta);
+                $decision->setTiempo(date("H:i:s", strtotime(' ', mktime($hora, $minuto, $segundo, 0, 0, 0)))); //convert time
+                $decision->save();
+                $id_decision = $decision->getId();
+            }
+        }
+        return $this->renderText("" + $id_decision);
+    }
+    
+    
+    public function executeActualizarPuntaje(sfWebRequest $request) {
+        $tmp = $request->getParameter('mesa_id');
+        $mesa_id = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('jug_id');
+        $jug_id = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('puntos');
+        $puntos = isset($tmp) ? $tmp : '';
+        
+        $id_puntajeObj = 0;
+        $puntajeObj=Puntaje::getPuntajeXMesaJugId($mesa_id, $jug_id);
+        
+        if($puntajeObj==NULL){
+            $puntajeObj=new Puntaje();
+            $puntajeObj->setMesaId($mesa_id);
+            $puntajeObj->setJugadorId($jug_id);
+            $puntajeObj->save();            
+        }
+        
+        $puntajeObj->setPuntaje($puntajeObj->getPuntaje()+$puntos);
+        $puntajeObj->save(); 
+        $id_puntajeObj = $puntajeObj->getId();
+        
+        return $this->renderText("" + $id_puntajeObj);        
     }
     
     //INCOMPLETO
@@ -169,85 +229,34 @@ class MesaActions extends sfActions {
         $tmp = $request->getParameter('segundo');
         $segundo = isset($tmp) ? $tmp : '';
 
+        $tmp = $request->getParameter('mesa_id');
+        $mesa_id = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('jug_id');
+        $jug_id = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('round_num');
+        $round_num = isset($tmp) ? $tmp : '';
+        
         $id_etiqueta = 0;
         //$response = array();
         if ($etiqueta_texto != '' && $hora != '' && $minuto != '' && $segundo != '') {
             //calificar, insertarla con el tiempo
             $etiqueta = new InstanciaEtiqueta();
-            //sacar de session su relacionmesavideo_id
-            $relacionmesavideo_id = $this->getUser()->getAttribute('relacionmesavideo_id', "");
-            //$relacionmesavideo_id=$request->getParameter('relacionmesavideo_id');
-            $etiqueta->setRelacionmesavideoId($relacionmesavideo_id); //*IMPORTANTE* ojo HAY QUE PASAR RELACIONMESAVIDEO
-            $etiqueta->setTexto($etiqueta_texto);
-            $etiqueta->setTiempo(date("H:i:s", strtotime(' ', mktime($hora, $minuto, $segundo, 0, 0, 0)))); //convert time
-            $etiqueta->save();
-            $id_etiqueta = $etiqueta->getId();
+            $relacionmesavideo= RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $jug_id, $round_num);
+            if($relacionmesavideo!=NULL){
+                $relacionmesavideo_id=$relacionmesavideo->getId();  
+                $etiqueta->setRelacionmesavideoId($relacionmesavideo_id); //*IMPORTANTE* ojo HAY QUE PASAR RELACIONMESAVIDEO
+                $etiqueta->setTexto($etiqueta_texto);
+                $etiqueta->setTiempo(date("H:i:s", strtotime(' ', mktime($hora, $minuto, $segundo, 0, 0, 0)))); //convert time
+                $etiqueta->save();
+                $id_etiqueta = $etiqueta->getId();
+            }
         }
-        //Devolver JSON con estos datos
-        //$response['puntaje'] = "identificacion"; //RETORNAR MENSAJES DE TIPO ? Y PUNTAJE
-        //$this->getResponse()->setHttpHeader('Content-type', 'application/json');
-        //return $this->renderText(json_encode($response));
         return $this->renderText("" + $id_etiqueta);
     }
 
-    //actualizarIntervaloEstado
-    public function executeActualizarIntervaloEstado(sfWebRequest $request) {
-        $tmp = $request->getParameter('estado');
-        $estado = isset($tmp) ? $tmp : '';
-        $tmp = $request->getParameter('mesa_id');
-        $mesa_id = isset($tmp) ? $tmp : '';
-        $tmp = $request->getParameter('num_round');
-        $num_round = isset($tmp) ? $tmp : '';
-        $rsp = '';
-        $response = array();
-
-        $user_id_facebook = $this->getUser()->getAttribute('userid', "");
-        $jugador_actual = Jugador::getJugadorByUserId($user_id_facebook);
-        $id_jug = $jugador_actual->getId();
-
-        if ($estado != '' && $mesa_id != '' && $num_round != '') {
-            $mesa = Mesa::getMesaxId($mesa_id);
-            $estado_mesa = $mesa->getEstado();
-            if ($estado_mesa == 0) {
-                //Incompleta
-                $relacion_mesa_vid = RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $id_jug, $num_round);
-                $relacion_mesa_vid->setVideoIntervaloEstado(1); //1: loaded 0 no loaded
-                $relacion_mesa_vid->save();
-                $rsp = 'INCOMPLETO';
-            } else if ($estado_mesa == 1) {
-                //Completa
-                $id_jug1 = $mesa->getJugador1Id();
-                $id_jug2 = $mesa->getJugador2Id();
-
-                //relaciones mesavideo
-                $relacion_mesa_vid_jug1 = RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $id_jug1, $num_round);
-                $relacion_mesa_vid_jug2 = RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $id_jug2, $num_round);
-
-                //Se actualiza la relación mesa video del usuario actualiza
-                if ($id_jug == $id_jug1) {
-                    $relacion_mesa_vid_jug1->setVideoIntervaloEstado(1); //1: loaded 0 no loaded 
-                    $relacion_mesa_vid_jug1->save();
-                } else {
-                    $relacion_mesa_vid_jug2->setVideoIntervaloEstado(1); //1: loaded 0 no loaded  
-                    $relacion_mesa_vid_jug2->save();
-                }
-
-                //Ahora cual es el estado de los videos
-                if ($relacion_mesa_vid_jug1->getNumRound() == 1 && $relacion_mesa_vid_jug2->getNumRound() == 1) {
-                    $rsp = 'COMPLETO'; // en este momento es posible coincidan él último va llegar aquí a confirmar
-                } else {
-                    $rsp = 'INCOMPLETO';
-                }
-            }
-        }
-        //Devolver JSON con estos datos
-        $response['respuesta'] = $rsp; //RETORNAR MENSAJES DE TIPO ? Y PUNTAJE
-        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
-        return $this->renderText(json_encode($response));
-    }
-
     /* Link Iniciar */
-
     public function executeNew(sfWebRequest $request) {
         
     }
