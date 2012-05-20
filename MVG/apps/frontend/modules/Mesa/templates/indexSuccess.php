@@ -1,9 +1,11 @@
 <script type="text/javascript">          
     function mostrarLoading(){
+        ( function($) {
         $(document).ready(function(){  
             $("#content").mask("Estamos busc&aacute;ndole un compa&ntilde;ero de juego...");
             //$("#content").unmask();
         });
+        } ) ( jQuery );
     }                   
 </script>
 <div id="content">

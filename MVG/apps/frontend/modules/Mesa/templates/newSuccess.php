@@ -260,8 +260,8 @@ function getHoraMinSec(){
             var params = { allowScriptAccess: "always" };
             var atts = { id: "myytplayer" };
             swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3",
-            "ytapiplayer", "400", "273", "8", null, null, params, atts);
-            
+            "ytapiplayer", "400", "233", "8", null, null, params, atts);
+            //400 273     360  220
             var ytplayer;
             function onYouTubePlayerReady(playerId) {
                 ytplayer = document.getElementById("myytplayer");				
@@ -302,16 +302,18 @@ function getHoraMinSec(){
                     alerta("se cargo todo el video, lo envío a server sockets");
                 }else{
                     //ytplayer.pauseVideo();	//pausado no hace buffer ràpido		                    
-                    mostrarLoading();                    
+                    //mostrarLoading();                    
                     mute(true);
                 }
             } 
             
             /*Muestra una máscara loading*/
             function mostrarLoading(){
+                ( function($) {
                 $(document).ready(function(){  
                     $("#content").mask("Esperando se sincronicen los videos...");                    
                 });
+                } ) ( jQuery );
             } 
             /*Envía respuesta a servidor de socket, y guarda la etiqueta en la base*/
             function enviarRespuesta(respuesta){                
@@ -402,4 +404,4 @@ function getHoraMinSec(){
     
         <p>Hola usuario: <strong><?php echo $sf_user->getAttribute('userid') ?></strong>.</p>            
         <p id="resp"></p>
-        <a href="<?php echo url_for('Mesa/new'); ?>">Volver a Jugar </a>    
+        <a href="<?php echo url_for('Mesa/new'); ?>">Volver a Jugar </a><!--Va en interfaz de ranking-->    

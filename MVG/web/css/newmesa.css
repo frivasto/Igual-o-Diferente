@@ -107,16 +107,16 @@ body{
 }
 #video_principal{
         /*resolucion 800x600*/
-        background:transparent url('/images/v_plasma4_img.png') no-repeat left top;
+        background:transparent url('/images/tv_plasma4_img.png') no-repeat left top;
         height:273px;
-        width:100%;
+        /*width:100%;*/
 }
 #video_principal iframe{
         /*position: relative;
         top: 0px;
         left: 50px;*/
         position: relative;
-        top: 15px;
+        top: 20px;
         left: 20px;
 }
 #same_different{
@@ -169,6 +169,14 @@ body{
         border-color:#7A991A;
         border-width:5px;
 }
-#log, #logpartner{
-        margin: 20px; height: 150px; overflow: auto;  border-style:none; background-color: white;
+#log, #logpartner{        
+        height: 120px;
+        overflow: auto;
+        border-style: none;
+        background-color: white;
+        padding-top: 35px;
+        width: 74%;
+        position: relative;
+        top: 19px;
+        left: 20px;
 }
