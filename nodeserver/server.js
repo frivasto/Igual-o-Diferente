@@ -13,6 +13,7 @@ var decisionesmesa = {};		// mesaid:{jugid:{'respuesta':''},jugid:{'respuesta':'
 function User(socket) {
   this.socket = socket;
   this.jug_id = 0;
+  this.mesa_id = "";
 }
 User.prototype = {
   imprimirUser: function () {
@@ -60,6 +61,12 @@ server.sockets.on("connection", function(client)
 				var estado_mesa="";
 				var user_actual;
 				var jugid=value;
+								
+				console.log('Ingresó Jugador: '+jugid);
+				
+				//************ USUARIOS_CONECTADOS [jugid de user] Actualizar 
+				user_actual=usuarios_conectados[""+client.id];
+				user_actual.setJugId(jugid);				
 				
 				//******** MESAS [mesaid - jugid]
 				if(mesas[""+key]==null) {
@@ -68,11 +75,7 @@ server.sockets.on("connection", function(client)
 				
 				//MESA: poner en mesa el arreglo de usuarios 
 				mesas[""+key].push(user_actual); 
-				
-				//************ USUARIOS_CONECTADOS [jugid de user] Actualizar 
-				user_actual=usuarios_conectados[""+client.id];
-				user_actual.setJugId(jugid);
-				user_actual.setMesaId(""+key);
+				user_actual.setMesaId(""+key);				
 				
 				//************ ESTADOVIDEOS [mesaid - jugid -estado]
 				if(estadovideos[""+key]==null) {				
@@ -194,7 +197,7 @@ server.sockets.on("connection", function(client)
 			break;
 			case "mensajes":	//en caso mensajes, no mandar a client this, sino a su partner no más
 				var socket_destinatario;
-				console.log('Hi new case'); 
+				console.log('Mensaje enviado'); 
 				if(mesas[""+key]!=null){
 					if(mesas[""+key][0]!=null && mesas[""+key][1]!=null){
 						if(mesas[""+key][0].socket.id!=client.id)
