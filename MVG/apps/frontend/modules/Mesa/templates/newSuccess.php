@@ -1,48 +1,49 @@
 <script type="text/javascript">
 ( function($) {
 $(document).ready(function() {
-    $("#cmd_enviar").button().click(function(){ getHoraMinSec(); send(); });
+    $("#cmd_enviar").button().click(function(){ send(); });
     $("#same_different").buttonset();
     $("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185})
     .click(function(){
             enviarRespuesta('SAME');
-            //$( "#dialog_result" ).dialog( "open" );
     });
     $('#same_different2').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20)
     .click(function(){
             enviarRespuesta('DIFFERENT');
-            //$( "#dialog_result" ).dialog( "open" );
     });
 
     //JQUERY CHRONY con callback  otra opcion es enviar el texto completo text: '1:20:30' MEJOR!!
     //PERMITE REAJUSTAR DATOS TAMBIÉN $('#time').chrony('set', { decrement: 2 }); re-adjust runtime options.
+        
+    $('#timeglobal').chrony({hour: 0, minute: 3, second: 3,finish: function() {
+        $(this).html('Finished!');
+        }, blink: true
+    });
+    
     $('#time').chrony({hour: 0, minute: 1, second: 3,finish: function() {
-            $(this).html('Finished!');}, blink: true
+        //aqui va evento same different automatico envíe """ si el usuario no ha contestado
+        if(!envioDecision) enviarRespuesta('NO_CONTESTO');
+        /*$(this).html('Finished!');*/
+        }, blink: true
     });
 
     $( "#dialog_result" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});
     $('.alert div.ui-dialog-titlebar').hide();//transparent
-    $('.alert').css('background','transparent');
-    ////alert('doing2');
+    $('.alert').css('background','transparent');    
 });
 } ) ( jQuery );
-function getHoraMinSec(){
-    var hora=$("#time #hour:first").text();
-    var minuto=$("#time #minute:first").text();
-    var segundo=$("#time #second:first").text();
-    //alert(hora+" - "+minuto+" - "+segundo);
-}
 </script>
 
         <script src="http://localhost:6969/socket.io/socket.io.js"></script>
         <script type="text/javascript">
             /*Datos de la session*/
-            var round_actual="<?php $round=$sf_user->getAttribute('round_actual'); echo $round-1; ?>"; 
+            var round_actual=<?php $round=$sf_user->getAttribute('round_actual'); echo $round-1; ?>; 
             var mesa_id="<?php echo $sf_user->getAttribute('mesaid'); ?>";
             var jug_id="<?php echo $sf_user->getAttribute('jugadorid'); ?>";
             var modoJugada="<?php echo $sf_user->getAttribute('modoJugada'); ?>";
             var websocket;
-            var set_videos=[];    
+            var set_videos=[]; 
+            var envioDecision=0;
                         
             <?php 
             $tmp=$sf_user->getAttribute('set_intervalos_videos'); $tam=count($tmp);                               
@@ -58,36 +59,8 @@ function getHoraMinSec(){
             <?php } ?>
             
             var video_actual=set_videos[round_actual].video_url;
+            //cueVideo(video_url); play(0);
             
-            /*Asigna videos por cada round_num, y lo carga*/
-            function asignarVideo(round_num){                
-                var video_url="";
-                var ini;
-                var fin;
-                var respuesta_real;
-                                
-                var request;
-                request = createXMLHttpRequest();
-                request.open('GET','<?php echo url_for('Mesa/obtenerVideoRound'); ?>'+"?round_index="+round_num,true);
-                request.onreadystatechange=function(){                      
-                    if(request.readyState==4){
-                        if(request.status==200){                             
-                            respuestajson=request.responseText; 
-                            if(respuestajson!=null){                                                                
-                                var myObject = eval('(' + respuestajson + ')');
-                                video_url=myObject.video_url;
-                                ini=myObject.inicio;
-                                fin=myObject.fin;
-                                respuesta_real=myObject.respuesta_real;
-                                ////alert(respuesta_real+" "+video_url +" + "+ini+" + "+fin);
-                                cueVideo(video_url);
-                                play(0);
-                            }
-                        }
-                    }
-                };
-                request.send(null);                                
-            }            
             /*Ajax*/
             function createXMLHttpRequest() {
                 var request = false;
@@ -118,11 +91,10 @@ function getHoraMinSec(){
             /*Guarda la etiqueta, en el tiempo que fue ingresada*/
             function consulta_guardarEtiqueta(etiqueta_texto){                
                 var request;
-                request = createXMLHttpRequest();
-                //obtener etiqueta, tiempo
-                var hora='00';
-                var minuto='01';
-                var segundo='50';
+                request = createXMLHttpRequest();                
+                var hora=$("#time #hour:first").text();
+                var minuto=$("#time #minute:first").text();
+                var segundo=$("#time #second:first").text();
                 request.open('GET','<?php echo url_for('Mesa/insertarEtiqueta'); ?>'+"?etiqueta_texto="+etiqueta_texto+"&hora="+hora+"&minuto="+minuto+"&segundo="+segundo+"&mesa_id="+mesa_id+"&jug_id="+jug_id+"&round_num="+round_actual,true);
                 request.onreadystatechange=function(){                      
                     if(request.readyState==4){
@@ -140,10 +112,11 @@ function getHoraMinSec(){
             function guardarRespuesta(respuesta){                
                 var request;
                 request = createXMLHttpRequest();
-                //obtener respuesta, tiempo
-                var hora='00';
-                var minuto='01';
-                var segundo='50';
+                //obtener respuesta, tiempo                
+                var hora=$("#time #hour:first").text();
+                var minuto=$("#time #minute:first").text();
+                var segundo=$("#time #second:first").text();
+                
                 request.open('GET','<?php echo url_for('Mesa/insertarDecision'); ?>'+"?respuesta="+respuesta+"&hora="+hora+"&minuto="+minuto+"&segundo="+segundo+"&mesa_id="+mesa_id+"&jug_id="+jug_id+"&round_num="+round_actual,true);
                 request.onreadystatechange=function(){                      
                     if(request.readyState==4){
@@ -157,8 +130,9 @@ function getHoraMinSec(){
                 };
                 request.send(null);
             }
+            /*PASO DE NIVELES ROUNDS*/
             /*Actualiza el puntaje de la base, de la mesa jugador*/
-            function actualizarPuntaje(puntos){                
+            function actualizarPuntaje(puntos,resultado_jug_tu,resultado_jug_partner){                
                 var request;
                 request = createXMLHttpRequest();               
                 request.open('GET','<?php echo url_for('Mesa/actualizarPuntaje'); ?>'+"?puntos="+puntos+"&mesa_id="+mesa_id+"&jug_id="+jug_id,true);
@@ -167,10 +141,41 @@ function getHoraMinSec(){
                         if(request.status==200){                             
                             respuestajson=request.responseText;
                             if(respuestajson!=null && respuestajson!='' && respuestajson!='0'){
-                                //mostrar en pantalla correcto, incorrecto n seconds
-                                if(puntos==100)alert("Correcto, Puntaje: "+puntos); 
-                                else alert("Incorrecto, Puntaje: "+puntos);
+                                //****************** reusltados y PASAR A SIGUIENTE ROUND ***************************                              
+                                //EDITAR RESULTADO_INDIVIDUAL 
+                                //JUG1                                
+                                if(resultado_jug_tu=="ACIERTO")
+                                    $("#respuesta_jug").attr({ src: "/images/check.png", alt: "Resultado Jug1" });
+                                else
+                                    $("#respuesta_jug").attr({ src: "/images/cross.png", alt: "Resultado Jug1" });
+                                //JUG2
+                                if(resultado_jug_partner=="ACIERTO")
+                                    $("#respuesta_jug_partner").attr({ src: "/images/check.png", alt: "Resultado Jug2" });
+                                else
+                                    $("#respuesta_jug_partner").attr({ src: "/images/cross.png", alt: "Resultado Jug2" });
+                                
+                                //EDITAR PUNTAJE GRUPAL O RESULTADO_DECISIONES_COLABORATIVAS [mostrar en pantalla correcto, incorrecto por n seconds]
+                                if(puntos==100) $("#resultado_decision").html("Correcto2");
+                                else $("#resultado_decision").html("Incorrecto2");
+                                
+                                //MOSTRAR RESULTADO 5000ms
+                                $( "#dialog_result" ).dialog( "open" );
+                                setTimeout(function(){$( "#dialog_result" ).dialog("close")},5000);
+                                                                
+                                //incrementar round
+                                round_actual+=1;    
+                                
                                 //y al cerrar eso, asignar nuevo video
+                                video_actual=set_videos[round_actual].video_url;
+                                cueVideo(video_actual);
+                                play(0);
+                                
+                                //Limpiar
+                                envioDecision=0;
+                                
+                                //Limpiar LOG y LOGPARTNER
+                                document.getElementById("log").innerHTML="";
+                                document.getElementById("logpartner").innerHTML="";
                             }
                         }
                     }
@@ -205,14 +210,18 @@ function getHoraMinSec(){
                                 $("#content").unmask();
                                 play(0);
                                 mute(false);
-                                logPartner("Received: COORDENADA ES: "+value);
+                                //logPartner("Received: SINCRONIZADOS: "+value);
                             },0.007);
-                        }else if(obj.tipo=="same-different"){                         
-                            //guardar puntaje, acumularlo  
-                            //alert("aquii same-different");
-                            actualizarPuntaje(value);                            
+                        }else if(obj.tipo=="same-different"){ 
+                            var keys=Object.keys(value);                            
+                            var puntaje_grupal=obj.objeto[keys[0]];
+                            var resultado_jug_tu=obj.objeto[keys[1]];
+                            var resultado_jug_partner=obj.objeto[keys[2]];
+                            
+                            //guardar puntaje, acumularlo
+                            actualizarPuntaje(puntaje_grupal,resultado_jug_tu,resultado_jug_partner);                            
                         }else{
-                            logPartner("Received: "+value);
+                            logPartner(""+value);
                         }                           
                     }); 
                     
@@ -235,20 +244,24 @@ function getHoraMinSec(){
                 var message = document.getElementById("txt_mensaje");
                 var msg = message.value;
                 if(!msg){ //alert("Message can not be empty");
-                 return; }
-             
+                 return; 
+                }             
                 websocket.emit("mensaje", '{"tipo":"mensajes","objeto":{"'+mesa_id+'": "'+msg+'"}}');                
-                log('Sent: -mesa: '+mesa_id+" - "+msg);//consulta_guardarEtiqueta(msg); 
+                log(""+msg);
+                consulta_guardarEtiqueta(msg);
+                
                 message.value = '';
-                message.focus();       
+                message.focus();                 
             }
             /*Imprime mensajes en el área Tú */
-            function log(msg){ 
-                document.getElementById("log").innerHTML+="<br>"+msg; 
+            function log(msg){                 
+                var texto=document.getElementById("log").innerHTML;
+                document.getElementById("log").innerHTML=msg+"<br>"+texto; 
             }
             /*Imprime mensajes en el área Partner */
-            function logPartner(msg){ 
-                document.getElementById("logpartner").innerHTML+="<br>"+msg; 
+            function logPartner(msg){                 
+                var texto=document.getElementById("logpartner").innerHTML;
+                document.getElementById("logpartner").innerHTML=msg+"<br>"+texto; 
             }
             /*Envía, con evento keypress, la etiqueta a servidor de socket, y guarda la etiqueta en la base*/
             function enviar_texto(e){ 
@@ -256,7 +269,7 @@ function getHoraMinSec(){
             }   
             
             /*Uso de Youtube Api*/
-            var params = { allowScriptAccess: "always" };
+            var params = { allowScriptAccess: "always", wmode:"transparent" };
             var atts = { id: "myytplayer" };
             swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3",
             "ytapiplayer", "400", "233", "8", null, null, params, atts);
@@ -324,8 +337,14 @@ function getHoraMinSec(){
             function enviarRespuesta(respuesta){                
                 //ENVIAR POR AJAX REQUERIMIENTO PARA GUARDAR LA RESPUESTA
                 guardarRespuesta(respuesta);
+                
+                //resultado: ACIERTO si coinciden
+                if(respuesta==set_videos[round_actual].respuesta_real) respuesta='ACIERTO';
+                else respuesta='NO_ACIERTO';
+                
                 //ENVIAR A SOCKET_SERVER PARA ACTUALIZA LA RESPUESTA
                 enviar_objeto('same-different',jug_id,''+respuesta); 
+                envioDecision=1;
             }
 
             window.onload = init;
@@ -333,11 +352,12 @@ function getHoraMinSec(){
 
 <div id="wrapper">
 	<div id="header">
-		<h1>My First Heading</h1>
+		<h1>CazaVideos</h1>
 		<p>Divi&eacute;rtete</p>
 		<div id="timer_content">
-			<h3>Tiempo:</h3>
-			<div id="time" class="content_text" ></div>
+                    <h3>Tiempo:</h3>
+                    <div id="timeglobal" class="content_text" ></div>
+                    <div id="time" class="content_text_min" ></div>
 		</div>
 		<div id="puntos_content">
 			<h3>Puntos:</h3>
@@ -377,34 +397,12 @@ function getHoraMinSec(){
 		</div>
 	</div>
 	<div id="dialog_result" title="Basic dialog" style="display:none; background: #333; min-height: 0px !important; opacity:0.95; filter:alpha(opacity=95); ">
-		<div style="float:left;" ><p style="font-size:10px; font-weight:bold;">Tu</p><img src="/images/icon_checked.png" width="16px" /></div>
-		<div style="float:left; padding:0px 25px;"><h3 style="text-align:center; font-size:20px; color:white;">Incorrecto</h3></div>
-		<div style="float:left;"><p style="font-size:10px; font-weight:bold;">Tu compa&ntilde;ero</p><img src="/images/icon_checked.png" width="16px" /></div>
+		<div style="float:left;" ><p style="font-size:10px; font-weight:bold;">Tu</p><img id="respuesta_jug" src="/images/icon_checked.png" width="16px" /></div>
+		<div style="float:left; padding:0px 25px;"><h3 style="text-align:center; font-size:20px; color:white;" id="resultado_decision" >Incorrecto</h3></div>
+		<div style="float:left;"><p style="font-size:10px; font-weight:bold;">Tu compa&ntilde;ero</p><img id="respuesta_jug_partner" src="/images/icon_checked.png" width="16px" /></div>
 	</div>
 </div>
-<!--
-<p>
-    Hola usuario: <strong><?php //echo $sf_user->getAttribute('userid') ?></strong>.
-</p>    
-<div id="ytapiplayer">
-    You need Flash player 8+ and JavaScript enabled to view this video.
-</div>
-
-<a href="javascript:void(0);" onclick="play('I9cCPQVPv8o&ob');">Same-Different</a>
-<h3>WebSocket v2.00</h3>
-<div id="prueba"></div>
-<div id="log"></div>
-<div id="logpartner"></div>
-<input id="msg" type="textbox" onkeypress="onkey(event)"/>
-<p id="timer"></p>
-<button onclick="send()">Send</button>
-<button onclick="quit()">Quit</button>
-<div>Commands: hello, hi, name, age, date, time, thanks, bye</div>
-<a href="<?php // echo url_for('Mesa/new'); ?>">Volver a Jugar </a>
-<script>init();</script>
-
--->
-
+<!--Fin de Interfaz-->
         <p style="color:black;">Hola usuario: <strong><?php echo $sf_user->getAttribute('userid') ?></strong>.</p>            
         <p style="color:black;" id="resp"></p>
         <p style="color:black;" id="loaded"></p>

@@ -105,6 +105,15 @@ body{
         font-weight:bold;
         padding-left:18px;
 }
+.content_text_min{
+        color:white;
+        padding:0px;
+        /*font-size:40px;*/
+        font-size:15px;
+        margin:0px;
+        font-weight:bold;
+        padding-left:18px;
+}
 #video_principal{
         /*resolucion 800x600*/
         background:transparent url('/images/tv_plasma4_img.png') no-repeat left top;

@@ -177,7 +177,7 @@ class MesaActions extends sfActions {
         $id_decision = 0;
         if ($respuesta != '' && $hora != '' && $minuto != '' && $segundo != '') {            
             $decision = new Decision();
-            $relacionmesavideo= RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $jug_id, $round_num);
+            $relacionmesavideo= RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $jug_id, $round_num+1);
             if($relacionmesavideo!=NULL){
                 $relacionmesavideo_id=$relacionmesavideo->getId();            
                 $decision->setRelacionmesavideoId($relacionmesavideo_id);
@@ -246,7 +246,7 @@ class MesaActions extends sfActions {
         if ($etiqueta_texto != '' && $hora != '' && $minuto != '' && $segundo != '') {
             //calificar, insertarla con el tiempo
             $etiqueta = new InstanciaEtiqueta();
-            $relacionmesavideo= RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $jug_id, $round_num);
+            $relacionmesavideo= RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $jug_id, $round_num+1);
             if($relacionmesavideo!=NULL){
                 $relacionmesavideo_id=$relacionmesavideo->getId();  
                 $etiqueta->setRelacionmesavideoId($relacionmesavideo_id); //*IMPORTANTE* ojo HAY QUE PASAR RELACIONMESAVIDEO
