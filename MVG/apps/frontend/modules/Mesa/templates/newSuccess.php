@@ -57,7 +57,6 @@ function getHoraMinSec(){
             set_videos[i]=intervaloObj;
             <?php } ?>
             
-            //alert(set_videos[0].inicio+" - "+set_videos[1].video_url);
             var video_actual=set_videos[round_actual].video_url;
             
             /*Asigna videos por cada round_num, y lo carga*/
@@ -287,24 +286,30 @@ function getHoraMinSec(){
                     else ytplayer.unMute();
                 }
             }            
+            var estacargado=0; var resp; var loaded;
             function onytplayerStateChange(newState) {  
-                var resp = document.getElementById("resp");
-                resp.innerHTML="total: "+ytplayer.getVideoBytesTotal()+" - cargando: "+(ytplayer.getVideoBytesLoaded());
+                resp = document.getElementById("resp");
+                resp.innerHTML="total: "+ytplayer.getVideoBytesTotal()+" - cargando: "+(ytplayer.getVideoBytesLoaded())+" - estado: "+newState;
 		//if(newState==0) ytplayer.playVideo(); //ninguno de estos estados			
                 //Possible values are unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5).
-		if(ytplayer.getVideoBytesLoaded()>=ytplayer.getVideoBytesTotal() && ytplayer.getVideoBytesTotal()!=0){
-                    //ytplayer.playVideo();
-                    //mute(false);
-                    //actualizar_intervalo_estado(newState);                    
-                    //enviar mensaje de tipo sincronizacion-videos
-                    //enviar_mensaje_interno("sincronizacion-videos","COMPLETO"); 
+		/*if(ytplayer.getVideoBytesLoaded()>=ytplayer.getVideoBytesTotal() && ytplayer.getVideoBytesTotal()!=0){                    
                     enviar_objeto("sincronizacion-videos",jug_id,"COMPLETO");
                     alerta("se cargo todo el video, lo envío a server sockets");
                 }else{
                     //ytplayer.pauseVideo();	//pausado no hace buffer ràpido		                    
                     //mostrarLoading();                    
                     mute(true);
-                }
+                }*/
+                if(newState==1) {
+                    alerta("se cargo todo el video, lo envío a server sockets");
+                    ytplayer.pauseVideo(); 
+                    estacargado=1;
+                    enviar_objeto("sincronizacion-videos",jug_id,"COMPLETO");
+                    loaded = document.getElementById("loaded");
+                    loaded.innerHTML+="Estado Video:: "+newState;                    
+                } else{
+                    //ytplayer.playVideo();
+                }               
             } 
             
             /*Muestra una máscara loading*/
@@ -400,8 +405,7 @@ function getHoraMinSec(){
 
 -->
 
-
-    
-        <p>Hola usuario: <strong><?php echo $sf_user->getAttribute('userid') ?></strong>.</p>            
-        <p id="resp"></p>
+        <p style="color:black;">Hola usuario: <strong><?php echo $sf_user->getAttribute('userid') ?></strong>.</p>            
+        <p style="color:black;" id="resp"></p>
+        <p style="color:black;" id="loaded"></p>
         <a href="<?php echo url_for('Mesa/new'); ?>">Volver a Jugar </a><!--Va en interfaz de ranking-->    

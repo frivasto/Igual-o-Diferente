@@ -259,6 +259,25 @@ class MesaActions extends sfActions {
         return $this->renderText("" + $id_etiqueta);
     }
 
+    /* Link Volver a Jugar: Remueve session y va Iniciar */
+    public function executeVolverAJugar(sfWebRequest $request) {
+        //REMOVER DATOS DE SESSION
+        $this->getUser()->getAttributeHolder()->clear();
+        /*
+        if(isset($this->getUser()->getAttribute('set_intervalos_videos')))
+            $this->getUser()->getAttributeHolder()->remove('set_intervalos_videos');
+        if(isset($this->getUser()->getAttribute('jugadorid')))
+            $this->getUser()->getAttributeHolder()->remove('jugadorid');
+        if(isset($this->getUser()->getAttribute('mesaid')))
+            $this->getUser()->getAttributeHolder()->remove('mesaid');
+        if(isset($this->getUser()->getAttribute('round_actual')))
+            $this->getUser()->getAttributeHolder()->remove('round_actual');
+        if(isset($this->getUser()->getAttribute('modoJugada')))
+            $this->getUser()->getAttributeHolder()->remove('modoJugada');*/        
+        //VOLVER A INICIAR
+        $this->redirect('Mesa/index');
+    }
+    
     /* Link Iniciar */
     public function executeNew(sfWebRequest $request) {
         
