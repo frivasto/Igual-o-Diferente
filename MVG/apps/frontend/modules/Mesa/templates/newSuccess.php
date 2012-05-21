@@ -163,7 +163,7 @@ $(document).ready(function() {
                                 setTimeout(function(){$( "#dialog_result" ).dialog("close")},5000);
                                                                 
                                 //incrementar round
-                                round_actual+=1;    
+                                round_actual++;    
                                 if(round_actual<set_videos.length){
                                     //y al cerrar eso, asignar nuevo video
                                     video_actual=set_videos[round_actual].video_url;
@@ -181,7 +181,7 @@ $(document).ready(function() {
                                     
                                 }else{
                                     //Ir a Game Over url
-                                    
+                                    window.location.href = "<?php echo url_for('Mesa/gameOver') ?>";
                                 }
                                     
                             }
@@ -190,6 +190,7 @@ $(document).ready(function() {
                 };
                 request.send(null);
             }
+            
             /*Inicializa websocket si es modo Parejas*/
             function init(){                
                 //alert(modoJugada);        

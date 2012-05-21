@@ -1,0 +1,198 @@
+/* 
+    Document   : gameover.css
+    Created on : 20-may-2012, 21:32:48
+    Author     : Salvatierra
+    Description:
+        Purpose of the stylesheet follows.
+*/
+body{
+        font-family: Arial, Helvetica, sans-serif;
+}
+#wrapper{
+        /*resolucion 800x600*/
+        background:#ffffff url('/images/bgfondojuego.jpg') repeat-y left top;
+        min-height:600px;
+        width:800px;
+        margin:0 auto;
+}
+#header{
+        height:100px;
+        /*background: #A690AF;*/
+        width:91%;
+        /*margin: 10px;*/
+        margin: 10px 0px 0px 30px;
+}
+#header h1, p{
+        color:white;
+        text-align: center;
+}
+#header h1{		
+        padding: 35px 0px 0px 0px;
+        font-weight:bold;
+        margin: 10px 10px 0px 10px;
+}
+#header p{
+        font-size:10px;
+        margin: 0px;
+}
+#content1{
+        min-height:400px;
+        width:30%;
+        background: rgb(253,213,255); /*223*/
+        margin: 10px 0px 0px 30px;
+        float:left;	
+        font-size:12px;
+}
+#tabs{
+        margin: 10px 30px 0px 30px;
+        font-size:12px;		
+}
+.ui-tabs .ui-tabs-panel{
+        padding: 0px !important;
+}
+#content2{
+        /*min-height:400px;*/
+        height:400px;
+        width:60%;
+        background: rgb(210,188,216);
+        margin: 10px 10px 10px 0px;
+        float:left;		
+}
+#content2 #videos{
+        height:340px;
+        margin: 10px 10px 10px 10px;
+        overflow:auto;		
+}
+#content1 h3, #content1 p{	
+        /*color: rgb(78,1,82);*/
+        padding:10px;
+}
+#content2 h3, #content2 p{	
+        color: rgb(78,1,82);
+}
+#content2 h3{			
+        padding: 0px 10px 5px 5px;
+        margin: 5px 10px 10px 5px;
+}
+#content2 p{
+        padding:1px;
+        margin:2px;
+        font-size: 12px;
+}
+#content2 iframe{
+        float: left;			
+}
+#content2 #video_details{
+        height:131px;
+        overflow:auto;
+        background-color:#399; /*rgb(78,1,82);*/
+}
+#content2 #video_details p{			
+        color:white;
+        text-align:	left;
+        padding:2px 0px 0px 10px;
+        font-weight:bold;
+}	
+#content2 div#video_details h3{			
+        margin: 2px 10px 1px 5px;
+}
+#content1 #jugar_again{
+        margin:30px
+}
+#content1 ul
+{
+        list-style-type:none;
+        margin:0;
+        padding:0;
+}	
+#content1 span#rounds
+{		
+        display:block;
+        font-weight:bold;
+        color:#FFFFFF;
+        background-color:#399;/*#7A991A*/
+        border-style:none solid none none;
+        border-color:#7A991A;
+        border-width:5px;		
+        text-align:left;
+        padding:4px 4px 4px 10px;
+        text-decoration:none;	
+        margin-bottom: 5px;
+}
+#content1 a:hover, #content1 a:active
+{		
+        border-style:none solid none none;
+        border-color:#7A991A;
+        border-width:5px;		
+}
+#jugar_again, #volver_a_jugar{
+        border: 1px solid #448dae; background: #026890 url(/css/start/images/ui-bg_gloss-wave_50_026890_500x100.png) 50% 50% repeat-x;
+}
+button.ui-state-active, button.ui-state-hover{
+        border: 1px solid #98BF21 !important; background: #98BF21 url(/css/start/images/ui-bg_glass_45_98bf21_1x400.png) 50% 50% repeat-x !important;
+}
+
+/*Tab2 css*/
+#tab2_contenido2{
+        background-color: #448DAE;
+        border: 2px solid black;		
+}
+#tab2_contenido2 .score_info, #tab2_contenido2 .other_info{
+        background-color: #448DAE;
+        width:47%;
+        padding:10px;
+        float:left;	
+        border:1px solid #CCCCCC;
+        border-style: none none solid solid;
+}
+#tab2_contenido1{
+        background-color: #D2BCD8;
+}
+#tab2_contenido1 .info_general{
+        padding:10px;
+        float:left;
+        width:45%;
+}
+.estilo_numerico{
+        font-size:16px;	
+        font-weight:bold;			
+}
+#tab2_contenido1 .info_general{	
+        font-weight:bold;
+}	
+#tab2_contenido1 .info_general .info_resaltada{
+        font-size:40px;		
+}	
+#tab2_contenido1 .info_general .info_nivel{
+        font-size:28px;
+        /*line-height:10px;		*/
+}
+.info_resaltada, .info_nivel{
+        text-align: right;
+}
+.info_nivel span{
+        font-size:12px;
+        line-height:10px;
+        display:block;
+        padding-bottom:10px;
+}
+#tab2_contenido1 h3, #tab2_contenido1 p{
+        color:#4E0152;
+}
+#tab2_menu{
+        position: relative;
+        background-color: #4E0152;
+        padding:10px;
+}
+#tab2_menu button{
+        position: relative;
+        top: 0;
+        left:40%;
+}
+.info_general .title{
+        text-align:left;
+        margin-left:15px;
+        padding:0px 0px 10px 0px;
+        border:5px dotted #4E0152;
+        border-style: none none solid none;
+}

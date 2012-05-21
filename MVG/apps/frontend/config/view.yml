@@ -11,8 +11,8 @@ default:
     #keywords:     symfony, project
     #language:     en
     #robots:       index, follow
-  javascripts:    [jquery-1.7.1.min.js,jquery-ui-1.8.18.custom.min.js, jquery.loadmask.js, jquery.chrony.min.js, swfobject.js]
-  stylesheets:    [main.css, /css/load-mask/jquery.loadmask.css, /css/custom-theme/jquery-ui-1.8.18.custom.css]
+  javascripts:    [jquery-1.7.1.min.js, jquery.loadmask.js, jquery.chrony.min.js, swfobject.js]
+  stylesheets:    [main.css, /css/load-mask/jquery.loadmask.css]
 
 
   has_layout:     true

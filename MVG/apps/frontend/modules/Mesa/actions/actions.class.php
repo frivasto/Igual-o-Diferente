@@ -278,6 +278,13 @@ class MesaActions extends sfActions {
         $this->redirect('Mesa/index');
     }
     
+    /* Link GameOver*/
+    public function executeGameOver(sfWebRequest $request) {
+        //PONER EN SESSION DATOS DE LA CONSULTA PARA USAR EN GAMERECAP Y EN SCOREBOARD
+        //LLAMA A GAMEOVERSUCESS
+        
+    }
+    
     /* Link Iniciar */
     public function executeNew(sfWebRequest $request) {
         

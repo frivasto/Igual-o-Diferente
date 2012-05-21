@@ -1,4 +1,8 @@
 ## YAML Template.
 newSuccess:
-  #javascripts: []
-  stylesheets: [newmesa.css]
+  javascripts: [jquery-ui-1.8.18.custom.min.js]
+  stylesheets: [newmesa.css, /css/custom-theme/jquery-ui-1.8.18.custom.css]
+  
+gameOverSuccess:
+  javascripts: [jquery-ui-1.8.18.custom.min.js ]
+  stylesheets: [gameover.css, /css/start/jquery-ui-1.8.18.custom.css]  
