@@ -164,18 +164,26 @@ $(document).ready(function() {
                                                                 
                                 //incrementar round
                                 round_actual+=1;    
-                                
-                                //y al cerrar eso, asignar nuevo video
-                                video_actual=set_videos[round_actual].video_url;
-                                cueVideo(video_actual);
-                                play(0);
-                                
-                                //Limpiar
-                                envioDecision=0;
-                                
-                                //Limpiar LOG y LOGPARTNER
-                                document.getElementById("log").innerHTML="";
-                                document.getElementById("logpartner").innerHTML="";
+                                if(round_actual<set_videos.length){
+                                    //y al cerrar eso, asignar nuevo video
+                                    video_actual=set_videos[round_actual].video_url;
+                                    cueVideo(video_actual);
+                                    play(0);
+
+                                    //Limpiar
+                                    envioDecision=0;
+
+                                    //Limpiar LOG y LOGPARTNER
+                                    document.getElementById("log").innerHTML="";
+                                    document.getElementById("logpartner").innerHTML="";
+                                    
+                                    //reiniciar timer local
+                                    
+                                }else{
+                                    //Ir a Game Over url
+                                    
+                                }
+                                    
                             }
                         }
                     }

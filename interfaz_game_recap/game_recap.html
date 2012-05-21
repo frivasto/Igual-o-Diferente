@@ -126,18 +126,84 @@
 		border-width:5px;
 		*/
 	}
-	#jugar_again{
+	#jugar_again, #volver_a_jugar{
 		border: 1px solid #448dae; background: #026890 url(custom_css/css/custom-theme/images/ui-bg_gloss-wave_50_026890_500x100.png) 50% 50% repeat-x;
 	}
 	button.ui-state-active, button.ui-state-hover{
 		border: 1px solid #98BF21 !important; background: #98BF21 url(custom_css/css/custom-theme/images/ui-bg_glass_45_98bf21_1x400.png) 50% 50% repeat-x !important;
+	}
+
+	/*Tab2 css*/
+	#tab2_contenido2{
+		background-color: #448DAE;
+		border: 2px solid black;		
+	}
+	#tab2_contenido2 .score_info, #tab2_contenido2 .other_info{
+		background-color: #448DAE;
+		width:47%;
+		padding:10px;
+		float:left;	
+		border:1px solid #CCCCCC;
+		border-style: none none solid solid;
+	}
+	#tab2_contenido1{
+		background-color: #D2BCD8;
+	}
+	#tab2_contenido1 .info_general{
+		padding:10px;
+		float:left;
+		width:45%;
+	}
+	.estilo_numerico{
+		font-size:16px;	
+		font-weight:bold;			
+	}
+	#tab2_contenido1 .info_general{	
+		font-weight:bold;
 	}	
+	#tab2_contenido1 .info_general .info_resaltada{
+		font-size:40px;		
+	}	
+	#tab2_contenido1 .info_general .info_nivel{
+		font-size:28px;
+		/*line-height:10px;		*/
+	}
+	.info_resaltada, .info_nivel{
+		text-align: right;
+	}
+	.info_nivel span{
+		font-size:12px;
+		line-height:10px;
+		display:block;
+		padding-bottom:10px;
+	}
+	#tab2_contenido1 h3, #tab2_contenido1 p{
+		color:#4E0152;
+	}
+	#tab2_menu{
+		position: relative;
+		background-color: #4E0152;
+		padding:10px;
+	}
+	#tab2_menu button{
+		position: relative;
+		top: 0;
+		left:40%;
+	}
+	.info_general .title{
+		text-align:left;
+		margin-left:15px;
+		padding:0px 0px 10px 0px;
+		border:5px dotted #4E0152;
+		border-style: none none solid none;
+	}
 	
 </style>
 <script type="text/javascript">
 $(document).ready(function() {  
 	$("#jugar_again").button();
-  
+	$("#volver_a_jugar").button();
+	
 	$("#videos_radios").buttonset();
 	$("#videos_radios1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185})
 		.click(function(){});
@@ -156,7 +222,7 @@ $(document).ready(function() {
 <body>
 <div id="wrapper">
 	<div id="header">
-		<h1>My First Heading</h1>
+		<h1>CazaVideos</h1>
 		<p>Res&uacute;men del Juego</p>
 	</div>
 	<div id="tabs">
@@ -209,7 +275,24 @@ $(document).ready(function() {
 		</div>
 		<!--Tab Scores-->
 		<div id="tabs-2">
-			<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+			<div id="tab2_contenido1">
+				<div id="resultados_juego">
+					<div class="info_general"><p class="title">El puntaje de este juego:</p><div><p class="info_resaltada estilo_numerico">80</p></div></div>
+					<div class="info_general"><p class="title">Tu CazaNivel es:</p><p class="info_nivel estilo_numerico"><span>Nivel 1</span>Novato</p></div>	
+					<div id="clear-fix" style="clear:both; width:100%"></div>
+				</div>							
+				<div id="tab2_menu">
+					<button id="volver_a_jugar" onclick="">Volver a Jugar</button>
+				</div>
+			</div>	
+			<div id="tab2_contenido2">				
+				<div class="score_info "><p>Tu puntaje:</p><p class="estilo_numerico">80</p></div>
+				<div class="other_info "><p>Tu puntos extra:</p><p class="estilo_numerico">80</p></div>
+				<div class="score_info "><p>Tu total CazaPuntaje:</p><p class="estilo_numerico">80</p></div>
+				<div class="other_info"><p>Puntaje del mejor jugador:</p><p class="estilo_numerico">80</p></div>
+				<div id="clear-fix" style="clear:both; width:100%"></div>
+			</div>	
+			<div id="clear-fix" style="clear:both; width:100%"></div>
 		</div>
 	</div>
 	
