@@ -112,7 +112,8 @@ body{
         font-size:15px;
         margin:0px;
         font-weight:bold;
-        padding-left:18px;
+        /*padding-left:18px;*/
+        padding-left: 50px;
 }
 #video_principal{
         /*resolucion 800x600*/

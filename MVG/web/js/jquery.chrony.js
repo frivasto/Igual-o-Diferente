@@ -148,7 +148,17 @@
 					methods.checkAlert.call(self, hour, minute, second);
 				}, 1000);
 			});
-		}, checkAlert: function(hour, minute, second) {
+		}
+                
+                , destroy : function( ) {
+
+                    return this.each(function(){
+                        $(window).unbind('.chrony');
+                    })
+
+                    }
+                
+                , checkAlert: function(hour, minute, second) {
 			var $this	= $(this),
 				alert	= this.opt.alert;
 

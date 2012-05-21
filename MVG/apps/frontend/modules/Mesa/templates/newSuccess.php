@@ -10,28 +10,36 @@ $(document).ready(function() {
     $('#same_different2').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20)
     .click(function(){
             enviarRespuesta('DIFFERENT');
-    });
-
-    //JQUERY CHRONY con callback  otra opcion es enviar el texto completo text: '1:20:30' MEJOR!!
-    //PERMITE REAJUSTAR DATOS TAMBIÉN $('#time').chrony('set', { decrement: 2 }); re-adjust runtime options.
-        
-    $('#timeglobal').chrony({hour: 0, minute: 3, second: 3,finish: function() {
-        $(this).html('Finished!');
-        }, blink: true
-    });
-    
-    $('#time').chrony({hour: 0, minute: 1, second: 3,finish: function() {
-        //aqui va evento same different automatico envíe """ si el usuario no ha contestado
-        if(!envioDecision) enviarRespuesta('NO_CONTESTO');
-        /*$(this).html('Finished!');*/
-        }, blink: true
-    });
-
+    });    
     $( "#dialog_result" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});
     $('.alert div.ui-dialog-titlebar').hide();//transparent
     $('.alert').css('background','transparent');    
 });
 } ) ( jQuery );
+
+//JQUERY CHRONY con callback  otra opcion es enviar el texto completo text: '1:20:30' MEJOR!!
+//PERMITE REAJUSTAR DATOS TAMBIÉN $('#time').chrony('set', { decrement: 2 }); re-adjust runtime options.
+function empezarTimerGlobal(){
+( function($) {
+    $('#timeglobal').chrony({hour: 0, minute: 2, second: 0,finish: function() {
+        $(this).html('Finished!');
+        }, blink: true
+    });
+} ) ( jQuery );
+}    
+
+function empezarTimerLocal(){
+( function($) {
+    //$(window).unbind('.chrony');
+    $('#time').chrony('destroy').chrony({hour: 0, minute: 0, second: 35,finish: function() {
+        //aqui va evento same different automatico envíe """ si el usuario no ha contestado
+        verificarEnvioRespuesta();
+        /*$(this).html('Finished!');*/
+        }, blink: true
+    });
+} ) ( jQuery );
+}
+
 </script>
 
         <script src="http://localhost:6969/socket.io/socket.io.js"></script>
@@ -61,6 +69,10 @@ $(document).ready(function() {
             var video_actual=set_videos[round_actual].video_url;
             //cueVideo(video_url); play(0);
             
+            function verificarEnvioRespuesta(){
+                alert(""+envioDecision);
+                if(envioDecision==0) enviarRespuesta('NO_CONTESTO');
+            }
             /*Ajax*/
             function createXMLHttpRequest() {
                 var request = false;
@@ -155,7 +167,7 @@ $(document).ready(function() {
                                     $("#respuesta_jug_partner").attr({ src: "/images/cross.png", alt: "Resultado Jug2" });
                                 
                                 //EDITAR PUNTAJE GRUPAL O RESULTADO_DECISIONES_COLABORATIVAS [mostrar en pantalla correcto, incorrecto por n seconds]
-                                if(puntos==100) $("#resultado_decision").html("Correcto2");
+                                if(puntos==100+"") $("#resultado_decision").html("Correcto2");
                                 else $("#resultado_decision").html("Incorrecto2");
                                 
                                 //MOSTRAR RESULTADO 5000ms
@@ -171,13 +183,14 @@ $(document).ready(function() {
                                     play(0);
 
                                     //Limpiar
-                                    envioDecision=0;
+                                    //envioDecision=0;
 
                                     //Limpiar LOG y LOGPARTNER
                                     document.getElementById("log").innerHTML="";
                                     document.getElementById("logpartner").innerHTML="";
                                     
-                                    //reiniciar timer local
+                                    //reiniciar timer local <-- eso ya lo incluye la sync video
+                                    //empezarTimerLocal(); //aqui no va sino después de sincronizado, por ahora qui probar
                                     
                                 }else{
                                     //Ir a Game Over url
@@ -328,7 +341,10 @@ $(document).ready(function() {
                     estacargado=1;
                     enviar_objeto("sincronizacion-videos",jug_id,"COMPLETO");
                     loaded = document.getElementById("loaded");
-                    loaded.innerHTML+="Estado Video:: "+newState;                    
+                    loaded.innerHTML+="Estado Video:: "+newState; 
+                    
+                    //empezar reloj local una vez sinronizado
+                    
                 } else{
                     //ytplayer.playVideo();
                 }               
@@ -346,17 +362,26 @@ $(document).ready(function() {
             function enviarRespuesta(respuesta){                
                 //ENVIAR POR AJAX REQUERIMIENTO PARA GUARDAR LA RESPUESTA
                 guardarRespuesta(respuesta);
+                                
+                var rsp_real=set_videos[round_actual].respuesta_real;
+                if(rsp_real==1) rsp_real="SAME";
+                else rsp_real="DIFFERENT";
                 
                 //resultado: ACIERTO si coinciden
-                if(respuesta==set_videos[round_actual].respuesta_real) respuesta='ACIERTO';
-                else respuesta='NO_ACIERTO';
+                if(respuesta==rsp_real+"") respuesta='ACIERTO';
+                //else respuesta='NO_ACIERTO';
                 
                 //ENVIAR A SOCKET_SERVER PARA ACTUALIZA LA RESPUESTA
                 enviar_objeto('same-different',jug_id,''+respuesta); 
                 envioDecision=1;
             }
 
-            window.onload = init;
+            function inicializar(){
+                init();
+                empezarTimerGlobal();
+                empezarTimerLocal(); //aqui no va sino después de sincronizado, por ahora qui probar
+            }
+            window.onload = inicializar;
         </script>
 
 <div id="wrapper">
@@ -366,7 +391,8 @@ $(document).ready(function() {
 		<div id="timer_content">
                     <h3>Tiempo:</h3>
                     <div id="timeglobal" class="content_text" ></div>
-                    <div id="time" class="content_text_min" ></div>
+                    <div id="clear-fix" style="clear:both; width:100%"></div>
+                    <div id="time" class="content_text_min" ></div>                    
 		</div>
 		<div id="puntos_content">
 			<h3>Puntos:</h3>
