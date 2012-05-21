@@ -31,7 +31,8 @@ function empezarTimerGlobal(){
 function empezarTimerLocal(){
 ( function($) {
     //$(window).unbind('.chrony');
-    $('#time').chrony('destroy').chrony({hour: 0, minute: 0, second: 35,finish: function() {
+    $('#time').unbind('.chrony'); //.chrony('destroy')
+    $('#time').chrony({hour: 0, minute: 0, second: 35,finish: function() {
         //aqui va evento same different automatico envíe """ si el usuario no ha contestado
         verificarEnvioRespuesta();
         /*$(this).html('Finished!');*/
@@ -389,6 +390,7 @@ function empezarTimerLocal(){
                     <h3>Tiempo:</h3>
                     <div id="timeglobal" class="content_text" ></div>
                     <div id="clear-fix" style="clear:both; width:100%"></div>
+                    <!--Delete and Create again and add plugin-->
                     <div id="time" class="content_text_min" ></div>                    
 		</div>
 		<div id="puntos_content">
