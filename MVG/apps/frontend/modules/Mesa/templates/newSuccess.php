@@ -31,7 +31,9 @@ function empezarTimerGlobal(){
 function empezarTimerLocal(){
 ( function($) {
     //$(window).unbind('.chrony');
-    $('#time').unbind('.chrony'); //.chrony('destroy')
+    $("#time").remove();
+    $("#timer_content").append("<div id='time' class='content_text_min' ></div>");
+    //$('#time').unbind('.chrony'); //.chrony('destroy')
     $('#time').chrony({hour: 0, minute: 0, second: 35,finish: function() {
         //aqui va evento same different automatico envíe """ si el usuario no ha contestado
         verificarEnvioRespuesta();
@@ -156,7 +158,7 @@ function empezarTimerLocal(){
                                 //****************** reusltados y PASAR A SIGUIENTE ROUND ***************************                              
                                 //EDITAR RESULTADO_INDIVIDUAL 
                                 //JUG1    
-                                alert(puntos+" - "+resultado_jug_tu+" - "+resultado_jug_partner);
+                                //alert(puntos+" - "+resultado_jug_tu+" - "+resultado_jug_partner);
                                 if(resultado_jug_tu=="ACIERTO") $("#respuesta_jug").attr({ src: "/images/check.png", alt: "Resultado Jug1" });
                                 else $("#respuesta_jug").attr({ src: "/images/cross.png", alt: "Resultado Jug1" });
                                 //JUG2
