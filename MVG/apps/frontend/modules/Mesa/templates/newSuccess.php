@@ -69,8 +69,7 @@ function empezarTimerLocal(){
             var video_actual=set_videos[round_actual].video_url;
             //cueVideo(video_url); play(0);
             
-            function verificarEnvioRespuesta(){
-                alert(""+envioDecision);
+            function verificarEnvioRespuesta(){                
                 if(envioDecision==0) enviarRespuesta('NO_CONTESTO');
             }
             /*Ajax*/
@@ -155,20 +154,19 @@ function empezarTimerLocal(){
                             if(respuestajson!=null && respuestajson!='' && respuestajson!='0'){
                                 //****************** reusltados y PASAR A SIGUIENTE ROUND ***************************                              
                                 //EDITAR RESULTADO_INDIVIDUAL 
-                                //JUG1                                
-                                if(resultado_jug_tu=="ACIERTO")
-                                    $("#respuesta_jug").attr({ src: "/images/check.png", alt: "Resultado Jug1" });
-                                else
-                                    $("#respuesta_jug").attr({ src: "/images/cross.png", alt: "Resultado Jug1" });
+                                //JUG1    
+                                alert(puntos+" - "+resultado_jug_tu+" - "+resultado_jug_partner);
+                                if(resultado_jug_tu=="ACIERTO") $("#respuesta_jug").attr({ src: "/images/check.png", alt: "Resultado Jug1" });
+                                else $("#respuesta_jug").attr({ src: "/images/cross.png", alt: "Resultado Jug1" });
                                 //JUG2
-                                if(resultado_jug_partner=="ACIERTO")
-                                    $("#respuesta_jug_partner").attr({ src: "/images/check.png", alt: "Resultado Jug2" });
-                                else
-                                    $("#respuesta_jug_partner").attr({ src: "/images/cross.png", alt: "Resultado Jug2" });
+                                if(resultado_jug_partner=="ACIERTO") $("#respuesta_jug_partner").attr({ src: "/images/check.png", alt: "Resultado Jug2" });
+                                else $("#respuesta_jug_partner").attr({ src: "/images/cross.png", alt: "Resultado Jug2" });
                                 
                                 //EDITAR PUNTAJE GRUPAL O RESULTADO_DECISIONES_COLABORATIVAS [mostrar en pantalla correcto, incorrecto por n seconds]
-                                if(puntos==100+"") $("#resultado_decision").html("Correcto2");
+                                if(puntos==100+"") $("#resultado_decision").html("Correcto2");                                                                                                    
                                 else $("#resultado_decision").html("Incorrecto2");
+                                
+                                $("#puntaje_grupal").html(puntos);
                                 
                                 //MOSTRAR RESULTADO 5000ms
                                 $( "#dialog_result" ).dialog( "open" );
@@ -183,14 +181,14 @@ function empezarTimerLocal(){
                                     play(0);
 
                                     //Limpiar
-                                    //envioDecision=0;
+                                    envioDecision=0;
 
                                     //Limpiar LOG y LOGPARTNER
                                     document.getElementById("log").innerHTML="";
                                     document.getElementById("logpartner").innerHTML="";
                                     
                                     //reiniciar timer local <-- eso ya lo incluye la sync video
-                                    //empezarTimerLocal(); //aqui no va sino después de sincronizado, por ahora qui probar
+                                    empezarTimerLocal(); //aqui no va sino después de sincronizado, por ahora qui probar
                                     
                                 }else{
                                     //Ir a Game Over url
@@ -234,12 +232,11 @@ function empezarTimerLocal(){
                                 mute(false);
                                 //logPartner("Received: SINCRONIZADOS: "+value);
                             },0.007);
-                        }else if(obj.tipo=="same-different"){ 
+                        }else if(obj.tipo=="same-different"){                             
                             var keys=Object.keys(value);                            
-                            var puntaje_grupal=obj.objeto[keys[0]];
-                            var resultado_jug_tu=obj.objeto[keys[1]];
-                            var resultado_jug_partner=obj.objeto[keys[2]];
-                            
+                            var puntaje_grupal=value[keys[0]];
+                            var resultado_jug_tu=value[keys[1]];
+                            var resultado_jug_partner=value[keys[2]];                            
                             //guardar puntaje, acumularlo
                             actualizarPuntaje(puntaje_grupal,resultado_jug_tu,resultado_jug_partner);                            
                         }else{
@@ -433,7 +430,7 @@ function empezarTimerLocal(){
 	</div>
 	<div id="dialog_result" title="Basic dialog" style="display:none; background: #333; min-height: 0px !important; opacity:0.95; filter:alpha(opacity=95); ">
 		<div style="float:left;" ><p style="font-size:10px; font-weight:bold;">Tu</p><img id="respuesta_jug" src="/images/icon_checked.png" width="16px" /></div>
-		<div style="float:left; padding:0px 25px;"><h3 style="text-align:center; font-size:20px; color:white;" id="resultado_decision" >Incorrecto</h3></div>
+		<div style="float:left; padding:0px 25px;"><h3 style="text-align:center; font-size:20px; color:white;" id="resultado_decision" >Incorrecto</h3><p id="puntaje_grupal" ></p></div>
 		<div style="float:left;"><p style="font-size:10px; font-weight:bold;">Tu compa&ntilde;ero</p><img id="respuesta_jug_partner" src="/images/icon_checked.png" width="16px" /></div>
 	</div>
 </div>
