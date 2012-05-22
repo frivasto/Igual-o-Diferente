@@ -72,6 +72,7 @@ function empezarTimerLocal(){
             var video_actual=set_videos[round_actual].video_url;
             //cueVideo(video_url); play(0);
             
+            /*Sino ha contestado este jugador, entonces enviar NO_CONTESTO*/
             function verificarEnvioRespuesta(){                
                 if(envioDecision==0) enviarRespuesta('NO_CONTESTO');
             }
@@ -185,6 +186,7 @@ function empezarTimerLocal(){
 
                                     //Limpiar
                                     envioDecision=0;
+                                    estacargado=0; //video 
 
                                     //Limpiar LOG y LOGPARTNER
                                     document.getElementById("log").innerHTML="";
@@ -321,7 +323,7 @@ function empezarTimerLocal(){
                     else ytplayer.unMute();
                 }
             }            
-            var estacargado=0; var resp; var loaded;
+            var estacargado=0; var resp; var loaded; var cont=0;
             function onytplayerStateChange(newState) {  
                 resp = document.getElementById("resp");
                 resp.innerHTML="total: "+ytplayer.getVideoBytesTotal()+" - cargando: "+(ytplayer.getVideoBytesLoaded())+" - estado: "+newState;
@@ -334,19 +336,21 @@ function empezarTimerLocal(){
                     //ytplayer.pauseVideo();	//pausado no hace buffer ràpido		                    
                     //mostrarLoading();                    
                     mute(true);
-                }*/
-                if(newState==1) {
-                    alerta("se cargo todo el video, lo envío a server sockets");
+                }*/          
+                //alert("estado: "+newState+" tipo: "+(typeof newState));
+                //if(newState!=1)
+                if(newState!=-1 && estacargado==0) {
+                    //alert("se cargo todo el video, lo envío a server sockets");
                     ytplayer.pauseVideo(); 
                     estacargado=1;
                     enviar_objeto("sincronizacion-videos",jug_id,"COMPLETO");
                     loaded = document.getElementById("loaded");
-                    loaded.innerHTML+="Estado Video:: "+newState; 
-                    
-                    //empezar reloj local una vez sinronizado
-                    
+                    cont++;
+                    loaded.innerHTML="Estado Video:: "+newState+" se cargo todo el video, lo envío a server sockets "+cont;                     
+                    //empezar reloj local una vez sinronizado                    
                 } else{
                     //ytplayer.playVideo();
+                    //alerta("no playing");
                 }               
             } 
             
