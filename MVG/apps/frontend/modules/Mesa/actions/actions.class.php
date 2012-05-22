@@ -278,9 +278,18 @@ class MesaActions extends sfActions {
         $this->redirect('Mesa/index');
     }
     
+    public function executeConsultarRespuestas(sfWebRequest $request) {
+        $tmp = $request->getParameter('mesa_id');
+        $mesa_id = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('jug_id');
+        $jug_id = isset($tmp) ? $tmp : '';
+        
+        //consultas
+    }
     /* Link GameOver*/
     public function executeGameOver(sfWebRequest $request) {
-        //PONER EN SESSION DATOS DE LA CONSULTA PARA USAR EN GAMERECAP Y EN SCOREBOARD
+        //PONER EN SESSION DATOS DE LA CONSULTA PARA USAR EN GAMERECAP Y EN SCOREBOARD                      
         //LLAMA A GAMEOVERSUCESS
         
     }

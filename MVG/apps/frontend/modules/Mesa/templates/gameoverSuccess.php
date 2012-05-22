@@ -11,12 +11,63 @@
         $('#videos_radios3').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20)
         .click(function(){});
         $('#videos_radios4').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20)
-        .click(function(){});
-		
+        .click(function(){});		
         //$( "#menu_opciones" ).buttonset();	
         $( "#tabs" ).tabs();
     });
 </script>
+<script type="text/javascript">
+    var mesa_id="<?php echo $sf_user->getAttribute('mesaid'); ?>";
+    var jug_id="<?php echo $sf_user->getAttribute('jugadorid'); ?>";
+    //alert(mesa_id+" - "+jug_id);
+    /*Ajax*/
+    function createXMLHttpRequest() {
+        var request = false;
+        /* Does this browser support the XMLHttpRequest object? */
+        if (window.XMLHttpRequest) {
+            if (typeof XMLHttpRequest != 'undefined')
+            /* Try to create a new XMLHttpRequest object */
+                try {
+                    request = new XMLHttpRequest( );
+                } catch (e) {
+                request = false;
+            }
+            /* Does this browser support ActiveX objects? */
+        } else if (window.ActiveXObject) {
+            /* Try to create a new ActiveX XMLHTTP object */
+            try {
+                request = new ActiveXObject('Msxml2.XMLHTTP');
+            } catch(e) {
+                try {
+                    request = new ActiveXObject('Microsoft.XMLHTTP');
+                } catch (e) {
+                    request = false;
+                }
+            }
+        }
+        return request;
+    }                                      
+    /*Muestra resultados de cada round*/
+    function mostrarRespuestas(etiqueta_texto){                
+        var request;
+        request = createXMLHttpRequest();                        
+        request.open('GET','<?php echo url_for('Mesa/consultarRespuestas'); ?>'+"?mesa_id="+mesa_id+"&jug_id="+jug_id,true);
+        request.onreadystatechange=function(){                      
+            if(request.readyState==4){
+                if(request.status==200){                             
+                    respuestajson=request.responseText;
+                    if(respuestajson!=null && respuestajson!='' && respuestajson!='0'){
+                        //alert("se guardo!!");
+                    }
+                }
+            }
+        };
+        request.send(null);
+    }
+    //resultados rounds juego    
+    //window.onload = mostrarRespuestas;
+</script>
+
 <div id="wrapper">
     <div id="header">
         <h1>CazaVideos</h1>

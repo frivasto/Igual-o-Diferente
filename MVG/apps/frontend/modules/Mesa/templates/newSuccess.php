@@ -2,6 +2,8 @@
 ( function($) {
 $(document).ready(function() {
     $("#cmd_enviar").button().click(function(){ send(); });
+    
+    $("input","#same_different").button();
     $("#same_different").buttonset();
     $("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185})
     .click(function(){
@@ -233,9 +235,10 @@ function empezarTimerLocal(){
                         }else if(obj.tipo=="sincronizacion-completa"){                            
                             setTimeout(function(){ 
                                 $("#content").unmask();
-                                play(0);
+                                //play(0);
                                 mute(false);
                                 //logPartner("Received: SINCRONIZADOS: "+value);
+                                //iniciar AQUI timer de ese round sincronizado
                             },0.007);
                         }else if(obj.tipo=="same-different"){                             
                             var keys=Object.keys(value);                            
@@ -347,7 +350,7 @@ function empezarTimerLocal(){
                     loaded = document.getElementById("loaded");
                     cont++;
                     loaded.innerHTML="Estado Video:: "+newState+" se cargo todo el video, lo envío a server sockets "+cont;                     
-                    //empezar reloj local una vez sinronizado                    
+                    //empezar reloj local una vez sinronizado no aqui en sync complet                   
                 } else{
                     //ytplayer.playVideo();
                     //alerta("no playing");
@@ -413,8 +416,8 @@ function empezarTimerLocal(){
 		</div>
 		<div id="content1">
 			<div id="same_different">
-				<input type="radio" name="same_different" id="same_different1" checked value="1" onclick=""><label for="same_different1" > Igual </label>
-				<input type="radio" name="same_different" id="same_different2" value="2" onclick=""><label for="same_different2" > Diferente </label>                               
+				<input type="radio" name="same_different" id="same_different1" checked value="1" /><label for="same_different1" > Igual </label>
+				<input type="radio" name="same_different" id="same_different2" value="2" /><label for="same_different2" > Diferente </label>                               
 			</div>
                         <div id="video_principal">
                             <!--<iframe width="360" height="200" src="http://www.youtube.com/embed/a_YR4dKArgo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0&wmode=transparent" frameborder="0" allowfullscreen></iframe>-->
