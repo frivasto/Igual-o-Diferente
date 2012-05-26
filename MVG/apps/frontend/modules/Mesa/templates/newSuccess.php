@@ -23,7 +23,7 @@ $(document).ready(function() {
 //PERMITE REAJUSTAR DATOS TAMBIÉN $('#time').chrony('set', { decrement: 2 }); re-adjust runtime options.
 function empezarTimerGlobal(){
 ( function($) {
-    $('#timeglobal').chrony({hour: 0, minute: 2, second: 0,finish: function() {
+    $('#timeglobal').chrony({hour: 0, minute: 4, second: 0,finish: function() {
         $(this).html('Finished!');
         }, blink: true
     });
@@ -62,6 +62,9 @@ function empezarTimerLocal(){
             $tmp=$sf_user->getAttribute('set_intervalos_videos'); $tam=count($tmp);                               
                 for($i=0;$i<$tam;$i++){                                          
             ?>
+            var tam_arr_php=<?php echo $tam; ?>; 
+            alert("en php: "+tam_arr_php);
+            
             var i=<?php echo $i; ?>;             
             var intervaloObj={};
             intervaloObj.inicio="<?php echo $tmp[$i][1]['ini']; ?>";
@@ -71,6 +74,7 @@ function empezarTimerLocal(){
             set_videos[i]=intervaloObj;
             <?php } ?>
             
+            alert("en js: "+set_videos.length);
             var video_actual=set_videos[round_actual].video_url;
             //cueVideo(video_url); play(0);
             
@@ -184,7 +188,7 @@ function empezarTimerLocal(){
                                     //y al cerrar eso, asignar nuevo video
                                     video_actual=set_videos[round_actual].video_url;
                                     cueVideo(video_actual);
-                                    play(0);
+                                    
 
                                     //Limpiar
                                     envioDecision=0;
@@ -225,6 +229,7 @@ function empezarTimerLocal(){
                         var obj=JSON.parse(data);
                         var keys=Object.keys(obj.objeto);
                         var key=keys[0];
+                        //alert("obj:"+obj);
                         var value=obj.objeto[key];                            
                         if(obj.tipo=="conexion"){
                             if(value=="INCOMPLETO"){                                
@@ -234,13 +239,15 @@ function empezarTimerLocal(){
                             }
                         }else if(obj.tipo=="sincronizacion-completa"){                            
                             setTimeout(function(){ 
-                                $("#content").unmask();
-                                //play(0);
+                            //    $("#content").unmask();
+                                play(0);
                                 mute(false);
+                              //  alert(value);
                                 //logPartner("Received: SINCRONIZADOS: "+value);
                                 //iniciar AQUI timer de ese round sincronizado
                             },0.007);
-                        }else if(obj.tipo=="same-different"){                             
+                        }else if(obj.tipo=="same-different"){     
+                            //alert(value);
                             var keys=Object.keys(value);                            
                             var puntaje_grupal=value[keys[0]];
                             var resultado_jug_tu=value[keys[1]];
@@ -307,7 +314,7 @@ function empezarTimerLocal(){
                 ytplayer.addEventListener("onStateChange", "onytplayerStateChange");		
                 //ytplayer.cueVideoById("DZfCPEn6L6g");	
                 cueVideo(video_actual);
-                play(0);
+                //play(0);
             }            
             function cueVideo(video_url) {		
                 if (ytplayer) {

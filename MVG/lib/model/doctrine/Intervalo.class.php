@@ -22,6 +22,7 @@ class Intervalo extends BaseIntervalo
          $intervalo_jug = $intervalos_videos[$id_array]['id']; 
          return $intervalo_jug;
      }
+     //los 10 primeros
      public static function getFragmentoVideosOrdenadosXTags($array_excluidos){
         /*$intervalos_videos=Doctrine_Core::getTable('Intervalo')
                             ->createQuery('i')
@@ -36,6 +37,7 @@ class Intervalo extends BaseIntervalo
                             ->whereNotIn('i.id',$array_excluidos)
                             ->groupBy('i.id')
                             ->orderBy('conteo')
+                            ->limit(10)
                             ->fetchArray();          
         return $intervalos_videos; 
     }    

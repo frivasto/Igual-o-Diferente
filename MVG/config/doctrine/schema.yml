@@ -50,7 +50,6 @@ Mesa:
     jugador1_id:   { type: integer(4) }
     jugador2_id:   { type: integer(4) }
     tiempo_emparejar: { type:  integer(4) }
-    coleccion_id: { type: integer(4) }
     estado:   { type: integer(1) } 
     eliminado: { type: boolean, default: 0 }
   relations:

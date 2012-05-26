@@ -10,7 +10,6 @@
  * @property integer $jugador1_id
  * @property integer $jugador2_id
  * @property integer $tiempo_emparejar
- * @property integer $coleccion_id
  * @property integer $estado
  * @property boolean $eliminado
  * @property Doctrine_Collection $MesaMesaVideo
@@ -21,7 +20,6 @@
  * @method integer             getJugador1Id()       Returns the current record's "jugador1_id" value
  * @method integer             getJugador2Id()       Returns the current record's "jugador2_id" value
  * @method integer             getTiempoEmparejar()  Returns the current record's "tiempo_emparejar" value
- * @method integer             getColeccionId()      Returns the current record's "coleccion_id" value
  * @method integer             getEstado()           Returns the current record's "estado" value
  * @method boolean             getEliminado()        Returns the current record's "eliminado" value
  * @method Doctrine_Collection getMesaMesaVideo()    Returns the current record's "MesaMesaVideo" collection
@@ -31,7 +29,6 @@
  * @method Mesa                setJugador1Id()       Sets the current record's "jugador1_id" value
  * @method Mesa                setJugador2Id()       Sets the current record's "jugador2_id" value
  * @method Mesa                setTiempoEmparejar()  Sets the current record's "tiempo_emparejar" value
- * @method Mesa                setColeccionId()      Sets the current record's "coleccion_id" value
  * @method Mesa                setEstado()           Sets the current record's "estado" value
  * @method Mesa                setEliminado()        Sets the current record's "eliminado" value
  * @method Mesa                setMesaMesaVideo()    Sets the current record's "MesaMesaVideo" collection
@@ -69,10 +66,6 @@ abstract class BaseMesa extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('tiempo_emparejar', 'integer', 4, array(
-             'type' => 'integer',
-             'length' => 4,
-             ));
-        $this->hasColumn('coleccion_id', 'integer', 4, array(
              'type' => 'integer',
              'length' => 4,
              ));

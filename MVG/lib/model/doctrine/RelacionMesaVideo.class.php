@@ -119,7 +119,7 @@ class RelacionMesaVideo extends BaseRelacionMesaVideo
             //echo "Set de videos completando ".$idjugador; die();
         } else {
             //SET VIDEOS INICIAL, ::::::::::PRIMER JUG::::::::::
-            for ($num_round = 0; $num_round < 2; $num_round++) {
+            for ($num_round = 0; $num_round < 10; $num_round++) {
                 if (self::getRelacionMesaVideoXRound($mesa_id, $idjugador, $num_round + 1) == NULL) {
 
                     //BUSCAR 1ER VIDEO 
