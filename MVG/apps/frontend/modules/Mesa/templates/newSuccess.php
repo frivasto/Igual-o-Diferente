@@ -63,7 +63,7 @@ function empezarTimerLocal(){
                 for($i=0;$i<$tam;$i++){                                          
             ?>
             var tam_arr_php=<?php echo $tam; ?>; 
-            alert("en php: "+tam_arr_php);
+            //alert("en php: "+tam_arr_php);
             
             var i=<?php echo $i; ?>;             
             var intervaloObj={};
@@ -74,7 +74,7 @@ function empezarTimerLocal(){
             set_videos[i]=intervaloObj;
             <?php } ?>
             
-            alert("en js: "+set_videos.length);
+           // alert("en js: "+set_videos.length);
             var video_actual=set_videos[round_actual].video_url;
             //cueVideo(video_url); play(0);
             
