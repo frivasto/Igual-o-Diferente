@@ -120,7 +120,8 @@ class RelacionMesaVideo extends BaseRelacionMesaVideo
         } else {
             //SET VIDEOS INICIAL, ::::::::::PRIMER JUG::::::::::
             for ($num_round = 0; $num_round < 10; $num_round++) {
-                if (self::getRelacionMesaVideoXRound($mesa_id, $idjugador, $num_round + 1) == NULL) {
+                //echo "<br />aqui: ".$num_round;
+                if (self::getRelacionMesaVideo($mesa_id, $idjugador, $num_round + 1) == NULL) {
 
                     //BUSCAR 1ER VIDEO 
                     $intervalo1 = Intervalo::obtenerIntervaloAleatorio($array_excluidos);
@@ -137,6 +138,8 @@ class RelacionMesaVideo extends BaseRelacionMesaVideo
                     $relacion_mesa_vid_jug_actual->setJugadorId($idjugador); //actual
                     $relacion_mesa_vid_jug_actual->setNumRound($num_round + 1);
                     $relacion_mesa_vid_jug_actual->save();
+                    
+                    //echo " - ".$relacion_mesa_vid_jug_actual->getId();
                 }
             }
             //echo "Set de videos inicial ".$idjugador."round nums".$num_round; die();

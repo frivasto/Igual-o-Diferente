@@ -57,7 +57,9 @@ function empezarTimerLocal(){
             var websocket;
             var set_videos=[]; 
             var envioDecision=0;
-                        
+            var vecesjugadas=0;
+            var puntos_extra=0;
+            
             <?php 
             $tmp=$sf_user->getAttribute('set_intervalos_videos'); $tam=count($tmp);                               
                 for($i=0;$i<$tam;$i++){                                          
@@ -246,12 +248,23 @@ function empezarTimerLocal(){
                                 //logPartner("Received: SINCRONIZADOS: "+value);
                                 //iniciar AQUI timer de ese round sincronizado
                             },0.007);
-                        }else if(obj.tipo=="same-different"){     
-                            //alert(value);
+                        }else if(obj.tipo=="same-different"){                                                             
                             var keys=Object.keys(value);                            
                             var puntaje_grupal=value[keys[0]];
                             var resultado_jug_tu=value[keys[1]];
-                            var resultado_jug_partner=value[keys[2]];                            
+                            var resultado_jug_partner=value[keys[2]]; 
+                            
+                            //CORRECTO, acumular vecesjugadas consecutivas
+                            if(resultado_jug_tu==resultado_jug_partner) vecesjugadas++;
+                            else vecesjugadas=0;
+                            
+                            //3 vecesjugadas consecutivas incrementa 10 puntos
+                            if(vecesjugadas!=0 && vecesjugadas%3==0){
+                               puntos_extra=10;
+                            }
+                            
+                            puntaje_grupal+=puntos_extra;
+                            
                             //guardar puntaje, acumularlo
                             actualizarPuntaje(puntaje_grupal,resultado_jug_tu,resultado_jug_partner);                            
                         }else{
