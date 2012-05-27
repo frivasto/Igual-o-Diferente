@@ -255,7 +255,7 @@ function empezarTimerLocal(){
                             var resultado_jug_partner=value[keys[2]]; 
                             
                             //CORRECTO, acumular vecesjugadas consecutivas
-                            if(resultado_jug_tu==resultado_jug_partner) vecesjugadas++;
+                            if(resultado_jug_tu==resultado_jug_partner && resultado_jug_tu=="ACIERTO") vecesjugadas++;
                             else vecesjugadas=0;
                             
                             //3 vecesjugadas consecutivas incrementa 10 puntos
@@ -265,8 +265,6 @@ function empezarTimerLocal(){
                                puntaje_grupal+=puntos_extra;
                                vecesjugadas=0;
                             }
-                            
-                            
                             
                             //guardar puntaje, acumularlo
                             actualizarPuntaje(puntaje_grupal,resultado_jug_tu,resultado_jug_partner);                            
