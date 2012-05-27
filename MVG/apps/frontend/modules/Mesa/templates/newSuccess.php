@@ -175,14 +175,14 @@ function empezarTimerLocal(){
                                 else $("#respuesta_jug_partner").attr({ src: "/images/cross.png", alt: "Resultado Jug2" });
                                 
                                 //EDITAR PUNTAJE GRUPAL O RESULTADO_DECISIONES_COLABORATIVAS [mostrar en pantalla correcto, incorrecto por n seconds]
-                                if(puntos==100+"") $("#resultado_decision").html("Correcto2");                                                                                                    
-                                else $("#resultado_decision").html("Incorrecto2");
+                                if(puntos==100+"") $("#resultado_decision").html("Correcto");                                                                                                    
+                                else $("#resultado_decision").html("Incorrecto");
                                 
                                 $("#puntaje_grupal").html(puntos);
                                 
                                 //MOSTRAR RESULTADO 5000ms
                                 $( "#dialog_result" ).dialog( "open" );
-                                setTimeout(function(){$( "#dialog_result" ).dialog("close")},5000);
+                                setTimeout(function(){$( "#dialog_result" ).dialog("close")},3000);
                                                                 
                                 //incrementar round
                                 round_actual++;    
@@ -261,9 +261,12 @@ function empezarTimerLocal(){
                             //3 vecesjugadas consecutivas incrementa 10 puntos
                             if(vecesjugadas!=0 && vecesjugadas%3==0){
                                puntos_extra=10;
+                               puntaje_grupal=parseInt(puntaje_grupal);
+                               puntaje_grupal+=puntos_extra;
+                               vecesjugadas=0;
                             }
                             
-                            puntaje_grupal+=puntos_extra;
+                            
                             
                             //guardar puntaje, acumularlo
                             actualizarPuntaje(puntaje_grupal,resultado_jug_tu,resultado_jug_partner);                            

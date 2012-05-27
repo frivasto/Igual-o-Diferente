@@ -61,7 +61,7 @@ class Mesa extends BaseMesa
                     $jug_partner = Jugador::getJugadorById($jug_partner_id);
                    
                     //JUGADOR ENCONTRADO
-                    $jugador_pareja_id = $jug_partner->getId();
+                    $jugador_pareja_id = $jug_partner->getId();                    
                     
                     //SET DE VIDEOS DE ESTA MESA Y JUGADOR 2
                     RelacionMesaVideo::generarSetVideos($id_mesa,$id_jugador); 

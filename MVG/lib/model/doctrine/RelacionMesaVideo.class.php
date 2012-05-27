@@ -87,6 +87,23 @@ class RelacionMesaVideo extends BaseRelacionMesaVideo
 
                 //N ROUNDS ->N REGS
                 $tam_relaciones_mesa_video = count($relaciones_mesa_video);
+                
+                //echo "<br />tammm 1:  ".$tam_relaciones_mesa_video; 
+                //print_r($relaciones_mesa_video);
+                //echo "<br />";
+                
+                /*Dormir n segundos hasta que complete sus videos el 2do jugador*/
+                if($tam_relaciones_mesa_video<10){                   
+                    //sleep(5); //10-$tam_relaciones_mesa_video
+                    sleep(10-$tam_relaciones_mesa_video); 
+                    $relaciones_mesa_video = self::getRelacionMesaVideoXId($mesa_id);
+                    $tam_relaciones_mesa_video = count($relaciones_mesa_video);
+                    
+                    //echo "<br />tammm 2:  ".$tam_relaciones_mesa_video; 
+                    //print_r($relaciones_mesa_video);
+                }
+                //die();
+                                
                 for ($index = 0; $index < $tam_relaciones_mesa_video; $index++) {
 
                     //RESPUESTA_REAL Y PRIMER VIDEO
@@ -112,7 +129,7 @@ class RelacionMesaVideo extends BaseRelacionMesaVideo
                     $relacion_mesa_vid_jug_partner->setMesaId($mesa_id);
                     $relacion_mesa_vid_jug_partner->setJugadorId($idjugador); //partner
                     $relacion_mesa_vid_jug_partner->setNumRound($num_round);
-                    $relacion_mesa_vid_jug_partner->save();                    
+                    $relacion_mesa_vid_jug_partner->save();                        
                 }
                 //echo "**Set de videos completando ".$idjugador."  jug set era: ".$jug_set; die();
             }  
