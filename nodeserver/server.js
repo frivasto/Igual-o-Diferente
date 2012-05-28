@@ -123,7 +123,7 @@ server.sockets.on("connection", function(client)
 							if(decisionesmesa[""+key][""+jugid]!=null) {
 								console.log("Decisionmesa JUG decision no null "+decisionesmesa[""+key][""+jugid]);
 								decisionesmesa[""+key][""+jugid]["respuesta"] = respuesta;
-								console.log("Su respuesta se cambio a "+decisionesmesa[""+key][""+jugid]["respuesta"]);
+								console.log("Su respuesta se cambio a "+decisionesmesa[""+key][""+jugid]["respuesta"]);															
 							}
 							//verificar los estados de videos de esta mesa
 							var keys=Object.keys(decisionesmesa[""+key]); //keys de este obj
@@ -136,16 +136,24 @@ server.sockets.on("connection", function(client)
 									var decision1=decisionesmesa[""+key][key_jug1]["respuesta"];
 									var decision2=decisionesmesa[""+key][key_jug2]["respuesta"];
 									
+									/*************************** Posibles Destinatarios ***************************/
+									destinatario1=mesas[""+key][0].socket; 
+									destinatario2=mesas[""+key][1].socket;
+									
 									// ya contestaron ambos
-									if(decision1!="" && decision2!=""){		
+									if(decision1!="" && decision2!=""){	
+									
+										/*Envío de mensaje a ambos*/
 										console.log("Ambos tienen respuestas: "+decision1+" - "+decision2);
 										
 										// si ambos iguales y esa respuesta es ACERTO jug1 y ACERTO jug2
 										if(decision1==decision2 && decision1=="ACIERTO") puntaje=100;
 										else puntaje=0;										
 										
+										/*
 										destinatario1=mesas[""+key][0].socket; 
 										destinatario2=mesas[""+key][1].socket;
+										*/
 										
 										//destinatario1.emit("sendEvent", '{"tipo":"same-different","objeto":{"'+key+'": "'+puntaje+'"}}');
 										//destinatario2.emit("sendEvent", '{"tipo":"same-different","objeto":{"'+key+'": "'+puntaje+'"}}');
@@ -165,6 +173,18 @@ server.sockets.on("connection", function(client)
 										//limpiar respuestas de ambos
 										decisionesmesa[""+key][key_jug1]["respuesta"]="";
 										decisionesmesa[""+key][key_jug2]["respuesta"]="";
+										
+									}else{
+										if(decision1=="ACIERTO" || decision2=="ACIERTO"){									
+											/*Envío de mensaje a Compañero de Jug actual*/
+											if(destinatario1.id==client.id){
+												//mensaje a su partner									
+												destinatario2.emit("sendEvent", '{"tipo":"same-different-incompleto","objeto":{"'+key+'": "CONTESTO"}}');
+											}else{
+												//mensaje a su partner
+												destinatario1.emit("sendEvent", '{"tipo":"same-different-incompleto","objeto":{"'+key+'": "CONTESTO"}}');
+											}
+										}	
 									}
 								}
 							}

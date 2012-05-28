@@ -14,6 +14,8 @@ $(document).ready(function() {
             enviarRespuesta('DIFFERENT');
     });    
     $( "#dialog_result" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});
+    $( "#dialog_mensaje" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});
+    
     $('.alert div.ui-dialog-titlebar').hide();//transparent
     $('.alert').css('background','transparent');    
 });
@@ -248,7 +250,11 @@ function empezarTimerLocal(){
                                 //logPartner("Received: SINCRONIZADOS: "+value);
                                 //iniciar AQUI timer de ese round sincronizado
                             },0.007);
-                        }else if(obj.tipo=="same-different"){                                                             
+                        }else if(obj.tipo=="same-different-incompleto"){
+                            //Open Cuadro de diálogo que indica que respondió su partner en una esquina y por n seconds                            
+                            $( "#dialog_mensaje" ).dialog("open");
+                            setTimeout(function(){$( "#dialog_mensaje" ).dialog("close")},1500);                            
+                        }else if(obj.tipo=="same-different"){                              
                             var keys=Object.keys(value);                            
                             var puntaje_grupal=value[keys[0]];
                             var resultado_jug_tu=value[keys[1]];
@@ -464,6 +470,9 @@ function empezarTimerLocal(){
 		<div style="float:left;" ><p style="font-size:10px; font-weight:bold;">Tu</p><img id="respuesta_jug" src="/images/icon_checked.png" width="16px" /></div>
 		<div style="float:left; padding:0px 25px;"><h3 style="text-align:center; font-size:20px; color:white;" id="resultado_decision" >Incorrecto</h3><p id="puntaje_grupal" ></p></div>
 		<div style="float:left;"><p style="font-size:10px; font-weight:bold;">Tu compa&ntilde;ero</p><img id="respuesta_jug_partner" src="/images/icon_checked.png" width="16px" /></div>
+	</div>
+        <div id="dialog_mensaje" title="Basic dialog" style="display:none; background: #333; min-height: 0px !important; opacity:0.95; filter:alpha(opacity=95); ">	
+		<div style="float:left; padding:0px 25px;"><h3 style="text-align:center; font-size:20px; color:white;" >Tu compa&ntilde;ero acaba de contestar</h3></div>		
 	</div>
 </div>
 <!--Fin de Interfaz-->
