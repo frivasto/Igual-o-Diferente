@@ -181,6 +181,9 @@ class MesaActions extends sfActions {
             if($relacionmesavideo!=NULL){
                 $relacionmesavideo_id=$relacionmesavideo->getId();            
                 $decision->setRelacionmesavideoId($relacionmesavideo_id);
+                if($respuesta=="SAME") $respuesta=1;
+                else $respuesta=0; //different o no_contesto
+                
                 $decision->setRespuesta($respuesta);
                 $decision->setTiempo(date("H:i:s", strtotime(' ', mktime($hora, $minuto, $segundo, 0, 0, 0)))); //convert time
                 $decision->save();
