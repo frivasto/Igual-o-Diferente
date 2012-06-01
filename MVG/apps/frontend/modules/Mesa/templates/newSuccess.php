@@ -61,6 +61,7 @@ function empezarTimerLocal(){
             var envioDecision=0;
             var vecesjugadas=0;
             var puntos_extra=0;
+            var puntaje_extra_acumulado=0;
             
             <?php 
             $tmp=$sf_user->getAttribute('set_intervalos_videos'); $tam=count($tmp);                               
@@ -165,7 +166,7 @@ function empezarTimerLocal(){
                     if(request.readyState==4){
                         if(request.status==200){                             
                             respuestajson=request.responseText;
-                            if(respuestajson!=null && respuestajson!='' && respuestajson!='0'){
+                            if(respuestajson!=null && respuestajson!=''){
                                 //****************** reusltados y PASAR A SIGUIENTE ROUND ***************************                              
                                 //EDITAR RESULTADO_INDIVIDUAL 
                                 //JUG1    
@@ -206,7 +207,9 @@ function empezarTimerLocal(){
                                     empezarTimerLocal(); //aqui no va sino después de sincronizado, por ahora qui probar
                                     
                                 }else{
-                                    //Ir a Game Over url
+                                    //"puntaje_extra"   puntaje_extra_acumulado
+                                    <?php $sf_user->setAttribute('puntaje_extra',puntaje_extra_acumulado); ?>
+                                    //Ir a Game Over url                                    
                                     window.location.href = "<?php echo url_for('Mesa/gameOver') ?>";
                                 }
                                     
@@ -269,7 +272,9 @@ function empezarTimerLocal(){
                                puntos_extra=10;
                                puntaje_grupal=parseInt(puntaje_grupal);
                                puntaje_grupal+=puntos_extra;
-                               vecesjugadas=0;
+                               /*Todo el puynatje extra que obtuvo*/
+                               puntaje_extra_acumulado+=puntos_extra;
+                               vecesjugadas=0;                               
                             }
                             
                             //guardar puntaje, acumularlo

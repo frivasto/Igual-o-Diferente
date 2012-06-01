@@ -82,19 +82,23 @@ body{
 #content2 iframe{
         float: left;			
 }
-#content2 #video_details{
+#content2 .video_details{
         height:131px;
         overflow:auto;
         background-color:#399; /*rgb(78,1,82);*/
 }
-#content2 #video_details p{			
+#content2 .video_details p{			
         color:white;
         text-align:	left;
         padding:2px 0px 0px 10px;
         font-weight:bold;
 }	
-#content2 div#video_details h3{			
+#content2 div.video_details h3{			
         margin: 2px 10px 1px 5px;
+}
+#content2 div.video_with_details h3{			
+        margin: 0px; 
+        padding: 5px 5px 2px 0px;
 }
 #content1 #jugar_again{
         margin:30px

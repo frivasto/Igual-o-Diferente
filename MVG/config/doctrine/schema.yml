@@ -66,7 +66,8 @@ RelacionMesaVideo:
     jugador_id:   { type: integer(4) }
     num_round:   { type: integer(4) }
     intervalo_id: { type: integer(4) }
-    respuesta_real: { type: boolean, default: 0 }
+    #respuesta_real: { type: boolean, default: 0 }
+    respuesta_real: {type: integer(1), default: -1}
     eliminado: { type: boolean, default: 0 }
   relations:
     Mesa: { local: mesa_id, foreign: id, foreignAlias: MesaMesaVideo }    
@@ -94,7 +95,8 @@ Decision:
     token:   { type: string(255), notnull: true, unique: false }
     relacionmesavideo_id:   { type: integer(4) }
     tiempo: { type: time }
-    respuesta: { type: boolean, default: 0 }
+    #respuesta: { type: boolean, default: 0 }
+    respuesta: { type: integer(1), default: -1 } #tinyint smallint
     eliminado: { type: boolean, default: 0 }
   relations:
     RelacionMesaVideo: { local: relacionmesavideo_id, foreign: id, foreignAlias: InstanciaEtiquetaRelacionMesaVideo }

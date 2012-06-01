@@ -12,5 +12,28 @@
  */
 class Decision extends BaseDecision
 {
-
+    public static function getDecision($relacionmesavideo_id){                
+        $decision=Doctrine_Core::getTable('Decision')
+                    ->createQuery('d')                                      
+                    ->where('d.relacionmesavideo_id = ?',$relacionmesavideo_id)                    
+                    ->fetchOne();        
+        return $decision;         
+    }
+    public static function getResultado($relacionmesavideo_id,$respuesta_real){        
+        $resultado="";
+        $decision=self::getDecision($relacionmesavideo_id);
+        
+        if($decision!=NULL){
+            $resp=$decision->getRespuesta();
+            if($resp!=-1){
+                if($resp==$respuesta_real)
+                    $resultado="CORRECTO";
+                else
+                    $resultado="INCORRECTO";
+            }else{
+                $resultado="NO_CONTESTO";
+            }                
+        }
+        return $resultado;         
+    }    
 }

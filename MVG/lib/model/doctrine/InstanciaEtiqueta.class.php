@@ -12,5 +12,21 @@
  */
 class InstanciaEtiqueta extends BaseInstanciaEtiqueta
 {
-
+    public static function getInstanciaEtiquetas($relacionmesavideo_id){
+        $instanciaetiquetas = Doctrine_Core::getTable('InstanciaEtiqueta')
+                ->createQuery('inst')                                
+                ->where('inst.relacionmesavideo_id = ?',$relacionmesavideo_id)
+                ->fetchArray();
+        return $instanciaetiquetas;
+    }
+    
+    //sacar solo etiquetas(texto)  etiquetas(texto,tiempo)
+    public static function toJsonInstanciaEtiquetas($instancia_etiquetas){
+        $tam_instancia_etiquetas=count($instancia_etiquetas);
+        $arr_etiquetas=array();
+        for($i=0;$i<$tam_instancia_etiquetas;$i++){            
+            $arr_etiquetas[$i]=$instancia_etiquetas[$i]->getTexto();
+        }
+        return $arr_etiquetas;
+    }
 }

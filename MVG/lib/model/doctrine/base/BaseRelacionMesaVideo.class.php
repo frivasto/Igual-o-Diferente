@@ -11,7 +11,7 @@
  * @property integer $jugador_id
  * @property integer $num_round
  * @property integer $intervalo_id
- * @property boolean $respuesta_real
+ * @property integer $respuesta_real
  * @property boolean $eliminado
  * @property Mesa $Mesa
  * @property Jugador $Jugador
@@ -24,7 +24,7 @@
  * @method integer             getJugadorId()                          Returns the current record's "jugador_id" value
  * @method integer             getNumRound()                           Returns the current record's "num_round" value
  * @method integer             getIntervaloId()                        Returns the current record's "intervalo_id" value
- * @method boolean             getRespuestaReal()                      Returns the current record's "respuesta_real" value
+ * @method integer             getRespuestaReal()                      Returns the current record's "respuesta_real" value
  * @method boolean             getEliminado()                          Returns the current record's "eliminado" value
  * @method Mesa                getMesa()                               Returns the current record's "Mesa" value
  * @method Jugador             getJugador()                            Returns the current record's "Jugador" value
@@ -82,9 +82,10 @@ abstract class BaseRelacionMesaVideo extends sfDoctrineRecord
              'type' => 'integer',
              'length' => 4,
              ));
-        $this->hasColumn('respuesta_real', 'boolean', null, array(
-             'type' => 'boolean',
-             'default' => 0,
+        $this->hasColumn('respuesta_real', 'integer', 1, array(
+             'type' => 'integer',
+             'default' => -1,
+             'length' => 1,
              ));
         $this->hasColumn('eliminado', 'boolean', null, array(
              'type' => 'boolean',

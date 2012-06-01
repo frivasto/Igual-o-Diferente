@@ -12,7 +12,8 @@
  */
 class Puntaje extends BasePuntaje
 {
-    public static function getPuntajeXMesaJugId($id_mesa, $id_jug){
+    /*Puntaje obtenido en una mesa específica del Jugador*/
+    public static function getPuntajeXMesaJugId($id_mesa, $id_jug){        
         $puntaje=Doctrine_Core::getTable('Puntaje')
                     ->createQuery('p')                                      
                     ->where('p.mesa_id = ?',$id_mesa)
@@ -20,4 +21,26 @@ class Puntaje extends BasePuntaje
                     ->fetchOne();
         return $puntaje;        
     }
+    /*Puntaje obtenido durantes varias partidas por el Jugador*/
+    public static function getPuntajeXJugId($id_jug){        
+        $puntaje=Doctrine_Query::create()
+                    ->select('SUM(p.puntaje) AS puntos')
+                    ->from('Puntaje p')                                    
+                    ->where('p.jugador_id = ?',$id_jug)
+                    ->fetchOne();        
+        return $puntaje;        
+    }   
+    /*Puntaje más alto obtenido de entre todos los jugadores*/
+    public static function getPuntajeMaximo(){
+        $puntaje=0;
+        $puntajes=Doctrine_Query::create()
+                    ->select('SUM(p.puntaje) AS puntos')
+                    ->from('Puntaje p')
+                    ->groupBy('p.jugador_id')
+                    ->orderBy('p.puntaje DESC')
+                    ->fetchArray();
+        if($puntajes!=NULL)
+            $puntaje=$puntajes[0]['puntos'];
+        return $puntaje;        
+    } 
 }

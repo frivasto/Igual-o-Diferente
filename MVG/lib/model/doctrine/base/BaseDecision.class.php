@@ -9,7 +9,7 @@
  * @property string $token
  * @property integer $relacionmesavideo_id
  * @property time $tiempo
- * @property boolean $respuesta
+ * @property integer $respuesta
  * @property boolean $eliminado
  * @property RelacionMesaVideo $RelacionMesaVideo
  * 
@@ -17,7 +17,7 @@
  * @method string            getToken()                Returns the current record's "token" value
  * @method integer           getRelacionmesavideoId()  Returns the current record's "relacionmesavideo_id" value
  * @method time              getTiempo()               Returns the current record's "tiempo" value
- * @method boolean           getRespuesta()            Returns the current record's "respuesta" value
+ * @method integer           getRespuesta()            Returns the current record's "respuesta" value
  * @method boolean           getEliminado()            Returns the current record's "eliminado" value
  * @method RelacionMesaVideo getRelacionMesaVideo()    Returns the current record's "RelacionMesaVideo" value
  * @method Decision          setId()                   Sets the current record's "id" value
@@ -58,9 +58,10 @@ abstract class BaseDecision extends sfDoctrineRecord
         $this->hasColumn('tiempo', 'time', null, array(
              'type' => 'time',
              ));
-        $this->hasColumn('respuesta', 'boolean', null, array(
-             'type' => 'boolean',
-             'default' => 0,
+        $this->hasColumn('respuesta', 'integer', 1, array(
+             'type' => 'integer',
+             'default' => -1,
+             'length' => 1,
              ));
         $this->hasColumn('eliminado', 'boolean', null, array(
              'type' => 'boolean',

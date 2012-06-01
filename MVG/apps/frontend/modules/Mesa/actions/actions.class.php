@@ -176,13 +176,23 @@ class MesaActions extends sfActions {
 
         $id_decision = 0;
         if ($respuesta != '' && $hora != '' && $minuto != '' && $segundo != '') {            
-            $decision = new Decision();
+            
             $relacionmesavideo= RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $jug_id, $round_num+1);
             if($relacionmesavideo!=NULL){
-                $relacionmesavideo_id=$relacionmesavideo->getId();            
+                $relacionmesavideo_id=$relacionmesavideo->getId();  
+                $decision=Decision::getDecision($relacionmesavideo_id);
+                if($decision==NULL){
+                    $decision = new Decision();
+                }
                 $decision->setRelacionmesavideoId($relacionmesavideo_id);
-                if($respuesta=="SAME") $respuesta=1;
-                else $respuesta=0; //different o no_contesto
+                
+                //RESPUESTAS:
+                if(($respuesta=="SAME") || ($respuesta=="DIFFERENT")){
+                    if($respuesta=="SAME") $respuesta=1;    //SAME
+                    else $respuesta=0;                      //DIFFERENT
+                }else{                    
+                    $respuesta=-1;                          //NO_CONTESTO
+                }
                 
                 $decision->setRespuesta($respuesta);
                 $decision->setTiempo(date("H:i:s", strtotime(' ', mktime($hora, $minuto, $segundo, 0, 0, 0)))); //convert time
@@ -204,7 +214,8 @@ class MesaActions extends sfActions {
         $tmp = $request->getParameter('puntos');
         $puntos = isset($tmp) ? $tmp : '';
         
-        $id_puntajeObj = 0;
+        //$id_puntajeObj = 0;
+        $puntajeAcumulado=0;
         $puntajeObj=Puntaje::getPuntajeXMesaJugId($mesa_id, $jug_id);
         
         if($puntajeObj==NULL){
@@ -216,9 +227,10 @@ class MesaActions extends sfActions {
         
         $puntajeObj->setPuntaje($puntajeObj->getPuntaje()+$puntos);
         $puntajeObj->save(); 
-        $id_puntajeObj = $puntajeObj->getId();
+        //$id_puntajeObj = $puntajeObj->getId();
+        $puntajeAcumulado = $puntajeObj->getPuntaje();
         
-        return $this->renderText("" + $id_puntajeObj);        
+        return $this->renderText("" + $puntajeAcumulado);        
     }
     
     //INCOMPLETO
@@ -247,11 +259,11 @@ class MesaActions extends sfActions {
         $id_etiqueta = 0;
         //$response = array();
         if ($etiqueta_texto != '' && $hora != '' && $minuto != '' && $segundo != '') {
-            //calificar, insertarla con el tiempo
-            $etiqueta = new InstanciaEtiqueta();
+            //calificar, insertarla con el tiempo            
             $relacionmesavideo= RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $jug_id, $round_num+1);
             if($relacionmesavideo!=NULL){
                 $relacionmesavideo_id=$relacionmesavideo->getId();  
+                $etiqueta = new InstanciaEtiqueta();
                 $etiqueta->setRelacionmesavideoId($relacionmesavideo_id); //*IMPORTANTE* ojo HAY QUE PASAR RELACIONMESAVIDEO
                 $etiqueta->setTexto($etiqueta_texto);
                 $etiqueta->setTiempo(date("H:i:s", strtotime(' ', mktime($hora, $minuto, $segundo, 0, 0, 0)))); //convert time
@@ -281,15 +293,144 @@ class MesaActions extends sfActions {
         $this->redirect('Mesa/index');
     }
     
-    public function executeConsultarRespuestas(sfWebRequest $request) {
+    public function executeConsultarResultados(sfWebRequest $request) {
         $tmp = $request->getParameter('mesa_id');
         $mesa_id = isset($tmp) ? $tmp : '';
         
         $tmp = $request->getParameter('jug_id');
         $jug_id = isset($tmp) ? $tmp : '';
         
-        //consultas
+        $response = array();        
+        //relacionesmesavideo de ese jug mesa 
+        $relaciones_mesavideo=RelacionMesaVideo::getRelacionMesaVideoxJug($mesa_id, $jug_id);
+        $tam_relaciones_mesavideo=count($relaciones_mesavideo);
+        
+        for($round=0;$round<$tam_relaciones_mesavideo;$round++){
+            
+            $respuesta_real=$relaciones_mesavideo[$round]["respuesta_real"];
+            $relacionmesavideo_id=$relaciones_mesavideo[$round]["id"];
+            $texto=Decision::getResultado($relacionmesavideo_id, $respuesta_real);
+            
+            $tmpObj = array();        
+            $tmpObj['id'] = $round+1;
+            $tmpObj['texto'] = $texto;
+            
+            $response[] = $tmpObj;
+        }
+        
+        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
+        return $this->renderText(json_encode($response));
     }
+    
+    public function executeMostrarPuntajes(sfWebRequest $request) {
+        $tmp = $request->getParameter('mesa_id');
+        $mesa_id = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('jug_id');
+        $jug_id_actual = isset($tmp) ? $tmp : '';
+    
+        $tmp = $request->getParameter('puntaje_extra');
+        $puntaje_extra = isset($tmp) ? $tmp : '';
+        
+        $response = array();  
+        $puntaje_total=0; $puntaje_mesa=0;
+        /*Enviar Todos los puntajes de la interfaz Puntaje*/
+        
+        $puntajeTmp=Puntaje::getPuntajeXJugId($jug_id_actual);
+        if($puntajeTmp!=null) $puntaje_total=$puntajeTmp->getPuntos();
+        $response["puntaje_total"]= $puntaje_total;
+        
+        $puntajeTmp=Puntaje::getPuntajeXMesaJugId($mesa_id, $jug_id_actual);
+        if($puntajeTmp!=null) $puntaje_mesa=$puntajeTmp->getPuntaje();
+        $response["puntaje_mesa"]= $puntaje_mesa;
+        
+        $response["puntaje_extra"]= $puntaje_extra;
+        $response["puntaje_mejor"]= Puntaje::getPuntajeMaximo();
+        
+        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
+        return $this->renderText(json_encode($response));
+    }
+    
+    public function executeMostrarDetallesResultados(sfWebRequest $request) {
+        $tmp = $request->getParameter('mesa_id');
+        $mesa_id = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('jug_id');
+        $jug_id_actual = isset($tmp) ? $tmp : '';
+        
+        $tmp = $request->getParameter('round_consultado');
+        $num_round = isset($tmp) ? $tmp : '';
+        
+        $response = array();
+        $mesaObj=Mesa::getMesaxId($mesa_id);
+        
+        //JUGADORES
+        $jugador1_id=$mesaObj->getJugador1Id();
+        $jugador2_id=$mesaObj->getJugador2Id();
+        
+        //CONSULTAR VIDEO
+        $relaciones_mesa_video_jug1 = RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $jugador1_id, $num_round);
+        $relaciones_mesa_video_jug2 = RelacionMesaVideo::getRelacionMesaVideo($mesa_id, $jugador2_id, $num_round);
+                
+        //RELACIONESMESAVIDEO
+        $relacionmesavideo_id1=$relaciones_mesa_video_jug1->getId();
+        $intervalo1_id=$relaciones_mesa_video_jug1->getIntervaloId();
+        $intervalo1=Intervalo::getIntervaloXId($intervalo1_id);
+        
+        $relacionmesavideo_id2=$relaciones_mesa_video_jug2->getId();
+        $intervalo2_id=$relaciones_mesa_video_jug2->getIntervaloId();
+        $intervalo2=Intervalo::getIntervaloXId($intervalo2_id);
+                
+        //ETIQUETAS
+        $instancia_etiquetas1=InstanciaEtiqueta::getInstanciaEtiquetas($relacionmesavideo_id1);
+        $instancia_etiquetas2=InstanciaEtiqueta::getInstanciaEtiquetas($relacionmesavideo_id2);
+        
+        //sacar solo etiquetas
+        $arr_etiquetas1=InstanciaEtiqueta::toJsonInstanciaEtiquetas($instancia_etiquetas1);
+        $arr_etiquetas2=InstanciaEtiqueta::toJsonInstanciaEtiquetas($instancia_etiquetas2);
+        
+        //NOMBRE
+        if($jugador1_id==$jug_id_actual){            
+            //titulo
+            $response["nombre1"]="Tu";
+            $response["nombre2"]="Tu compañero";
+            
+            //video
+            $response["url_video1"]=Video::getVideoxId($intervalo1->getVideoId())->getUrl();
+            $response["ini1"]=$intervalo1->getInicio();
+            $response["fin1"]=$intervalo1->getFin();
+            
+            $response["url_video2"]=Video::getVideoxId($intervalo2->getVideoId())->getUrl();
+            $response["ini2"]=$intervalo2->getInicio();
+            $response["fin2"]=$intervalo2->getFin();
+            
+            //etiquetas
+            $response["etiquetas1"]=$arr_etiquetas1;
+            $response["etiquetas2"]=$arr_etiquetas2;            
+        }else{
+            //titulo
+            $response["nombre1"]="Tu compañero";
+            $response["nombre2"]="Tu";
+            
+            //video
+            $response["url_video1"]=Video::getVideoxId($intervalo2->getVideoId())->getUrl();
+            $response["ini1"]=$intervalo2->getInicio();
+            $response["fin1"]=$intervalo2->getFin();
+            
+            $response["url_video2"]=Video::getVideoxId($intervalo1->getVideoId())->getUrl();
+            $response["ini2"]=$intervalo1->getInicio();
+            $response["fin2"]=$intervalo1->getFin();
+            
+            //etiquetas
+            $response["etiquetas1"]=$arr_etiquetas2;
+            $response["etiquetas2"]=$arr_etiquetas1;
+        }
+        
+        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
+        return $this->renderText(json_encode($response));
+    }
+
+
     /* Link GameOver*/
     public function executeGameOver(sfWebRequest $request) {
         //PONER EN SESSION DATOS DE LA CONSULTA PARA USAR EN GAMERECAP Y EN SCOREBOARD                      
