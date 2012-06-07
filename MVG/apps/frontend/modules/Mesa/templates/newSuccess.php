@@ -55,7 +55,7 @@ function empezarTimerLocal(){
             var round_actual=<?php $round=$sf_user->getAttribute('round_actual'); echo $round-1; ?>; 
             var mesa_id="<?php echo $sf_user->getAttribute('mesaid'); ?>";
             var jug_id="<?php echo $sf_user->getAttribute('jugadorid'); ?>";
-            var modoJugada="<?php echo $sf_user->getAttribute('modoJugada'); ?>";
+            var modoJugada="<?php echo $sf_user->getAttribute('modoJugada'); ?>";            
             var websocket;
             var set_videos=[]; 
             var envioDecision=0;
@@ -167,6 +167,20 @@ function empezarTimerLocal(){
                         if(request.status==200){                             
                             respuestajson=request.responseText;
                             if(respuestajson!=null && respuestajson!=''){
+                                //ACTUALIZAR PUNTAJE EN LA INTERFAZ
+
+                                var puntaje_contenedor=$("#puntajeglobal").text();
+                                
+                                if(puntaje_contenedor!=""){
+                                    puntaje_contenedor=parseInt(puntaje_contenedor);
+                                    puntaje_contenedor+=puntos;
+                                }else{
+                                    puntaje_contenedor=0;
+                                }
+                                
+                                $("#puntajeglobal").html(""+puntaje_contenedor);
+                                //VERIFICAR SI SE HACE ACREEDOR A BONO
+                                
                                 //****************** reusltados y PASAR A SIGUIENTE ROUND ***************************                              
                                 //EDITAR RESULTADO_INDIVIDUAL 
                                 //JUG1    
@@ -207,12 +221,31 @@ function empezarTimerLocal(){
                                     empezarTimerLocal(); //aqui no va sino después de sincronizado, por ahora qui probar
                                     
                                 }else{
-                                    //"puntaje_extra"   puntaje_extra_acumulado
-                                    <?php $sf_user->setAttribute('puntaje_extra',puntaje_extra_acumulado); ?>
+                                    //poner "puntaje_extra"   puntaje_extra_acumulado  en
+                                    enviarPuntajeExtra(puntaje_extra_acumulado);                                    
                                     //Ir a Game Over url                                    
-                                    window.location.href = "<?php echo url_for('Mesa/gameOver') ?>";
+                                    //window.location.href = "<?php echo url_for('Mesa/gameOver') ?>";
                                 }
                                     
+                            }
+                        }
+                    }
+                };
+                request.send(null);
+            }
+            
+            /*Guarda la respuesta, sea Same o Different, en el tiempo que fue ingresada*/
+            function enviarPuntajeExtra(puntuacion_extra){                
+                var request;
+                request = createXMLHttpRequest();                
+                request.open('GET','<?php echo url_for('Mesa/actualizarPuntajeExtra'); ?>'+"?puntuacion_extra="+puntuacion_extra,true);
+                request.onreadystatechange=function(){                      
+                    if(request.readyState==4){
+                        if(request.status==200){                             
+                            respuestajson=request.responseText;
+                            if(respuestajson!=null){
+                                //Ir a gameover, luego de enviar el puntaje extra
+                                window.location.href = "<?php echo url_for('Mesa/gameOver') ?>";
                             }
                         }
                     }
@@ -245,14 +278,14 @@ function empezarTimerLocal(){
                                 //alert("Prueba juego habilitado");                            
                             }
                         }else if(obj.tipo=="sincronizacion-completa"){                            
-                            setTimeout(function(){ 
+                            //setTimeout(function(){ 
                             //    $("#content").unmask();
                                 play(0);
                                 mute(false);
                               //  alert(value);
                                 //logPartner("Received: SINCRONIZADOS: "+value);
                                 //iniciar AQUI timer de ese round sincronizado
-                            },0.007);
+                            //},0.007);
                         }else if(obj.tipo=="same-different-incompleto"){
                             //Open Cuadro de diálogo que indica que respondió su partner en una esquina y por n seconds                            
                             $( "#dialog_mensaje" ).dialog("open");
@@ -267,10 +300,10 @@ function empezarTimerLocal(){
                             if(resultado_jug_tu==resultado_jug_partner && resultado_jug_tu=="ACIERTO") vecesjugadas++;
                             else vecesjugadas=0;
                             
+                            puntaje_grupal=parseInt(puntaje_grupal);
                             //3 vecesjugadas consecutivas incrementa 10 puntos
                             if(vecesjugadas!=0 && vecesjugadas%3==0){
-                               puntos_extra=10;
-                               puntaje_grupal=parseInt(puntaje_grupal);
+                               puntos_extra=10;                               
                                puntaje_grupal+=puntos_extra;
                                /*Todo el puynatje extra que obtuvo*/
                                puntaje_extra_acumulado+=puntos_extra;
@@ -436,7 +469,7 @@ function empezarTimerLocal(){
 		</div>
 		<div id="puntos_content">
 			<h3>Puntos:</h3>
-			<h3 class="content_text">100</h3>
+			<h3 class="content_text" id="puntajeglobal">0</h3>
 		</div>
 	</div>
 	<div id="body">

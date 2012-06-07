@@ -117,7 +117,7 @@ class MesaActions extends sfActions {
         $this->getUser()->setAttribute('jugadorid', $jugador_actual_id); 
         
         //PONER EN SESSION ROUND       
-        $this->getUser()->setAttribute('round_actual', 1);
+        $this->getUser()->setAttribute('round_actual', 1);          
         
         //REDIRECCIONAR A PÁGINA JUEGO
         $this->redirect('Mesa/new');
@@ -291,6 +291,14 @@ class MesaActions extends sfActions {
             $this->getUser()->getAttributeHolder()->remove('modoJugada');*/        
         //VOLVER A INICIAR
         $this->redirect('Mesa/index');
+    }
+    
+    public function executeActualizarPuntajeExtra(sfWebRequest $request) {
+        $tmp = $request->getParameter('puntuacion_extra');
+        $puntuacion_extra = isset($tmp) ? $tmp : '';
+        
+        $this->getUser()->setAttribute('puntaje_extra', $puntuacion_extra);
+        return $this->renderText("" + $puntuacion_extra);        
     }
     
     public function executeConsultarResultados(sfWebRequest $request) {

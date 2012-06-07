@@ -17,7 +17,7 @@
     var mesa_id="<?php echo $sf_user->getAttribute('mesaid'); ?>";
     var jug_id="<?php echo $sf_user->getAttribute('jugadorid'); ?>";  
     var puntaje_extra_obtenido=<?php echo $sf_user->getAttribute('puntaje_extra',0); ?>;
-    alert(puntaje_extra_obtenido);
+    //alert(puntaje_extra_obtenido);
     /*Ajax*/
     function createXMLHttpRequest() {
         var request = false;
