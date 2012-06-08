@@ -82,6 +82,11 @@ server.sockets.on("connection", function(client)
 					estadovideos[""+key]={};
 				}
 							
+				//estadovideo_ SINCRONIZACIONES esta_sincronizado round
+				if(estadovideos[""+key]["esta_sincronizado"]==null) {				
+					estadovideos[""+key]["esta_sincronizado"]="";
+				}			
+				
 				//actualiza jugid obj 			
 				estadovideos[""+key][""+jugid] = {};
 				estadovideos[""+key][""+jugid]["texto"] = "";
@@ -103,6 +108,7 @@ server.sockets.on("connection", function(client)
 				if(estado_mesa=="COMPLETO"){
 					destinatario1=mesas[""+key][0].socket; 
 					destinatario2=mesas[""+key][1].socket;
+										
 					destinatario1.emit("sendEvent", '{"tipo":"conexion","objeto":{"'+key+'": "'+estado_mesa+'"}}');
 					destinatario2.emit("sendEvent", '{"tipo":"conexion","objeto":{"'+key+'": "'+estado_mesa+'"}}');
 				}else{
@@ -210,19 +216,22 @@ server.sockets.on("connection", function(client)
 								var key_jug2=keys[1];
 								if(key_jug1!=null && key_jug2!=null){
 									var estado_video1=estadovideos[""+key][key_jug1]["texto"];
-									var estado_video2=estadovideos[""+key][key_jug2]["texto"];
-									if(estado_video1=="COMPLETO" && estado_video2=="COMPLETO"){
+									var estado_video2=estadovideos[""+key][key_jug2]["texto"];																	
+									
+									if(estado_video1=="COMPLETO" && estado_video2=="COMPLETO" && estadovideos[""+key]["esta_sincronizado"]!="1"){
 										// si ambos estados están iguales																				
 										destinatario1=mesas[""+key][0].socket; 
 										destinatario2=mesas[""+key][1].socket;
+										
 										destinatario1.emit("sendEvent", '{"tipo":"sincronizacion-completa","objeto":{"'+key+'": "'+estado_video+'"}}');
 										destinatario2.emit("sendEvent", '{"tipo":"sincronizacion-completa","objeto":{"'+key+'": "'+estado_video+'"}}');														
 										
-										console.log("los 2 coontestaron sincronizacion-videos "+estado_video);
+										console.log("LISTO! SINCRONIZADOS: sincronizacion-videos "+estado_video);
 										
 										//limpiar estados de ambos
 										estadovideos[""+key][key_jug1]["texto"]="";
 										estadovideos[""+key][key_jug2]["texto"]="";
+										estadovideos[""+key]["esta_sincronizado"]="1";
 									}
 								}
 							}
@@ -230,6 +239,21 @@ server.sockets.on("connection", function(client)
 					}	
 					console.log("************ ingresoo a sincronizacion-videos "+key +" - "+jugid+" - "+estado_video);
 				}				
+			break;
+			case "reiniciar_estado_videos":
+				var jugid=value.atributo1;
+				var mensaje=value.atributo2;
+				if(mesas[""+key]!=null){
+					if(mesas[""+key][0]!=null && mesas[""+key][1]!=null){	
+						if(estadovideos[""+key]!=null){
+							//reiniciar, editar -> esta_sincronizado?
+							if(estadovideos[""+key]["esta_sincronizado"]!=null) estadovideos[""+key]["esta_sincronizado"]=mensaje;
+							//editar el estado
+							if(estadovideos[""+key][""+jugid]!=null) estadovideos[""+key][""+jugid]["texto"] = "";							
+						}
+					}	
+					console.log("************ ingresoo a reiniciar_estado_videos "+key +" - "+jugid+" - "+mensaje);
+				}
 			break;
 			case "mensajes":	//en caso mensajes, no mandar a client this, sino a su partner no más
 				var socket_destinatario;

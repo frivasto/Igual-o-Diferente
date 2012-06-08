@@ -1,28 +1,24 @@
 <script type="text/javascript">
 ( function($) {
-$(document).ready(function() {
-    $("#cmd_enviar").button().click(function(){ send(); });
-    
-    $("input","#same_different").button();
-    $("#same_different").buttonset();
-    $("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185})
-    .click(function(){
-            enviarRespuesta('SAME');
+    $(document).ready(function() {
+        $("#cmd_enviar").button().click(function(){ send(); });    
+        $("input","#same_different").button();
+        $("#same_different").buttonset();
+        $("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185}).click(function(){ enviarRespuesta('SAME');});
+        $('#same_different2').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20).click(function(){ enviarRespuesta('DIFFERENT');});    
+        $( "#dialog_result" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});
+        $( "#dialog_mensaje" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});    
+        $('.alert div.ui-dialog-titlebar').hide();//transparent
+        $('.alert').css('background','transparent');    
     });
-    $('#same_different2').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20)
-    .click(function(){
-            enviarRespuesta('DIFFERENT');
-    });    
-    $( "#dialog_result" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});
-    $( "#dialog_mensaje" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});
-    
-    $('.alert div.ui-dialog-titlebar').hide();//transparent
-    $('.alert').css('background','transparent');    
-});
 } ) ( jQuery );
 
-//JQUERY CHRONY con callback  otra opcion es enviar el texto completo text: '1:20:30' MEJOR!!
-//PERMITE REAJUSTAR DATOS TAMBIÉN $('#time').chrony('set', { decrement: 2 }); re-adjust runtime options.
+/*
+ *JQUERY CHRONY 
+ *Con callback  otra opcion es enviar el texto completo text: '1:20:30' MEJOR!!
+ *PERMITE REAJUSTAR DATOS TAMBIÉN $('#time').chrony('set', { decrement: 2 }); 
+ *re-adjust runtime options.
+*/
 function empezarTimerGlobal(){
 ( function($) {
     $('#timeglobal').chrony({hour: 0, minute: 4, second: 0,finish: function() {
@@ -33,15 +29,12 @@ function empezarTimerGlobal(){
 }    
 
 function empezarTimerLocal(){
-( function($) {
-    //$(window).unbind('.chrony');
+( function($) {    
     $("#time").remove();
-    $("#timer_content").append("<div id='time' class='content_text_min' ></div>");
-    //$('#time').unbind('.chrony'); //.chrony('destroy')
+    $("#timer_content").append("<div id='time' class='content_text_min' ></div>");    
     $('#time').chrony({hour: 0, minute: 0, second: 35,finish: function() {
         //aqui va evento same different automatico envíe """ si el usuario no ha contestado
-        verificarEnvioRespuesta();
-        /*$(this).html('Finished!');*/
+        verificarEnvioRespuesta();        
         }, blink: true
     });
 } ) ( jQuery );
@@ -67,9 +60,7 @@ function empezarTimerLocal(){
             $tmp=$sf_user->getAttribute('set_intervalos_videos'); $tam=count($tmp);                               
                 for($i=0;$i<$tam;$i++){                                          
             ?>
-            var tam_arr_php=<?php echo $tam; ?>; 
-            //alert("en php: "+tam_arr_php);
-            
+            var tam_arr_php=<?php echo $tam; ?>;             
             var i=<?php echo $i; ?>;             
             var intervaloObj={};
             intervaloObj.inicio="<?php echo $tmp[$i][1]['ini']; ?>";
@@ -78,11 +69,8 @@ function empezarTimerLocal(){
             intervaloObj.respuesta_real="<?php echo $tmp[$i][0]; ?>";
             set_videos[i]=intervaloObj;
             <?php } ?>
-            
-           // alert("en js: "+set_videos.length);
-            var video_actual=set_videos[round_actual].video_url;
-            //cueVideo(video_url); play(0);
-            
+                       
+            var video_actual=set_videos[round_actual].video_url;                        
             /*Sino ha contestado este jugador, entonces enviar NO_CONTESTO*/
             function verificarEnvioRespuesta(){                
                 if(envioDecision==0) enviarRespuesta('NO_CONTESTO');
@@ -168,7 +156,6 @@ function empezarTimerLocal(){
                             respuestajson=request.responseText;
                             if(respuestajson!=null && respuestajson!=''){
                                 //ACTUALIZAR PUNTAJE EN LA INTERFAZ
-
                                 var puntaje_contenedor=$("#puntajeglobal").text();
                                 
                                 if(puntaje_contenedor!=""){
@@ -178,13 +165,15 @@ function empezarTimerLocal(){
                                     puntaje_contenedor=0;
                                 }
                                 
+                                //REINICIAR ESTADO VIDEOS
+                                enviar_objeto("reiniciar_estado_videos",jug_id,"");
+                                
                                 $("#puntajeglobal").html(""+puntaje_contenedor);
                                 //VERIFICAR SI SE HACE ACREEDOR A BONO
                                 
-                                //****************** reusltados y PASAR A SIGUIENTE ROUND ***************************                              
-                                //EDITAR RESULTADO_INDIVIDUAL 
-                                //JUG1    
-                                //alert(puntos+" - "+resultado_jug_tu+" - "+resultado_jug_partner);
+                                
+                                //****************** RESULTADOS y PASAR A SIGUIENTE ROUND ***************************                                                                                               
+                                //JUG1
                                 if(resultado_jug_tu=="ACIERTO") $("#respuesta_jug").attr({ src: "/images/check.png", alt: "Resultado Jug1" });
                                 else $("#respuesta_jug").attr({ src: "/images/cross.png", alt: "Resultado Jug1" });
                                 //JUG2
@@ -193,8 +182,7 @@ function empezarTimerLocal(){
                                 
                                 //EDITAR PUNTAJE GRUPAL O RESULTADO_DECISIONES_COLABORATIVAS [mostrar en pantalla correcto, incorrecto por n seconds]
                                 if(puntos==100+"") $("#resultado_decision").html("Correcto");                                                                                                    
-                                else $("#resultado_decision").html("Incorrecto");
-                                
+                                else $("#resultado_decision").html("Incorrecto");                                
                                 $("#puntaje_grupal").html(puntos);
                                 
                                 //MOSTRAR RESULTADO 5000ms
@@ -205,23 +193,17 @@ function empezarTimerLocal(){
                                 round_actual++;    
                                 if(round_actual<set_videos.length){
                                     //y al cerrar eso, asignar nuevo video
-                                    video_actual=set_videos[round_actual].video_url;
-                                    cueVideo(video_actual);
-                                    
+                                    video_actual=set_videos[round_actual].video_url;                                    
+                                    iniciarVideo(video_actual,0);
 
                                     //Limpiar
-                                    envioDecision=0;
-                                    estacargado=0; //video 
+                                    envioDecision=0;                                    
 
                                     //Limpiar LOG y LOGPARTNER
                                     document.getElementById("log").innerHTML="";
-                                    document.getElementById("logpartner").innerHTML="";
-                                    
-                                    //reiniciar timer local <-- eso ya lo incluye la sync video
-                                    empezarTimerLocal(); //aqui no va sino después de sincronizado, por ahora qui probar
-                                    
+                                    document.getElementById("logpartner").innerHTML="";                                    
                                 }else{
-                                    //poner "puntaje_extra"   puntaje_extra_acumulado  en
+                                    //poner "puntaje_extra"
                                     enviarPuntajeExtra(puntaje_extra_acumulado);                                    
                                     //Ir a Game Over url                                    
                                     //window.location.href = "<?php echo url_for('Mesa/gameOver') ?>";
@@ -253,6 +235,7 @@ function empezarTimerLocal(){
                 request.send(null);
             }
             
+            var veces_sincronizado=0;
             /*Inicializa websocket si es modo Parejas*/
             function init(){                
                 //alert(modoJugada);        
@@ -275,17 +258,18 @@ function empezarTimerLocal(){
                             if(value=="INCOMPLETO"){                                
                                 //alert("Estamos buscándole un compañero de juego");
                             }else{                                
-                                //alert("Prueba juego habilitado");                            
+                                //alert("Prueba juego habilitado");    
+                                //iniciarVideo(video_actual,0);
                             }
                         }else if(obj.tipo=="sincronizacion-completa"){                            
-                            //setTimeout(function(){ 
-                            //    $("#content").unmask();
+                            setTimeout(function(){ 
+                                //$("#content").unmask();
+                                veces_sincronizado++;
                                 play(0);
-                                mute(false);
-                              //  alert(value);
-                                //logPartner("Received: SINCRONIZADOS: "+value);
-                                //iniciar AQUI timer de ese round sincronizado
-                            //},0.007);
+                                mute(false);  
+                                actualizarInfo("sincronizado_msg","sincronizacion-completa "+veces_sincronizado+" veces, en round: "+(round_actual+1));
+                                empezarTimerLocal(); //iniciar AQUI timer de ese round sincronizado                                
+                            },0.007);
                         }else if(obj.tipo=="same-different-incompleto"){
                             //Open Cuadro de diálogo que indica que respondió su partner en una esquina y por n seconds                            
                             $( "#dialog_mensaje" ).dialog("open");
@@ -335,7 +319,8 @@ function empezarTimerLocal(){
             function send(){                
                 var message = document.getElementById("txt_mensaje");
                 var msg = message.value;
-                if(!msg){ //alert("Message can not be empty");
+                if(!msg){ 
+                 //alert("Message can not be empty");
                  return; 
                 }             
                 websocket.emit("mensaje", '{"tipo":"mensajes","objeto":{"'+mesa_id+'": "'+msg+'"}}');                
@@ -364,16 +349,21 @@ function empezarTimerLocal(){
             var params = { allowScriptAccess: "always", wmode:"transparent" };
             var atts = { id: "myytplayer" };
             swfobject.embedSWF("http://www.youtube.com/apiplayer?enablejsapi=1&version=3",
-            "ytapiplayer", "400", "233", "8", null, null, params, atts);
-            //400 273     360  220
+            "ytapiplayer", "400", "233", "8", null, null, params, atts);            
             var ytplayer;
             function onYouTubePlayerReady(playerId) {
                 ytplayer = document.getElementById("myytplayer");				
-                ytplayer.addEventListener("onStateChange", "onytplayerStateChange");		
-                //ytplayer.cueVideoById("DZfCPEn6L6g");	
-                cueVideo(video_actual);
-                //play(0);
-            }            
+                ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
+                iniciarVideo(video_actual,0);
+            }           
+            
+            function iniciarVideo(video,inicio_min) {		
+                if (ytplayer) {
+                    cueVideo(video,0,"small"); //calidad más baja
+                    play(inicio_min);
+                }
+            }  
+            
             function cueVideo(video_url) {		
                 if (ytplayer) {
                     ytplayer.cueVideoById(video_url);	
@@ -391,35 +381,16 @@ function empezarTimerLocal(){
                     else ytplayer.unMute();
                 }
             }            
-            var estacargado=0; var resp; var loaded; var cont=0;
+            var cont=0;
             function onytplayerStateChange(newState) {  
-                resp = document.getElementById("resp");
-                resp.innerHTML="total: "+ytplayer.getVideoBytesTotal()+" - cargando: "+(ytplayer.getVideoBytesLoaded())+" - estado: "+newState;
-		//if(newState==0) ytplayer.playVideo(); //ninguno de estos estados			
-                //Possible values are unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5).
-		/*if(ytplayer.getVideoBytesLoaded()>=ytplayer.getVideoBytesTotal() && ytplayer.getVideoBytesTotal()!=0){                    
-                    enviar_objeto("sincronizacion-videos",jug_id,"COMPLETO");
-                    alerta("se cargo todo el video, lo envío a server sockets");
-                }else{
-                    //ytplayer.pauseVideo();	//pausado no hace buffer ràpido		                    
-                    //mostrarLoading();                    
-                    mute(true);
-                }*/          
-                //alert("estado: "+newState+" tipo: "+(typeof newState));
-                //if(newState!=1)
-                if(newState!=-1 && estacargado==0) {
-                    //alert("se cargo todo el video, lo envío a server sockets");
-                    ytplayer.pauseVideo(); 
-                    estacargado=1;
-                    enviar_objeto("sincronizacion-videos",jug_id,"COMPLETO");
-                    loaded = document.getElementById("loaded");
+                actualizarInfo("resp","total: "+ytplayer.getVideoBytesTotal()+" - cargando: "+(ytplayer.getVideoBytesLoaded())+" - estado: "+newState);                					
+                //Possible values are unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5).		
+                if(newState!=-1 && newState!=5) {
+                    //se cargo todo el video, lo envío a server sockets               
+                    enviar_objeto("sincronizacion-videos",jug_id,"COMPLETO");                 
                     cont++;
-                    loaded.innerHTML="Estado Video:: "+newState+" se cargo todo el video, lo envío a server sockets "+cont;                     
-                    //empezar reloj local una vez sinronizado no aqui en sync complet                   
-                } else{
-                    //ytplayer.playVideo();
-                    //alerta("no playing");
-                }               
+                    actualizarInfo("loaded", "Estado Video:: "+newState+" se cargo todo el video, lo envío a server sockets "+cont);                                                         
+                }              
             } 
             
             /*Muestra una máscara loading*/
@@ -448,10 +419,16 @@ function empezarTimerLocal(){
                 envioDecision=1;
             }
 
+            /*Modifica el texto de un elemento HTML*/
+            function actualizarInfo(id_contenedor, info_msg){                
+                var contenedor= document.getElementById(id_contenedor);                
+                contenedor.innerHTML=info_msg;
+            }
+            
             function inicializar(){
                 init();
                 empezarTimerGlobal();
-                empezarTimerLocal(); //aqui no va sino después de sincronizado, por ahora qui probar
+                //empezarTimerLocal();
             }
             window.onload = inicializar;
         </script>
@@ -517,4 +494,6 @@ function empezarTimerLocal(){
         <p style="color:black;">Hola usuario: <strong><?php echo $sf_user->getAttribute('userid') ?></strong>.</p>            
         <p style="color:black;" id="resp"></p>
         <p style="color:black;" id="loaded"></p>
+        
+        <p style="color:black;" id="sincronizado_msg"></p>
         <a href="<?php echo url_for('Mesa/new'); ?>">Volver a Jugar </a><!--Va en interfaz de ranking-->    
