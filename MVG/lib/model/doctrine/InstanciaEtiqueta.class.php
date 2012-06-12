@@ -25,7 +25,7 @@ class InstanciaEtiqueta extends BaseInstanciaEtiqueta
         $tam_instancia_etiquetas=count($instancia_etiquetas);
         $arr_etiquetas=array();
         for($i=0;$i<$tam_instancia_etiquetas;$i++){            
-            $arr_etiquetas[$i]=$instancia_etiquetas[$i]->getTexto();
+            $arr_etiquetas[]=$instancia_etiquetas[$i]['texto'];
         }
         return $arr_etiquetas;
     }

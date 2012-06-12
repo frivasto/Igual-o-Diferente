@@ -1,334 +1,158 @@
 ## YAML Template.
-Video:
-  video1:
-    url: 3QMXJg04lsY
-    categoria: Educacion
-  video2:
-    url: 	ANglxq0Qr6g
-    categoria: Educacion
-  video3:
-    url: 	4S7GBaONq1g
-    categoria: Educacion
-  video4:
-    url: 7y57BBwhEEM
-    categoria: Educacion
-  video5:
-    url: 	dCcCeig3mgE
-    categoria: Educacion
-  video6:
-    url:  v50qXXKV_c4
-    categoria: Educacion
-  video7:
-    url: CiWTUVFKWkI
-    categoria: Educacion
-  video8:
-    url: 	4dCO9VBlExE
-    categoria: Educacion
-  video9:
-    url: 	9L8Ve7cbT4o
-    categoria: Educacion
-  video10:
-    url: lgpy88oxJDs
-    categoria: Educacion
-  video11:
-    url: 	kfMyfod5eW8
-    categoria: Educacion
-  video12:
-    url: 	0ug96YW3HC0
-    categoria: Educacion
-  video13:
-    url: DTQx3U31tmg
-    categoria: Educacion
-  video14:
-    url: 	G_9SRysJM2c
-    categoria: Educacion
-  video15:
-    url: 	Ud1WRI5Cy6Y
-    categoria: Educacion
-  video16:
-    url: VwTfXGLFqOU
-    categoria: Educacion
-  video17:
-    url: 	inRW-G8JJ2U
-    categoria: Educacion
-  video18:
-    url: 	sQEIk0tBpVo
-    categoria: Educacion
-  video19:
-    url: OAtSI0LkkGM
-    categoria: Educacion
-  video20:
-    url: 	mY_3Nub1qhA
-    categoria: Educacion
-  video21:
-    url: 	_dSl2IQ1c38
-    categoria: Educacion
-  video22:
-    url: icEhwasTbZA
-    categoria: Educacion
-  video23:
-    url: 	GH92JwDCnTg
-    categoria: Educacion
-  video24:
-    url: 	bBgZ8WCZsBI
-    categoria: Educacion
-  video25:
-    url: SXTNPpP3pQc
-    categoria: Educacion
-  video26:
-    url: 	XHid-q5hQ68
-    categoria: Educacion
-  video27:
-    url: 	JsQxXrIZpLQ
-    categoria: Educacion
-  video28:
-    url: Yhq_NhsuyJM
-    categoria: Educacion
-  video29:
-    url: 	EG0TaOgupaE
-    categoria: Educacion
-  video30:
-    url: 	Kg1wow6pgps
-    categoria: Educacion
-  video31:
-    url: SEBLt6Kd9EY
-    categoria: Blooper
-  video32:
-    url: 	YnhP3kTdLeo
-    categoria: Blooper
-  video33:
-    url: 	sd0g59X_IRI
-    categoria: Blooper
-  video34:
-    url: ctJJrBw7e-c
-    categoria: Blooper
-  video35:
-    url: 	wf_IIbT8HGk
-    categoria: Blooper
-  video36:
-    url: 	Hb92wQpPG-s
-    categoria: Blooper
-  video37:
-    url: 89kKUeT2sxk
-    categoria: Blooper
-  video38:
-    url: 	u23gEi47_j4
-    categoria: Blooper
-  video39:
-    url:  i479N2ei8Us
-    categoria: Blooper
-  video40:
-    url: eTu6Fq8hC0U
-    categoria: Blooper
-  video41:
-    url: 	lyzxrF8x5Ww
-    categoria: Blooper
-  video42:
-    url: 	9d_i--693WE
-    categoria: Blooper
-  video43:
-    url: cTbu4ZnzNko
-    categoria: Blooper
-  video44:
-    url: 	81NeQJWGYJY
-    categoria: Blooper
-  video45:
-    url: 	oDdI4jsnvyc
-    categoria: Blooper
-  video46:
-    url: cXXm696UbKY
-    categoria: Blooper
-  video47:
-    url: 	ZkWkirlQVxg
-    categoria: Blooper
-  video48:
-    url: 	lL5Y0ng0uRU
-    categoria: Blooper
-  video49:
-    url: CjqvLAs9t1Q
-    categoria: Blooper
-  video50:
-    url: 	sIYzVORJFLI
-    categoria: Blooper
-  video51:
-    url: 	kJY5BRCNAs4
-    categoria: Blooper
-  video52:
-    url: JhUpejnZ-9Q
-    categoria: Blooper
-  video53:
-    url: 	WahvT8hrnsQ
-    categoria: Blooper
-  video54:
-    url: 	GJ6OG5fZ7M0
-    categoria: Blooper
-  video55:
-    url: Q2xzt5_ITtY
-    categoria: Blooper
-  video56:
-    url: 	7PokysnUOo4
-    categoria: Blooper
-  video57:
-    url: 	HsHfV-Ns8Dg
-    categoria: Blooper
-  video58:
-    url: HMPFf66oDFk
-    categoria: Blooper
-  video59:
-    url: 	g8gPicK5Mug
-    categoria: Blooper
-  video60:
-    url: 	qJzREZXiXIw
-    categoria: Blooper
-  video61:
-    url: wbqFMgdSeGs
-    categoria: Popfail
-  video62:
-    url: 	lwnoVnaFwxM
-    categoria: Popfail
-  video63:
-    url: 	F-sSooqYisM
-    categoria: Popfail
-  video64:
-    url: DNJ6a9Lf_K8
-    categoria: Popfail
-  video65:
-    url: 	T-NviMJMQGQ
-    categoria: Popfail
-  video66:
-    url: 	g-RMityCgyo
-    categoria: Popfail
-  video67:
-    url: E_emNxk1CKQ
-    categoria: Popfail
-  video68:
-    url: 	-vgoa0IAOls
-    categoria: Popfail
-  video69:
-    url: 	wpqzukQJ1bU
-    categoria: Popfail
-  video70:
-    url: 20lgHlQcLs0
-    categoria: Popfail
-  video71:
-    url: 	QBt9E3dZlNw
-    categoria: Popfail
-  video72:
-    url: 	y4xLM9wIM8A
-    categoria: Popfail
-  video73:
-    url: Q31YDyxbS5k
-    categoria: Popfail
-  video74:
-    url: 	Ct-FfReSonw
-    categoria: Popfail
-  video75:
-    url: 	5HyMJpG4hvg
-    categoria: Popfail
-  video76:
-    url: QT-rQZ6LmKE
-    categoria: Popfail
-  video77:
-    url: 	jOkH55V6HvY
-    categoria: Popfail
-  video78:
-    url: 	Tby-LnyiZUE
-    categoria: Popfail
-  video79:
-    url: 3QMXJg04lsY
-    categoria: Popfail
-  video80:
-    url: 	kfVsfOSbJY0
-    categoria: Popfail
-  video81:
-    url: 	cSfgUQKbl0w
-    categoria: Popfail
-  video82:
-    url: thhOrlhst0E
-    categoria: Popfail
-  video83:
-    url: 	8-QToIzw7Fk
-    categoria: Popfail
-  video84:
-    url: 	0AbQpzn6t4c
-    categoria: Popfail
-  video85:
-    url: OtZyj_UHAcw
-    categoria: Popfail
-  video86:
-    url: 	9Sw7z2PWZqU
-    categoria: Popfail
-  video87:
-    url: 	8_lTdVNMbIM
-    categoria: Popfail
-  video88:
-    url: OlR_CQ3NPvI
-    categoria: Popfail
-  video89:
-    url: 	SSA3ydf06yg
-    categoria: Popfail
-  video90:
-    url: 	or2GH3CHXqY
-    categoria: Popfail
+<?php 
+class VideoItem{
+  public $url;
+  public $categoria;
+  public $video_id;
+  public $duracion;
 
+  // Require $url and $categoria when INSTANTIATING
+  public function __construct($url, $categoria, $duracion)    
+  {
+    $this->url = $url; 
+    $this->categoria = $categoria;
+    $this->duracion = $duracion;
+  }
+
+  public function getUrl() {
+        return $this->url;
+  }
+  
+  public function getCategoria() {
+        return $this->categoria;
+  }
+  
+  public function getDuracion() {
+        return $this->duracion;
+  }
+  
+  //Setear el id de video
+  public function setVideoId($video_id) {
+        $this->video_id = $video_id;
+        return $this;
+  }
+  
+  //Setear el Duracion
+  public function setDuracion($duracion) {
+        $this->duracion = $duracion;
+        return $this;
+  }
+  
+  public function __toString()
+  {
+    return "VideoItem [url='$this->url', categoria='$this->categoria']";
+  }
+}?>
+<?php 
+$coleccion_videos=array();
+$coleccion_videos[]=new VideoItem('3QMXJg04lsY', 'Educacion','597');
+$coleccion_videos[]=new VideoItem('ANglxq0Qr6g', 'Educacion','597');
+$coleccion_videos[]=new VideoItem('4S7GBaONq1g', 'Educacion','809');
+$coleccion_videos[]=new VideoItem('7y57BBwhEEM', 'Educacion','727');
+$coleccion_videos[]=new VideoItem('dCcCeig3mgE', 'Educacion','1249');
+$coleccion_videos[]=new VideoItem('v50qXXKV_c4', 'Educacion','1184');
+$coleccion_videos[]=new VideoItem('CiWTUVFKWkI', 'Educacion','1215');
+$coleccion_videos[]=new VideoItem('4dCO9VBlExE', 'Educacion','1404');
+$coleccion_videos[]=new VideoItem('9L8Ve7cbT4o', 'Educacion','603');
+$coleccion_videos[]=new VideoItem('lgpy88oxJDs', 'Educacion','446');
+$coleccion_videos[]=new VideoItem('kfMyfod5eW8', 'Educacion','593');
+$coleccion_videos[]=new VideoItem('0ug96YW3HC0', 'Educacion','1350');
+$coleccion_videos[]=new VideoItem('DTQx3U31tmg', 'Educacion','1287');
+$coleccion_videos[]=new VideoItem('G_9SRysJM2c', 'Educacion','1327');
+$coleccion_videos[]=new VideoItem('Ud1WRI5Cy6Y', 'Educacion','1341');
+$coleccion_videos[]=new VideoItem('VwTfXGLFqOU', 'Educacion','1208');
+$coleccion_videos[]=new VideoItem('inRW-G8JJ2U', 'Educacion','1363');
+$coleccion_videos[]=new VideoItem('sQEIk0tBpVo', 'Educacion','1278');
+$coleccion_videos[]=new VideoItem('OAtSI0LkkGM', 'Educacion','375');
+$coleccion_videos[]=new VideoItem('mY_3Nub1qhA', 'Educacion','569');
+$coleccion_videos[]=new VideoItem('_dSl2IQ1c38', 'Educacion','391');
+$coleccion_videos[]=new VideoItem('icEhwasTbZA', 'Educacion','492');
+$coleccion_videos[]=new VideoItem('GH92JwDCnTg', 'Educacion','823');
+$coleccion_videos[]=new VideoItem('bBgZ8WCZsBI', 'Educacion','882');
+$coleccion_videos[]=new VideoItem('SXTNPpP3pQc', 'Educacion','399');
+$coleccion_videos[]=new VideoItem('XHid-q5hQ68', 'Educacion','1734');
+$coleccion_videos[]=new VideoItem('JsQxXrIZpLQ', 'Educacion','574');
+$coleccion_videos[]=new VideoItem('Yhq_NhsuyJM', 'Educacion','575');
+$coleccion_videos[]=new VideoItem('EG0TaOgupaE', 'Educacion','600');
+$coleccion_videos[]=new VideoItem('Kg1wow6pgps', 'Educacion','279');
+$coleccion_videos[]=new VideoItem('SEBLt6Kd9EY', 'Blooper','46');
+$coleccion_videos[]=new VideoItem('YnhP3kTdLeo', 'Blooper','49');
+$coleccion_videos[]=new VideoItem('sd0g59X_IRI', 'Blooper','32');
+$coleccion_videos[]=new VideoItem('ctJJrBw7e-c', 'Blooper','199');
+$coleccion_videos[]=new VideoItem('wf_IIbT8HGk', 'Blooper','184');
+$coleccion_videos[]=new VideoItem('Hb92wQpPG-s', 'Blooper','90');
+$coleccion_videos[]=new VideoItem('89kKUeT2sxk', 'Blooper','220');
+$coleccion_videos[]=new VideoItem('u23gEi47_j4', 'Blooper','80');
+$coleccion_videos[]=new VideoItem('i479N2ei8Us', 'Blooper','233');
+$coleccion_videos[]=new VideoItem('eTu6Fq8hC0U', 'Blooper','441');
+$coleccion_videos[]=new VideoItem('lyzxrF8x5Ww', 'Blooper','174');
+$coleccion_videos[]=new VideoItem('9d_i--693WE', 'Blooper','85');
+$coleccion_videos[]=new VideoItem('cTbu4ZnzNko', 'Blooper','108');
+$coleccion_videos[]=new VideoItem('81NeQJWGYJY', 'Blooper','80');
+$coleccion_videos[]=new VideoItem('oDdI4jsnvyc', 'Blooper','77');
+$coleccion_videos[]=new VideoItem('cXXm696UbKY', 'Blooper','82');
+$coleccion_videos[]=new VideoItem('ZkWkirlQVxg', 'Blooper','29');
+$coleccion_videos[]=new VideoItem('lL5Y0ng0uRU', 'Blooper','354');
+$coleccion_videos[]=new VideoItem('CjqvLAs9t1Q', 'Blooper','151');
+$coleccion_videos[]=new VideoItem('sIYzVORJFLI', 'Blooper','53');
+$coleccion_videos[]=new VideoItem('kJY5BRCNAs4', 'Blooper','101');
+$coleccion_videos[]=new VideoItem('JhUpejnZ-9Q', 'Blooper','557');
+$coleccion_videos[]=new VideoItem('WahvT8hrnsQ', 'Blooper','580');
+$coleccion_videos[]=new VideoItem('GJ6OG5fZ7M0', 'Blooper','648');
+$coleccion_videos[]=new VideoItem('Q2xzt5_ITtY', 'Blooper','523');
+$coleccion_videos[]=new VideoItem('7PokysnUOo4', 'Blooper','169');
+$coleccion_videos[]=new VideoItem('HsHfV-Ns8Dg', 'Blooper','1597');
+$coleccion_videos[]=new VideoItem('HMPFf66oDFk', 'Blooper','262');
+$coleccion_videos[]=new VideoItem('g8gPicK5Mug', 'Blooper','322');
+$coleccion_videos[]=new VideoItem('qJzREZXiXIw', 'Blooper','513');
+$coleccion_videos[]=new VideoItem('wbqFMgdSeGs', 'Popfail','75');
+$coleccion_videos[]=new VideoItem('lwnoVnaFwxM', 'Popfail','41');
+$coleccion_videos[]=new VideoItem('F-sSooqYisM', 'Popfail','479');
+$coleccion_videos[]=new VideoItem('DNJ6a9Lf_K8', 'Popfail','228');
+$coleccion_videos[]=new VideoItem('T-NviMJMQGQ', 'Popfail','152');
+$coleccion_videos[]=new VideoItem('g-RMityCgyo', 'Popfail','192');
+$coleccion_videos[]=new VideoItem('E_emNxk1CKQ', 'Popfail','51');
+$coleccion_videos[]=new VideoItem('-vgoa0IAOls', 'Popfail','62');
+$coleccion_videos[]=new VideoItem('wpqzukQJ1bU', 'Popfail','247');
+$coleccion_videos[]=new VideoItem('20lgHlQcLs0', 'Popfail','231');
+$coleccion_videos[]=new VideoItem('QBt9E3dZlNw', 'Popfail','626');
+$coleccion_videos[]=new VideoItem('y4xLM9wIM8A', 'Popfail','548');
+$coleccion_videos[]=new VideoItem('Q31YDyxbS5k', 'Popfail','414');
+$coleccion_videos[]=new VideoItem('Ct-FfReSonw', 'Popfail','237');
+$coleccion_videos[]=new VideoItem('5HyMJpG4hvg', 'Popfail','36');
+$coleccion_videos[]=new VideoItem('QT-rQZ6LmKE', 'Popfail','125');
+$coleccion_videos[]=new VideoItem('jOkH55V6HvY', 'Popfail','156');
+$coleccion_videos[]=new VideoItem('Tby-LnyiZUE', 'Popfail','73');
+$coleccion_videos[]=new VideoItem('3QMXJg04lsY', 'Popfail','597');
+$coleccion_videos[]=new VideoItem('kfVsfOSbJY0', 'Popfail','228');
+$coleccion_videos[]=new VideoItem('cSfgUQKbl0w', 'Popfail','121');
+$coleccion_videos[]=new VideoItem('thhOrlhst0E', 'Popfail','202');
+$coleccion_videos[]=new VideoItem('8-QToIzw7Fk', 'Popfail','745');
+$coleccion_videos[]=new VideoItem('0AbQpzn6t4c', 'Popfail','335');
+$coleccion_videos[]=new VideoItem('OtZyj_UHAcw', 'Popfail','139');
+$coleccion_videos[]=new VideoItem('9Sw7z2PWZqU', 'Popfail','109');
+$coleccion_videos[]=new VideoItem('8_lTdVNMbIM', 'Popfail','516');
+$coleccion_videos[]=new VideoItem('OlR_CQ3NPvI', 'Popfail','61');
+$coleccion_videos[]=new VideoItem('SSA3ydf06yg', 'Popfail','384');
+$coleccion_videos[]=new VideoItem('or2GH3CHXqY', 'Popfail','373');?>
+Video:
+<?php for ($i = 0; $i <90; $i++): ?>
+  video<?php echo $i ?>:
+    url: <?php echo $coleccion_videos[$i]->getUrl()."\n" ?>
+    categoria: <?php echo $coleccion_videos[$i]->getCategoria()."\n" ?>
+<?php endfor; ?>
 Intervalo:
-  intervalo1:
-    video_id: 1
-    inicio: 00:14:00	
-    fin: 04:13:00
-  intervalo2:
-    video_id: 2
-    inicio: 01:26:00	
-    fin: 04:16:00
-  intervalo3:
-    video_id: 3
-    inicio: 02:19:00	
-    fin: 06:59:00
-  intervalo4:
-    video_id: 4
-    inicio: 02:59:00	
-    fin: 06:40:00    
-  intervalo5:
-    video_id: 5
-    inicio: 00:28:00	
-    fin: 11:43:00  
-  intervalo6:
-    video_id: 6
-    inicio: 00:53:00	
-    fin: 11:54:00  
-  intervalo7:
-    video_id: 7
-    inicio: 00:24:00	
-    fin: 10:53:00
-  intervalo8:
-    video_id: 8
-    inicio: 01:53:00	
-    fin: 12:14:00   
-  intervalo9:
-    video_id: 9
-    inicio: 01:26:00	
-    fin: 04:16:00  
-  intervalo10:
-    video_id: 10
-    inicio: 00:00:00	
-    fin: 00:30:00  
-  intervalo11:
-    video_id: 11
-    inicio: 00:00:00	
-    fin: 00:30:00
-  intervalo12:
-    video_id: 12
-    inicio: 00:00:00	
-    fin: 00:30:00 
-  intervalo13:
-    video_id: 13
-    inicio: 00:00:00	
-    fin: 00:30:00  
-  intervalo14:
-    video_id: 14
-    inicio: 00:00:00	
-    fin: 00:30:00
-  intervalo15:
-    video_id: 15
-    inicio: 00:00:00	
-    fin: 00:30:00  
+<?php $j=0 ?>
+<?php for ($i = 0; $i <90; $i++): ?>
+  intervalo<?php echo $j ?>:
+    video_id: <?php echo ($i+1)."\n" ?>
+    inicio: <?php echo date('H:i:s',($coleccion_videos[$i]->getDuracion()/10.0))."\n" ?>
+    fin: <?php echo date('H:i:s',($coleccion_videos[$i]->getDuracion()/10.0+30)).")\n" ?>
+<?php $j++ ?>
+<?php if(($coleccion_videos[$i]->getDuracion()/10.0+$coleccion_videos[$i]->getDuracion()/2+30)<$coleccion_videos[$i]->getDuracion()): ?>
+  intervalo<?php echo $j ?>:
+    video_id: <?php echo ($i+1)."\n" ?>
+    inicio: <?php echo date('H:i:s',($coleccion_videos[$i]->getDuracion()/10.0+$coleccion_videos[$i]->getDuracion()/2))."\n" ?>
+    fin: <?php echo date('H:i:s',($coleccion_videos[$i]->getDuracion()/10.0+$coleccion_videos[$i]->getDuracion()/2+30))."\n" ?><?php $j++ ?>
+<?php endif ?>
+<?php endfor ?>

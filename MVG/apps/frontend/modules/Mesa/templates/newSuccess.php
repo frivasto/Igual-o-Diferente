@@ -273,7 +273,7 @@ function empezarTimerLocal(){
                         }else if(obj.tipo=="same-different-incompleto"){
                             //Open Cuadro de diálogo que indica que respondió su partner en una esquina y por n seconds                            
                             $( "#dialog_mensaje" ).dialog("open");
-                            setTimeout(function(){$( "#dialog_mensaje" ).dialog("close")},1500);                            
+                            setTimeout(function(){$( "#dialog_mensaje" ).dialog("close")},1250);                            
                         }else if(obj.tipo=="same-different"){                              
                             var keys=Object.keys(value);                            
                             var puntaje_grupal=value[keys[0]];
