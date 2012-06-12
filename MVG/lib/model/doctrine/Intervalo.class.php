@@ -12,6 +12,13 @@
  */
 class Intervalo extends BaseIntervalo
 {  
+    //Convertir de time a segundos
+    public static function time2seconds($time='00:00:00')
+    {
+        list($hours, $mins, $secs) = explode(':', $time);
+        return ($hours * 3600 ) + ($mins * 60 ) + $secs;
+    }
+    
     public static function obtenerIntervaloAleatorio($array_excluidos){
          //intervalos ORDENADADOS por total tags
          $intervalos_videos=self::getFragmentoVideosOrdenadosXTags($array_excluidos);

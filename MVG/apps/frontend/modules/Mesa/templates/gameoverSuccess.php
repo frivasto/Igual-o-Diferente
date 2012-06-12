@@ -106,17 +106,17 @@
                         var etiquetas1=dataObj.etiquetas1;
                         var etiquetas2=dataObj.etiquetas2;
                                                 
-                        $("#video_1 iframe").attr("src","http://www.youtube.com/embed/"+url_video1+"?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0");
-                        $("#video_2 iframe").attr("src","http://www.youtube.com/embed/"+url_video2+"?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0");
+                        $("#video_1 iframe").attr("src","http://www.youtube.com/embed/"+url_video1+"?start="+ini1+"&rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0");
+                        $("#video_2 iframe").attr("src","http://www.youtube.com/embed/"+url_video2+"?start="+ini2+"&rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0");
                                     
                         $("#video_1 .video_details").html("<p>&lt;&lt;No hay etiquetas&gt;&gt;</p>");                       
                         for(i=0;i<etiquetas1.length;i++){
-                            $("#video_1 .video_details").html("<p>"+etiquetas1[i]+"</p>");
+                            $("#video_1 .video_details").html($("#video_1 .video_details").html()+"<p>"+etiquetas1[i]+"</p>");
                         }
                         
                         $("#video_2 .video_details").html("<p>&lt;&lt;No hay etiquetas&gt;&gt;</p>");                        
                         for(i=0;i<etiquetas2.length;i++){
-                            $("#video_2 .video_details").html("<p>"+etiquetas2[i]+"</p>");
+                            $("#video_2 .video_details").html($("#video_2 .video_details").html()+"<p>"+etiquetas2[i]+"</p>");
                         }
                         
                     }

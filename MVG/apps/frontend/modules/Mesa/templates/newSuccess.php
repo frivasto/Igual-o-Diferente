@@ -70,7 +70,8 @@ function empezarTimerLocal(){
             set_videos[i]=intervaloObj;
             <?php } ?>
                        
-            var video_actual=set_videos[round_actual].video_url;                        
+            var video_actual=set_videos[round_actual].video_url;  
+            var minuto_actual=set_videos[round_actual].inicio;
             /*Sino ha contestado este jugador, entonces enviar NO_CONTESTO*/
             function verificarEnvioRespuesta(){                
                 if(envioDecision==0) enviarRespuesta('NO_CONTESTO');
@@ -193,8 +194,9 @@ function empezarTimerLocal(){
                                 round_actual++;    
                                 if(round_actual<set_videos.length){
                                     //y al cerrar eso, asignar nuevo video
-                                    video_actual=set_videos[round_actual].video_url;                                    
-                                    iniciarVideo(video_actual,0);
+                                    video_actual=set_videos[round_actual].video_url; 
+                                    minuto_actual=set_videos[round_actual].inicio;
+                                    iniciarVideo(video_actual,minuto_actual);
 
                                     //Limpiar
                                     envioDecision=0;                                    
@@ -265,7 +267,7 @@ function empezarTimerLocal(){
                             setTimeout(function(){ 
                                 //$("#content").unmask();
                                 veces_sincronizado++;
-                                play(0);
+                                play(minuto_actual);
                                 mute(false);  
                                 actualizarInfo("sincronizado_msg","sincronizacion-completa "+veces_sincronizado+" veces, en round: "+(round_actual+1));
                                 empezarTimerLocal(); //iniciar AQUI timer de ese round sincronizado                                
@@ -354,19 +356,19 @@ function empezarTimerLocal(){
             function onYouTubePlayerReady(playerId) {
                 ytplayer = document.getElementById("myytplayer");				
                 ytplayer.addEventListener("onStateChange", "onytplayerStateChange");
-                iniciarVideo(video_actual,0);
+                iniciarVideo(video_actual,minuto_actual);
             }           
             
             function iniciarVideo(video,inicio_min) {		
                 if (ytplayer) {
-                    cueVideo(video,0,"small"); //calidad más baja
+                    cueVideo(video,inicio_min,"small"); //calidad más baja
                     play(inicio_min);
                 }
             }  
             
-            function cueVideo(video_url) {		
+            function cueVideo(video_url,startSeconds,suggestedQuality) {		
                 if (ytplayer) {
-                    ytplayer.cueVideoById(video_url);	
+                    ytplayer.cueVideoById(video_url,startSeconds,suggestedQuality);	
                 }
             }           
             function play(inicio_min) {		

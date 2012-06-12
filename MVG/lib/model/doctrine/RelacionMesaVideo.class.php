@@ -206,6 +206,8 @@ class RelacionMesaVideo extends BaseRelacionMesaVideo
         return $set_intervalos_videos;
     }
     
+    
+    
     //CONSULTAR EL SET VIDEOS DEL JUGADOR
     public static function toJsonArray($mesa_id,$jug_id){        
         $relaciones_mesa_video_jug1 = self::getRelacionMesaVideoxJug($mesa_id, $jug_id);
@@ -223,8 +225,8 @@ class RelacionMesaVideo extends BaseRelacionMesaVideo
             
              $intervaloObj1=array();
              $intervaloObj1["url"]= Video::getVideoxId($intervalo1->getVideoId())->getUrl();
-             $intervaloObj1["ini"]= $intervalo1->getInicio();
-             $intervaloObj1["fin"]= $intervalo1->getFin();
+             $intervaloObj1["ini"]= Intervalo::time2seconds($intervalo1->getInicio());
+             $intervaloObj1["fin"]= Intervalo::time2seconds($intervalo1->getFin());
              
              $intervalos_row=array($respuesta_real,$intervaloObj1);             
              $set_intervalos_videos[]=$intervalos_row;

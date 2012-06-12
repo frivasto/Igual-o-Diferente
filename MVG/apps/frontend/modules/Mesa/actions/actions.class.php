@@ -405,12 +405,12 @@ class MesaActions extends sfActions {
             
             //video
             $response["url_video1"]=Video::getVideoxId($intervalo1->getVideoId())->getUrl();
-            $response["ini1"]=$intervalo1->getInicio();
-            $response["fin1"]=$intervalo1->getFin();
+            $response["ini1"]=Intervalo::time2seconds($intervalo1->getInicio());
+            $response["fin1"]=Intervalo::time2seconds($intervalo1->getFin());
             
             $response["url_video2"]=Video::getVideoxId($intervalo2->getVideoId())->getUrl();
-            $response["ini2"]=$intervalo2->getInicio();
-            $response["fin2"]=$intervalo2->getFin();
+            $response["ini2"]=Intervalo::time2seconds($intervalo2->getInicio());
+            $response["fin2"]=Intervalo::time2seconds($intervalo2->getFin());
             
             //etiquetas
             $response["etiquetas1"]=$arr_etiquetas1;
@@ -422,12 +422,12 @@ class MesaActions extends sfActions {
             
             //video
             $response["url_video1"]=Video::getVideoxId($intervalo2->getVideoId())->getUrl();
-            $response["ini1"]=$intervalo2->getInicio();
-            $response["fin1"]=$intervalo2->getFin();
+            $response["ini1"]=Intervalo::time2seconds($intervalo2->getInicio());
+            $response["fin1"]=Intervalo::time2seconds($intervalo2->getFin());
             
             $response["url_video2"]=Video::getVideoxId($intervalo1->getVideoId())->getUrl();
-            $response["ini2"]=$intervalo1->getInicio();
-            $response["fin2"]=$intervalo1->getFin();
+            $response["ini2"]=Intervalo::time2seconds($intervalo1->getInicio());
+            $response["fin2"]=Intervalo::time2seconds($intervalo1->getFin());
             
             //etiquetas
             $response["etiquetas1"]=$arr_etiquetas2;
