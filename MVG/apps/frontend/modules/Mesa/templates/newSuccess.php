@@ -8,8 +8,10 @@
         $('#same_different2').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20).click(function(){ enviarRespuesta('DIFFERENT');});    
         $( "#dialog_result" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});
         $( "#dialog_mensaje" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});    
+        $( "#dialog_bonus" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: false, position: ['center',260], title: 'Bono', dialogClass: 'bonus_alert', resizable: false});            
         $('.alert div.ui-dialog-titlebar').hide();//transparent
-        $('.alert').css('background','transparent');    
+        $('.alert').css('background','transparent');  
+        $('.bonus_alert').css('background','transparent'); 
     });
 } ) ( jQuery );
 
@@ -55,7 +57,7 @@ function empezarTimerLocal(){
             var vecesjugadas=0;
             var puntos_extra=0;
             var puntaje_extra_acumulado=0;
-            
+            var estan_emparejados=false;
             <?php 
             $tmp=$sf_user->getAttribute('set_intervalos_videos'); $tam=count($tmp);                               
                 for($i=0;$i<$tam;$i++){                                          
@@ -171,7 +173,10 @@ function empezarTimerLocal(){
                                 
                                 $("#puntajeglobal").html(""+puntaje_contenedor);
                                 //VERIFICAR SI SE HACE ACREEDOR A BONO
-                                
+                                if(puntaje_contenedor>0 && puntaje_contenedor%300==0){
+                                    $( "#dialog_bonus" ).dialog("open");
+                                    setTimeout(function(){$( "#dialog_bonus" ).dialog("close")},1250);
+                                }
                                 
                                 //****************** RESULTADOS y PASAR A SIGUIENTE ROUND ***************************                                                                                               
                                 //JUG1
@@ -188,8 +193,11 @@ function empezarTimerLocal(){
                                 
                                 //MOSTRAR RESULTADO 5000ms
                                 $( "#dialog_result" ).dialog( "open" );
-                                setTimeout(function(){$( "#dialog_result" ).dialog("close")},3000);
-                                                                
+                                setTimeout(function(){$( "#dialog_result" ).dialog("close")},1250);
+                                
+                                //remover 
+                                //$("#time").remove();
+                                
                                 //incrementar round
                                 round_actual++;    
                                 if(round_actual<set_videos.length){
@@ -204,6 +212,7 @@ function empezarTimerLocal(){
                                     //Limpiar LOG y LOGPARTNER
                                     document.getElementById("log").innerHTML="";
                                     document.getElementById("logpartner").innerHTML="";                                    
+                                    setTimeout(function(){  enMascarar("wrapper","Esperando se sincronicen los videos..."); },1250);
                                 }else{
                                     //poner "puntaje_extra"
                                     enviarPuntajeExtra(puntaje_extra_acumulado);                                    
@@ -262,10 +271,11 @@ function empezarTimerLocal(){
                             }else{                                
                                 //alert("Prueba juego habilitado");    
                                 //iniciarVideo(video_actual,0);
+                                estan_emparejados=true;
                             }
                         }else if(obj.tipo=="sincronizacion-completa"){                            
-                            setTimeout(function(){ 
-                                //$("#content").unmask();
+                            setTimeout(function(){                                 
+                                desEnMascarar("wrapper");
                                 veces_sincronizado++;
                                 play(minuto_actual);
                                 mute(false);  
@@ -281,6 +291,8 @@ function empezarTimerLocal(){
                             var puntaje_grupal=value[keys[0]];
                             var resultado_jug_tu=value[keys[1]];
                             var resultado_jug_partner=value[keys[2]]; 
+                                                       
+                            //envioDecision=1;
                             
                             //CORRECTO, acumular vecesjugadas consecutivas
                             if(resultado_jug_tu==resultado_jug_partner && resultado_jug_tu=="ACIERTO") vecesjugadas++;
@@ -359,10 +371,12 @@ function empezarTimerLocal(){
                 iniciarVideo(video_actual,minuto_actual);
             }           
             
+            /*Iniciar el video de cada round en mute*/
             function iniciarVideo(video,inicio_min) {		
                 if (ytplayer) {
                     cueVideo(video,inicio_min,"small"); //calidad más baja
                     play(inicio_min);
+                    mute(true);
                 }
             }  
             
@@ -385,9 +399,10 @@ function empezarTimerLocal(){
             }            
             var cont=0;
             function onytplayerStateChange(newState) {  
-                actualizarInfo("resp","total: "+ytplayer.getVideoBytesTotal()+" - cargando: "+(ytplayer.getVideoBytesLoaded())+" - estado: "+newState);                					
+                actualizarInfo("resp","total: "+ytplayer.getVideoBytesTotal()+" - cargando: "+(ytplayer.getVideoBytesLoaded())+" - estado: "+newState+" - estanemparejados: "+estan_emparejados);                					
                 //Possible values are unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5).		
-                if(newState!=-1 && newState!=5) {
+                //if(newState!=-1 && newState!=5) {                
+                if(estan_emparejados && newState!=-1 && newState!=5) {
                     //se cargo todo el video, lo envío a server sockets               
                     enviar_objeto("sincronizacion-videos",jug_id,"COMPLETO");                 
                     cont++;
@@ -395,14 +410,24 @@ function empezarTimerLocal(){
                 }              
             } 
             
-            /*Muestra una máscara loading*/
-            function mostrarLoading(){
+            /*Muestra una máscara loading con el mensaje indicado y sobre el contenedor id*/            
+            function enMascarar(id_contenedor,mensaje){
                 ( function($) {
                 $(document).ready(function(){  
-                    $("#content").mask("Esperando se sincronicen los videos...");                    
+                    $("#"+id_contenedor).mask(mensaje);                    
                 });
                 } ) ( jQuery );
             } 
+            
+            /*Quita la máscara loading del contenedor id*/            
+            function desEnMascarar(id_contenedor){
+                ( function($) {
+                $(document).ready(function(){  
+                    $("#"+id_contenedor).unmask();                    
+                });
+                } ) ( jQuery );
+            } 
+            
             /*Envía respuesta a servidor de socket, y guarda la etiqueta en la base*/
             function enviarRespuesta(respuesta){                
                 //ENVIAR POR AJAX REQUERIMIENTO PARA GUARDAR LA RESPUESTA
@@ -431,6 +456,7 @@ function empezarTimerLocal(){
                 init();
                 empezarTimerGlobal();
                 //empezarTimerLocal();
+                enMascarar("wrapper","Esperando se sincronicen los videos...");
             }
             window.onload = inicializar;
         </script>
@@ -485,11 +511,14 @@ function empezarTimerLocal(){
 	</div>
 	<div id="dialog_result" title="Basic dialog" style="display:none; background: #333; min-height: 0px !important; opacity:0.95; filter:alpha(opacity=95); ">
 		<div style="float:left;" ><p style="font-size:10px; font-weight:bold;">Tu</p><img id="respuesta_jug" src="/images/icon_checked.png" width="16px" /></div>
-		<div style="float:left; padding:0px 25px;"><h3 style="text-align:center; font-size:20px; color:white;" id="resultado_decision" >Incorrecto</h3><p id="puntaje_grupal" ></p></div>
+		<div style="float:left; padding:0px 25px;"><h3 style="text-align:center; font-size:20px; color:white;" id="resultado_decision" >?</h3><p id="puntaje_grupal" ></p></div>
 		<div style="float:left;"><p style="font-size:10px; font-weight:bold;">Tu compa&ntilde;ero</p><img id="respuesta_jug_partner" src="/images/icon_checked.png" width="16px" /></div>
 	</div>
         <div id="dialog_mensaje" title="Basic dialog" style="display:none; background: #333; min-height: 0px !important; opacity:0.95; filter:alpha(opacity=95); ">	
 		<div style="float:left; padding:0px 25px;"><h3 style="text-align:center; font-size:20px; color:white;" >Tu compa&ntilde;ero acaba de contestar</h3></div>		
+	</div>
+        <div id="dialog_bonus" title="Basic dialog" style="display:none; background: #333; min-height: 0px !important; opacity:0.95; filter:alpha(opacity=95); ">	
+		<div style="float:left; padding:0px 25px;"><h3 style="text-align:center; font-size:20px; color:white;" >Felicitaciones ganaste un Bono!</h3></div>		
 	</div>
 </div>
 <!--Fin de Interfaz-->
