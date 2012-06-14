@@ -229,8 +229,8 @@ server.sockets.on("connection", function(client)
 										console.log("LISTO! SINCRONIZADOS: sincronizacion-videos "+estado_video);
 										
 										//limpiar estados de ambos
-										estadovideos[""+key][key_jug1]["texto"]="";
-										estadovideos[""+key][key_jug2]["texto"]="";
+										//estadovideos[""+key][key_jug1]["texto"]="";
+										//estadovideos[""+key][key_jug2]["texto"]="";
 										estadovideos[""+key]["esta_sincronizado"]="1";
 									}
 								}
