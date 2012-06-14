@@ -203,13 +203,12 @@ server.sockets.on("connection", function(client)
 				//server.sockets.emit("sendEvent", '{"tipo":"coordenadas","objeto":{"'+key+'": {"posx":"'+value.posx+'","posy":"'+value.posy+'"}}}');	
 				var jugid=value.atributo1;
 				var estado_video=value.atributo2;
-				if(mesas[""+key]!=null){
-					if(mesas[""+key][0]!=null && mesas[""+key][1]!=null){	
-						if(estadovideos[""+key]!=null){
-							//editar el estado
-							if(estadovideos[""+key][""+jugid]!=null) estadovideos[""+key][""+jugid]["texto"] = estado_video;
-							
-							//verificar los estados de videos de esta mesa
+				if(mesas[""+key]!=null){					
+					if(estadovideos[""+key]!=null){
+						//editar el estado
+						if(estadovideos[""+key][""+jugid]!=null) estadovideos[""+key][""+jugid]["texto"] = estado_video;
+						//verificar los estados de videos de esta mesa	
+						if(mesas[""+key][0]!=null && mesas[""+key][1]!=null){							
 							var keys=Object.keys(estadovideos[""+key]); //keys de este obj
 							if(keys!=null){
 								var key_jug1=keys[0];

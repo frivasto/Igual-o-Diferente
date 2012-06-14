@@ -31,8 +31,10 @@ function empezarTimerGlobal(){
 }    
 
 function empezarTimerLocal(){
-( function($) {    
+( function($) { 
+    
     $("#time").remove();
+    $('#time').chrony('destroy');
     $("#timer_content").append("<div id='time' class='content_text_min' ></div>");    
     $('#time').chrony({hour: 0, minute: 0, second: 35,finish: function() {
         //aqui va evento same different automatico envíe """ si el usuario no ha contestado
@@ -438,7 +440,7 @@ function empezarTimerLocal(){
             function enviarRespuesta(respuesta){                
                 //ENVIAR POR AJAX REQUERIMIENTO PARA GUARDAR LA RESPUESTA
                 guardarRespuesta(respuesta);
-                                
+                
                 var rsp_real=set_videos[round_actual].respuesta_real;
                 if(rsp_real==1) rsp_real="SAME";
                 else rsp_real="DIFFERENT";
@@ -449,7 +451,7 @@ function empezarTimerLocal(){
                 
                 //ENVIAR A SOCKET_SERVER PARA ACTUALIZA LA RESPUESTA
                 enviar_objeto('same-different',jug_id,''+respuesta); 
-                envioDecision=1;
+                envioDecision=1;                
             }
 
             /*Modifica el texto de un elemento HTML*/
