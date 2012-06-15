@@ -147,17 +147,16 @@
 
 					methods.checkAlert.call(self, hour, minute, second);
 				}, 1000);
+                                /*Modificando plugin: Agregando data pid con intervalo a eliminar*/
+				$this.data('pid', timer);
 			});
-		}
-                
+		}   
+                /*Modificando plugin: Agregando destroy method*/
                 , destroy : function( ) {
-
-                    return this.each(function(){
-                        $(window).unbind('.chrony');
-                    })
-
-                    }
-                
+                    var $this = $(this);
+                    $this.data('init', false);
+                    clearInterval($this.data('pid'));
+                }               
                 , checkAlert: function(hour, minute, second) {
 			var $this	= $(this),
 				alert	= this.opt.alert;

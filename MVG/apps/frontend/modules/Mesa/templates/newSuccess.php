@@ -1,51 +1,48 @@
 <script type="text/javascript">
-( function($) {
-    $(document).ready(function() {
-        $("#cmd_enviar").button().click(function(){ send(); });    
-        $("input","#same_different").button();
-        $("#same_different").buttonset();
-        $("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185}).click(function(){ enviarRespuesta('SAME');});
-        $('#same_different2').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20).click(function(){ enviarRespuesta('DIFFERENT');});    
-        $( "#dialog_result" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});
-        $( "#dialog_mensaje" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});    
-        $( "#dialog_bonus" ).dialog({autoOpen: false, show: "blind", zIndex: 99999, hide: "explode", modal: false, position: ['left',130], title: 'Bono', dialogClass: 'bonus_alert', resizable: true, stack: true});            
-        $('.alert div.ui-dialog-titlebar').hide();//transparent
-        $('.alert').css('background','transparent');  
-        $('.bonus_alert').css('background','black'); 
-    });
-} ) ( jQuery );
-
-/*
- *JQUERY CHRONY 
- *Con callback  otra opcion es enviar el texto completo text: '1:20:30' MEJOR!!
- *PERMITE REAJUSTAR DATOS TAMBIÉN $('#time').chrony('set', { decrement: 2 }); 
- *re-adjust runtime options.
-*/
-function empezarTimerGlobal(){
-( function($) {
-    $('#timeglobal').chrony({hour: 0, minute: 4, second: 0,finish: function() {
-        $(this).html('Finished!');
-        }, blink: true
-    });
-} ) ( jQuery );
-}    
-
-function empezarTimerLocal(){
-( function($) { 
+    ( function($) {
+        $(document).ready(function() {
+            $("#cmd_enviar").button().click(function(){ send(); });    
+            $("input","#same_different").button();
+            $("#same_different").buttonset();
+            $("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185}).click(function(){ enviarRespuesta('SAME');});
+            $('#same_different2').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20).click(function(){ enviarRespuesta('DIFFERENT');});    
+            $( "#dialog_result" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});
+            $( "#dialog_mensaje" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});    
+            $( "#dialog_bonus" ).dialog({autoOpen: false, show: "blind", zIndex: 99999, hide: "explode", modal: false, position: ['left',130], title: 'Bono', dialogClass: 'bonus_alert', resizable: true, stack: true});            
+            $('.alert div.ui-dialog-titlebar').hide();//transparent
+            $('.alert').css('background','transparent');  
+            $('.bonus_alert').css('background','black'); 
+        });
+    } ) ( jQuery );
     
-    $("#time").remove();
-    $('#time').chrony('destroy');
-    $("#timer_content").append("<div id='time' class='content_text_min' ></div>");    
-    $('#time').chrony({hour: 0, minute: 0, second: 35,finish: function() {
-        //aqui va evento same different automatico envíe """ si el usuario no ha contestado
-        verificarEnvioRespuesta();        
-        }, blink: true
-    });
-} ) ( jQuery );
-}
-
+    /*
+     *JQUERY CHRONY 
+     *Con callback  otra opcion es enviar el texto completo text: '1:20:30' MEJOR!!
+     *PERMITE REAJUSTAR DATOS TAMBIÉN $('#time').chrony('set', { decrement: 2 }); 
+     *re-adjust runtime options.
+     */
+    function empezarTimerGlobal(){
+        ( function($) {
+            $('#timeglobal').chrony({hour: 0, minute: 4, second: 0,finish: function() {
+                    $(this).html('Finished!');
+                }, blink: true
+            });
+        } ) ( jQuery );
+    }    
+    
+    function empezarTimerLocal(){
+        ( function($) {   
+            $('#time').chrony('destroy');
+            $("#time").remove();            
+            $("#timer_content").append("<div id='time' class='content_text_min' ></div>");    
+            $('#time').chrony({hour: 0, minute: 0, second: 35,finish: function() {        
+                    //$(this).html('Finished! '+envioDecision);
+                    verificarEnvioRespuesta();   //evento same different automatico envíe "" si el usuario no ha contestado     
+                }, blink: true
+            });
+        } ) ( jQuery );
+    }
 </script>
-
         <script src="http://localhost:6969/socket.io/socket.io.js"></script>
         <script type="text/javascript">
             /*Datos de la session*/
@@ -77,9 +74,10 @@ function empezarTimerLocal(){
                        
             var video_actual=set_videos[round_actual].video_url;  
             var minuto_actual=set_videos[round_actual].inicio;
+            
             /*Sino ha contestado este jugador, entonces enviar NO_CONTESTO*/
             function verificarEnvioRespuesta(){                
-                if(envioDecision==0) enviarRespuesta('NO_CONTESTO');
+                if(!envioDecision) enviarRespuesta('NO_CONTESTO');
             }
             /*Ajax*/
             function createXMLHttpRequest() {
@@ -152,7 +150,7 @@ function empezarTimerLocal(){
             }
             /*PASO DE NIVELES ROUNDS*/
             /*Actualiza el puntaje de la base, de la mesa jugador*/
-            function actualizarPuntaje(puntos,resultado_jug_tu,resultado_jug_partner){                
+            function actualizarPuntaje(puntos){                
                 var request;
                 request = createXMLHttpRequest();               
                 request.open('GET','<?php echo url_for('Mesa/actualizarPuntaje'); ?>'+"?puntos="+puntos+"&mesa_id="+mesa_id+"&jug_id="+jug_id,true);
@@ -161,79 +159,82 @@ function empezarTimerLocal(){
                         if(request.status==200){                             
                             respuestajson=request.responseText;
                             if(respuestajson!=null && respuestajson!=''){
-                                //ACTUALIZAR PUNTAJE EN LA INTERFAZ
-                                var puntaje_contenedor=$("#puntajeglobal").text();
                                 
-                                if(puntaje_contenedor!=""){
-                                    puntaje_contenedor=parseInt(puntaje_contenedor);
-                                    puntaje_contenedor+=puntos;
-                                    puntuacion_bonos+=puntos;
-                                }else{
-                                    puntaje_contenedor=0;
-                                }
+                                //ACTUALIZAR PUNTAJE EN LA INTERFAZ
+                                updatePuntos("puntajeglobal", puntos);
+                                
+                                //(OJO) Devolver puntos del Jugador en toda su vida en el juego
+                                puntuacion_bonos+=puntos;
                                 
                                 //REINICIAR ESTADO VIDEOS
                                 enviar_objeto("reiniciar_estado_videos",jug_id,"");
                                 
-                                $("#puntajeglobal").html(""+puntaje_contenedor);
-                                
                                 //VERIFICAR SI SE HACE ACREEDOR A BONO
                                 if(puntuacion_bonos>0 && puntuacion_bonos%300==0){
-                                    $( "#dialog_bonus" ).dialog("open");
-                                    //$( "#dialog_bonus" ).dialog("moveToTop");
+                                    $( "#dialog_bonus" ).dialog("open");                                    
                                     setTimeout(function(){$( "#dialog_bonus" ).dialog("close")},1000);
                                     puntuacion_bonos=0;
                                 }
                                 
-                                //****************** RESULTADOS y PASAR A SIGUIENTE ROUND ***************************                                                                                               
-                                //JUG1
-                                if(resultado_jug_tu=="ACIERTO") $("#respuesta_jug").attr({ src: "/images/check.png", alt: "Resultado Jug1" });
-                                else $("#respuesta_jug").attr({ src: "/images/cross.png", alt: "Resultado Jug1" });
-                                //JUG2
-                                if(resultado_jug_partner=="ACIERTO") $("#respuesta_jug_partner").attr({ src: "/images/check.png", alt: "Resultado Jug2" });
-                                else $("#respuesta_jug_partner").attr({ src: "/images/cross.png", alt: "Resultado Jug2" });
-                                
-                                //EDITAR PUNTAJE GRUPAL O RESULTADO_DECISIONES_COLABORATIVAS [mostrar en pantalla correcto, incorrecto por n seconds]
-                                if(puntos==100+"") $("#resultado_decision").html("Correcto");                                                                                                    
-                                else $("#resultado_decision").html("Incorrecto");                                
-                                $("#puntaje_grupal").html(puntos);
-                                
-                                //MOSTRAR RESULTADO 5000ms
-                                $( "#dialog_result" ).dialog( "open" );
-                                setTimeout(function(){$( "#dialog_result" ).dialog("close")},1000);
-                                
-                                //remover 
-                                //$("#time").remove();
-                                
                                 //incrementar round
-                                round_actual++;    
-                                if(round_actual<set_videos.length){
-                                    //y al cerrar eso, asignar nuevo video
+                                round_actual++;
+                                
+                                if(round_actual<set_videos.length){                                    
                                     video_actual=set_videos[round_actual].video_url; 
                                     minuto_actual=set_videos[round_actual].inicio;
                                     iniciarVideo(video_actual,minuto_actual);
 
-                                    //Limpiar
+                                    //Limpiar variable Decision
                                     envioDecision=0;                                    
 
                                     //Limpiar LOG y LOGPARTNER
                                     document.getElementById("log").innerHTML="";
                                     document.getElementById("logpartner").innerHTML="";                                    
-                                    setTimeout(function(){  enMascarar("wrapper","Esperando se sincronicen los videos..."); },1500);
-                                }else{
-                                    //poner "puntaje_extra"
-                                    enviarPuntajeExtra(puntaje_extra_acumulado);                                    
-                                    //Ir a Game Over url                                    
-                                    //window.location.href = "<?php echo url_for('Mesa/gameOver') ?>";
-                                }
                                     
+                                    setTimeout(function(){  enMascarar("wrapper","Esperando se sincronicen los videos..."); },1500);
+                                    
+                                }else{
+                                    //poner "puntaje_extra" e Ir a Game Over url  
+                                    enviarPuntajeExtra(puntaje_extra_acumulado);                                                                                                          
+                                    //window.location.href = "<?php echo url_for('Mesa/gameOver') ?>";
+                                }                                    
                             }
                         }
                     }
                 };
                 request.send(null);
             }
-            
+            /*Mostrar la alerta de Resultados*/
+            function mostrarResultados(resultado_jug_tu, resultado_jug_partner, puntos){
+                //****************** RESULTADOS y PASAR A SIGUIENTE ROUND ***************************                                                                                               
+                //JUG1
+                if(resultado_jug_tu=="ACIERTO") $("#respuesta_jug").attr({ src: "/images/check.png", alt: "Resultado Jug1" });
+                else $("#respuesta_jug").attr({ src: "/images/cross.png", alt: "Resultado Jug1" });
+                //JUG2
+                if(resultado_jug_partner=="ACIERTO") $("#respuesta_jug_partner").attr({ src: "/images/check.png", alt: "Resultado Jug2" });
+                else $("#respuesta_jug_partner").attr({ src: "/images/cross.png", alt: "Resultado Jug2" });
+
+                //EDITAR PUNTAJE GRUPAL O RESULTADO_DECISIONES_COLABORATIVAS [mostrar en pantalla correcto, incorrecto por n seconds]
+                if(puntos==100+"") $("#resultado_decision").html("Correcto");                                                                                                    
+                else $("#resultado_decision").html("Incorrecto");                                
+                $("#puntaje_grupal").html(puntos);
+
+                //MOSTRAR RESULTADO 5000ms
+                $( "#dialog_result" ).dialog( "open" );
+                setTimeout(function(){$( "#dialog_result" ).dialog("close")},1000);                
+            }
+             
+            /*Actualiza contenedro de puntos de la Interfaz*/ 
+            function updatePuntos(id_contenedor, puntos){
+                var puntaje_contenedor=$("#"+id_contenedor).text();                                
+                if(puntaje_contenedor!=""){
+                    puntaje_contenedor=parseInt(puntaje_contenedor);
+                    puntaje_contenedor+=puntos;                                    
+                }else{
+                    puntaje_contenedor=0;
+                }
+                $("#"+id_contenedor).html(""+puntaje_contenedor);
+            }
             /*Guarda la respuesta, sea Same o Different, en el tiempo que fue ingresada*/
             function enviarPuntajeExtra(puntuacion_extra){                
                 var request;
@@ -281,26 +282,26 @@ function empezarTimerLocal(){
                                 estan_emparejados=true;
                             }
                         }else if(obj.tipo=="sincronizacion-completa"){                            
-                            setTimeout(function(){                                 
+                            //setTimeout(function(){                                 
                                 desEnMascarar("wrapper");
                                 veces_sincronizado++;
                                 play(minuto_actual);
                                 mute(false);  
                                 actualizarInfo("sincronizado_msg","sincronizacion-completa "+veces_sincronizado+" veces, en round: "+(round_actual+1));
                                 empezarTimerLocal(); //iniciar AQUI timer de ese round sincronizado                                
-                            },0.007);
+                            //},0.007);
                         }else if(obj.tipo=="same-different-incompleto"){
                             //Open Cuadro de diálogo que indica que respondió su partner en una esquina y por n seconds                            
                             $( "#dialog_mensaje" ).dialog("open");
                             setTimeout(function(){$( "#dialog_mensaje" ).dialog("close")},1000);                            
+                        
                         }else if(obj.tipo=="same-different"){                              
+                            
                             var keys=Object.keys(value);                            
                             var puntaje_grupal=value[keys[0]];
                             var resultado_jug_tu=value[keys[1]];
                             var resultado_jug_partner=value[keys[2]]; 
-                                                       
-                            //envioDecision=1;
-                            
+                           
                             //CORRECTO, acumular vecesjugadas consecutivas
                             if(resultado_jug_tu==resultado_jug_partner && resultado_jug_tu=="ACIERTO") vecesjugadas++;
                             else vecesjugadas=0;
@@ -315,8 +316,13 @@ function empezarTimerLocal(){
                                vecesjugadas=0;                               
                             }
                             
-                            //guardar puntaje, acumularlo
-                            actualizarPuntaje(puntaje_grupal,resultado_jug_tu,resultado_jug_partner);                            
+                            //Mostrar la alerta con los Resultados del Round
+                            mostrarResultados(resultado_jug_tu, resultado_jug_partner, puntaje_grupal);
+                            
+                            //guardar puntaje, acumularlo y Pasar a aiguiente nivel
+                            actualizarPuntaje(puntaje_grupal); 
+                            //setTimeout(function(){  actualizarPuntaje(puntaje_grupal);  },2500);
+                            
                         }else{
                             logPartner(""+value);
                         }                           
@@ -436,20 +442,24 @@ function empezarTimerLocal(){
                 } ) ( jQuery );
             } 
             
+            /*Devuelve la respuesta real del video del round indicado*/
+            function obtenerRespuestaReal(round){
+                var rsp_real=set_videos[round].respuesta_real;
+                if(rsp_real==1) rsp_real="SAME";
+                else rsp_real="DIFFERENT";
+                return rsp_real;
+            }
+            
             /*Envía respuesta a servidor de socket, y guarda la etiqueta en la base*/
             function enviarRespuesta(respuesta){                
                 //ENVIAR POR AJAX REQUERIMIENTO PARA GUARDAR LA RESPUESTA
                 guardarRespuesta(respuesta);
                 
-                var rsp_real=set_videos[round_actual].respuesta_real;
-                if(rsp_real==1) rsp_real="SAME";
-                else rsp_real="DIFFERENT";
-                
-                //resultado: ACIERTO si coinciden
-                if(respuesta==rsp_real+"") respuesta='ACIERTO';
+                var respuesta_real=obtenerRespuestaReal(round_actual);                
+                if(respuesta==respuesta_real) respuesta='ACIERTO';
                 //else respuesta='NO_ACIERTO';
                 
-                //ENVIAR A SOCKET_SERVER PARA ACTUALIZA LA RESPUESTA
+                //ENVIAR A SOCKET_SERVER PARA ACTUALIZAR LA RESPUESTA
                 enviar_objeto('same-different',jug_id,''+respuesta); 
                 envioDecision=1;                
             }
@@ -462,8 +472,7 @@ function empezarTimerLocal(){
             
             function inicializar(){
                 init();
-                empezarTimerGlobal();
-                //empezarTimerLocal();
+                empezarTimerGlobal();                
                 enMascarar("wrapper","Esperando se sincronicen los videos...");
             }
             window.onload = inicializar;
@@ -497,8 +506,7 @@ function empezarTimerLocal(){
 				<input type="radio" name="same_different" id="same_different1" checked value="1" /><label for="same_different1" > Igual </label>
 				<input type="radio" name="same_different" id="same_different2" value="2" /><label for="same_different2" > Diferente </label>                               
 			</div>
-                        <div id="video_principal">
-                            <!--<iframe width="360" height="200" src="http://www.youtube.com/embed/a_YR4dKArgo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0&wmode=transparent" frameborder="0" allowfullscreen></iframe>-->
+                        <div id="video_principal">                           
                             <div id="content">
                                 <div id="ytapiplayer">
                                     You need Flash player 8+ and JavaScript enabled to view this video.
