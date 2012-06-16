@@ -136,13 +136,19 @@
                     if(respuestajson!=null){
                         var arr_puntajes=JSON.parse(respuestajson); 
                         var puntaje_total=0, puntaje_mesa=0, puntaje_extra=0, puntaje_mejor=0; 
+                        var idNivel="", tipoNivel="";
                         if(arr_puntajes.puntaje_total!=null) puntaje_total=arr_puntajes.puntaje_total;                        
                         if(arr_puntajes.puntaje_mesa!=null) puntaje_mesa=arr_puntajes.puntaje_mesa;
                         if(arr_puntajes.puntaje_extra!=null) puntaje_extra=arr_puntajes.puntaje_extra;
                         if(arr_puntajes.puntaje_mejor!=null) puntaje_mejor=arr_puntajes.puntaje_mejor;
                         //alert(" - "+puntaje_total+" - "+puntaje_mesa+" - "+puntaje_extra+" - "+puntaje_mejor);
                         
+                        if(arr_puntajes.id_nivel!=null) idNivel=arr_puntajes.id_nivel;
+                        if(arr_puntajes.categoria_nivel!=null) tipoNivel=arr_puntajes.categoria_nivel;
+                        
                         $("#puntos_mesa_neto").html(puntaje_mesa+"");
+                        $("#nivel_adquirido").html("<span>Nivel "+idNivel+"</span>"+tipoNivel);
+                        
                         $("#puntos_mesa").html((puntaje_mesa-puntaje_extra)+"");
                         $("#puntos_extra").html(puntaje_extra+"");
                         $("#puntos_total").html(puntaje_total+"");
@@ -206,7 +212,7 @@
             <div id="tab2_contenido1">
                 <div id="resultados_juego">
                     <div class="info_general"><p class="title">El puntaje de este juego:</p><div><p id="puntos_mesa_neto" class="info_resaltada estilo_numerico">80</p></div></div>
-                    <div class="info_general"><p class="title">Tu CazaNivel es:</p><p class="info_nivel estilo_numerico"><span>Nivel 1</span>Novato</p></div>	
+                    <div class="info_general"><p class="title">Tu CazaNivel es:</p><p id="nivel_adquirido" class="info_nivel estilo_numerico"><span>Nivel 1</span>Novato</p></div>	
                     <div id="clear-fix" style="clear:both; width:100%"></div>
                 </div>							
                 <div id="tab2_menu">

@@ -409,13 +409,18 @@ class MesaActions extends sfActions {
         $puntajeTmp=Puntaje::getPuntajeXJugId($jug_id_actual);
         if($puntajeTmp!=null) $puntaje_total=$puntajeTmp->getPuntos();
         $response["puntaje_total"]= $puntaje_total;
-        
+                
         $puntajeTmp=Puntaje::getPuntajeXMesaJugId($mesa_id, $jug_id_actual);
         if($puntajeTmp!=null) $puntaje_mesa=$puntajeTmp->getPuntaje();
         $response["puntaje_mesa"]= $puntaje_mesa;
         
         $response["puntaje_extra"]= $puntaje_extra;
         $response["puntaje_mejor"]= Puntaje::getPuntajeMaximo();
+        
+        /*Categoría o Nivel*/
+        $categoriaNivel=Puntaje::getCategoriaNivel($puntaje_total);
+        $response["id_nivel"]=$categoriaNivel["id_nivel"];
+        $response["categoria_nivel"]=$categoriaNivel["categoria_nivel"];
         
         $this->getResponse()->setHttpHeader('Content-type', 'application/json');
         return $this->renderText(json_encode($response));

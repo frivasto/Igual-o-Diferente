@@ -43,4 +43,37 @@ class Puntaje extends BasePuntaje
             $puntaje=$puntajes[0]['puntos'];
         return $puntaje;        
     } 
+    /*Puntaje más alto obtenido de entre todos los jugadores*/
+    public static function getCategoriaNivel($puntaje){
+        $arr_categoria=array();
+        if($puntaje>=0 && $puntaje<=300){
+            $arr_categoria["id_nivel"]=1;
+            $arr_categoria["categoria_nivel"]="Novato";
+        }
+        if($puntaje>300 && $puntaje<=600){
+            $arr_categoria["id_nivel"]=2;
+            $arr_categoria["categoria_nivel"]="Amateur";
+        }
+        if($puntaje>600 && $puntaje<=900){
+            $arr_categoria["id_nivel"]=3;
+            $arr_categoria["categoria_nivel"]="Intermedio";
+        }
+        if($puntaje>900 && $puntaje<=1200){
+            $arr_categoria["id_nivel"]=4;
+            $arr_categoria["categoria_nivel"]="Profesional";
+        }
+        if($puntaje>1200 && $puntaje<=1500){
+            $arr_categoria["id_nivel"]=5;
+            $arr_categoria["categoria_nivel"]="Avanzado";
+        }
+        if($puntaje>1500 && $puntaje<=1800){
+            $arr_categoria["id_nivel"]=6;
+            $arr_categoria["categoria_nivel"]="Experto";
+        }
+        if($puntaje>1800){
+            $arr_categoria["id_nivel"]=7;
+            $arr_categoria["categoria_nivel"]="Cazador de Videos";
+        }
+        return $arr_categoria;        
+    }
 }
