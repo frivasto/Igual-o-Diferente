@@ -113,3 +113,17 @@ Puntaje:
   relations:
     Mesa: { local: mesa_id, foreign: id, foreignAlias: MesaPuntaje }    
     Jugador: { local: jugador_id, foreign: id, foreignAlias: JugadorPuntaje }
+    
+Bonificacion:
+  actAs:
+    Timestampable:
+  columns:
+    id: { type: integer(4), autoincrement: true, primary: true, notnull:  true, unique: true }
+    token:   { type: string(255), notnull: true, unique: false }        
+    mesa_id:   { type: integer(4) } 
+    jugador_id:   { type: integer(4) }
+    descripcion:   { type: string(255) }
+    fecha:   { type: timestamp, notnull: true }
+  relations:
+    Mesa: { local: mesa_id, foreign: id, foreignAlias: MesaBonificacion }    
+    Jugador: { local: jugador_id, foreign: id, foreignAlias: JugadorBonificacion }    

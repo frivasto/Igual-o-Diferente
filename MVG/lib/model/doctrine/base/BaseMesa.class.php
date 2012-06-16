@@ -14,6 +14,7 @@
  * @property boolean $eliminado
  * @property Doctrine_Collection $MesaMesaVideo
  * @property Doctrine_Collection $MesaPuntaje
+ * @property Doctrine_Collection $MesaBonificacion
  * 
  * @method integer             getId()               Returns the current record's "id" value
  * @method string              getToken()            Returns the current record's "token" value
@@ -24,6 +25,7 @@
  * @method boolean             getEliminado()        Returns the current record's "eliminado" value
  * @method Doctrine_Collection getMesaMesaVideo()    Returns the current record's "MesaMesaVideo" collection
  * @method Doctrine_Collection getMesaPuntaje()      Returns the current record's "MesaPuntaje" collection
+ * @method Doctrine_Collection getMesaBonificacion() Returns the current record's "MesaBonificacion" collection
  * @method Mesa                setId()               Sets the current record's "id" value
  * @method Mesa                setToken()            Sets the current record's "token" value
  * @method Mesa                setJugador1Id()       Sets the current record's "jugador1_id" value
@@ -33,6 +35,7 @@
  * @method Mesa                setEliminado()        Sets the current record's "eliminado" value
  * @method Mesa                setMesaMesaVideo()    Sets the current record's "MesaMesaVideo" collection
  * @method Mesa                setMesaPuntaje()      Sets the current record's "MesaPuntaje" collection
+ * @method Mesa                setMesaBonificacion() Sets the current record's "MesaBonificacion" collection
  * 
  * @package    MusicVideoGame
  * @subpackage model
@@ -87,6 +90,10 @@ abstract class BaseMesa extends sfDoctrineRecord
              'foreign' => 'mesa_id'));
 
         $this->hasMany('Puntaje as MesaPuntaje', array(
+             'local' => 'id',
+             'foreign' => 'mesa_id'));
+
+        $this->hasMany('Bonificacion as MesaBonificacion', array(
              'local' => 'id',
              'foreign' => 'mesa_id'));
 

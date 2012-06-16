@@ -12,21 +12,24 @@
  * @property boolean $eliminado
  * @property Doctrine_Collection $JugadorMesaVideo
  * @property Doctrine_Collection $JugadorPuntaje
+ * @property Doctrine_Collection $JugadorBonificacion
  * 
- * @method integer             getId()               Returns the current record's "id" value
- * @method string              getToken()            Returns the current record's "token" value
- * @method string              getUserId()           Returns the current record's "user_id" value
- * @method string              getNombre()           Returns the current record's "nombre" value
- * @method boolean             getEliminado()        Returns the current record's "eliminado" value
- * @method Doctrine_Collection getJugadorMesaVideo() Returns the current record's "JugadorMesaVideo" collection
- * @method Doctrine_Collection getJugadorPuntaje()   Returns the current record's "JugadorPuntaje" collection
- * @method Jugador             setId()               Sets the current record's "id" value
- * @method Jugador             setToken()            Sets the current record's "token" value
- * @method Jugador             setUserId()           Sets the current record's "user_id" value
- * @method Jugador             setNombre()           Sets the current record's "nombre" value
- * @method Jugador             setEliminado()        Sets the current record's "eliminado" value
- * @method Jugador             setJugadorMesaVideo() Sets the current record's "JugadorMesaVideo" collection
- * @method Jugador             setJugadorPuntaje()   Sets the current record's "JugadorPuntaje" collection
+ * @method integer             getId()                  Returns the current record's "id" value
+ * @method string              getToken()               Returns the current record's "token" value
+ * @method string              getUserId()              Returns the current record's "user_id" value
+ * @method string              getNombre()              Returns the current record's "nombre" value
+ * @method boolean             getEliminado()           Returns the current record's "eliminado" value
+ * @method Doctrine_Collection getJugadorMesaVideo()    Returns the current record's "JugadorMesaVideo" collection
+ * @method Doctrine_Collection getJugadorPuntaje()      Returns the current record's "JugadorPuntaje" collection
+ * @method Doctrine_Collection getJugadorBonificacion() Returns the current record's "JugadorBonificacion" collection
+ * @method Jugador             setId()                  Sets the current record's "id" value
+ * @method Jugador             setToken()               Sets the current record's "token" value
+ * @method Jugador             setUserId()              Sets the current record's "user_id" value
+ * @method Jugador             setNombre()              Sets the current record's "nombre" value
+ * @method Jugador             setEliminado()           Sets the current record's "eliminado" value
+ * @method Jugador             setJugadorMesaVideo()    Sets the current record's "JugadorMesaVideo" collection
+ * @method Jugador             setJugadorPuntaje()      Sets the current record's "JugadorPuntaje" collection
+ * @method Jugador             setJugadorBonificacion() Sets the current record's "JugadorBonificacion" collection
  * 
  * @package    MusicVideoGame
  * @subpackage model
@@ -76,6 +79,10 @@ abstract class BaseJugador extends sfDoctrineRecord
              'foreign' => 'jugador_id'));
 
         $this->hasMany('Puntaje as JugadorPuntaje', array(
+             'local' => 'id',
+             'foreign' => 'jugador_id'));
+
+        $this->hasMany('Bonificacion as JugadorBonificacion', array(
              'local' => 'id',
              'foreign' => 'jugador_id'));
 

@@ -119,6 +119,11 @@ class MesaActions extends sfActions {
         //PONER EN SESSION ROUND       
         $this->getUser()->setAttribute('round_actual', 1);          
         
+        $this->getUser()->setAttribute('tresInRow',0);
+        $this->getUser()->setAttribute('tresInRowCount',0);        
+        $this->getUser()->setAttribute('puntaje_extra',0);
+        $this->getUser()->setAttribute('puntaje_bonificado',0);
+        
         //REDIRECCIONAR A PÁGINA JUEGO
         $this->redirect('Mesa/new');
     }
@@ -203,8 +208,8 @@ class MesaActions extends sfActions {
         return $this->renderText("" + $id_decision);
     }
     
-    
-    public function executeActualizarPuntaje(sfWebRequest $request) {
+    /*Actualiza puntajes, verifica 3inrow, bonos, acumula puntos extra de la mesa (mostrar en gamerecap)*/
+    public function executeActualizarPuntuaciones(sfWebRequest $request) {
         $tmp = $request->getParameter('mesa_id');
         $mesa_id = isset($tmp) ? $tmp : '';
         
@@ -213,9 +218,36 @@ class MesaActions extends sfActions {
         
         $tmp = $request->getParameter('puntos');
         $puntos = isset($tmp) ? $tmp : '';
+                       
+        $tmp = $request->getParameter('es_acertado');
+        $es_acertado = isset($tmp) ? $tmp : '';
         
-        //$id_puntajeObj = 0;
-        $puntajeAcumulado=0;
+        $response = array();
+        $p_extra=0;        
+        $msg_bonos="";
+        $puntaje_total=0;
+        $puntajeMesa=0;
+        
+        /*Verificar 3inRow*/
+        $tresInRow=$this->getUser()->getAttribute('tresInRow',0);        
+        $tresInRowCount=$this->getUser()->getAttribute('tresInRowCount',0);
+        
+        if($es_acertado==1) $tresInRow++;
+        else $tresInRow=0;
+        
+        if($tresInRow>0 && $tresInRow==3){
+            $p_extra=10; //puntos extra constante
+            $tresInRowCount++;
+            $tresInRow=0; //resetear                                          
+        }         
+        $this->getUser()->setAttribute('tresInRow',$tresInRow);
+        $this->getUser()->setAttribute('tresInRowCount',$tresInRowCount);
+                
+        /*Puntuación Extra de Mesa Actual - Jugador*/
+        $puntajeExtra=$this->getUser()->getAttribute('puntaje_extra',0);        
+        $this->getUser()->setAttribute('puntaje_extra', $puntajeExtra+$p_extra);
+                
+        /*Puntuación de Mesa Actual - Jugador*/        
         $puntajeObj=Puntaje::getPuntajeXMesaJugId($mesa_id, $jug_id);
         
         if($puntajeObj==NULL){
@@ -224,13 +256,51 @@ class MesaActions extends sfActions {
             $puntajeObj->setJugadorId($jug_id);
             $puntajeObj->save();            
         }
+                
+        //Acumular con los puntos obtenidos y el puntaje extra
+        $puntajeObj->setPuntaje($puntajeObj->getPuntaje()+$puntos+$p_extra);
+        $puntajeObj->save();         
+        $puntajeMesa = $puntajeObj->getPuntaje();
+                
+        /*Puntuación Total de Jugador*/                                 
+        $puntajeObj=Puntaje::getPuntajeXJugId($jug_id);
+        if($puntajeObj!=null) $puntaje_total=$puntajeObj->getPuntos();                
         
-        $puntajeObj->setPuntaje($puntajeObj->getPuntaje()+$puntos);
-        $puntajeObj->save(); 
-        //$id_puntajeObj = $puntajeObj->getId();
-        $puntajeAcumulado = $puntajeObj->getPuntaje();
+        /*Verificar Bonificación*/
+        $ultima_marca=$this->getUser()->setAttribute('puntaje_bonificado',0);
+        $puntaje_bonificado=$puntaje_total; 
+        if($puntaje_bonificado>0 && $puntaje_bonificado%300==0){
+            //si no se ha enviado:
+            if($ultima_marca!=$puntaje_bonificado){
+                $msg_bonos="Felicitaciones ganaste un Bono, Tu proxima meta es ".($puntaje_bonificado+300);                
+                //guardar en la base este registro Bonificacion (JugIdActual - Descripcion - Fecha)                
+                $date = date( 'Y-m-d H:i:s');
+                
+                //$jug_id "Bono - Mesa: ".$mesa_id 
+                $bonifObj=  Bonificacion::getBonificacionXMesaJugId($mesa_id, $jug_id);
+                if($bonifObj==NULL){
+                    $bonifObj=new Bonificacion();
+                    $bonifObj->setJugadorId($jug_id);
+                    $bonifObj->setDescripcion("Bono - Mesa: ".$mesa_id);
+                    $bonifObj->setFecha($date);
+                    $bonifObj->setMesaId($mesa_id);
+                }                    
+                
+                $this->getUser()->setAttribute('puntaje_bonificado',$puntaje_bonificado); //guardar ultima_marca $puntaje_bonificado
+            }
+        }else{
+            $this->getUser()->setAttribute('puntaje_bonificado',0);
+        }
         
-        return $this->renderText("" + $puntajeAcumulado);        
+        /*Datos a devolver*/
+        $response["puntaje_total"]= $puntaje_total;
+        $response["puntaje_mesa"]= $puntajeMesa;
+        $response["msg_bonos"]= $msg_bonos;
+        $response["inrow_count"]=$tresInRowCount;
+        $response["inrow"]=$tresInRow;
+        
+        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
+        return $this->renderText(json_encode($response));                       
     }
     
     //INCOMPLETO
@@ -292,15 +362,7 @@ class MesaActions extends sfActions {
         //VOLVER A INICIAR
         $this->redirect('Mesa/index');
     }
-    
-    public function executeActualizarPuntajeExtra(sfWebRequest $request) {
-        $tmp = $request->getParameter('puntuacion_extra');
-        $puntuacion_extra = isset($tmp) ? $tmp : '';
         
-        $this->getUser()->setAttribute('puntaje_extra', $puntuacion_extra);
-        return $this->renderText("" + $puntuacion_extra);        
-    }
-    
     public function executeConsultarResultados(sfWebRequest $request) {
         $tmp = $request->getParameter('mesa_id');
         $mesa_id = isset($tmp) ? $tmp : '';
