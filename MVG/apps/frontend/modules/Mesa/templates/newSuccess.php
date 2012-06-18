@@ -24,7 +24,7 @@
      */
     function empezarTimerGlobal(){
         ( function($) {
-            $('#timeglobal').chrony({hour: 0, minute: 4, second: 0,finish: function() {
+            $('#timeglobal').chrony({hour: 0, minute: 5, second: 0,finish: function() {
                     $(this).html('Finished!');
                 }, blink: true
             });
@@ -193,7 +193,10 @@
                                 //incrementar round
                                 round_actual++;
                                 
-                                if(round_actual<set_videos.length){                                    
+                                if(round_actual<set_videos.length){
+
+                                    enMascarar("wrapper","Esperando se sincronicen los videos...");
+                                    
                                     video_actual=set_videos[round_actual].video_url; 
                                     minuto_actual=set_videos[round_actual].inicio;
                                     iniciarVideo(video_actual,minuto_actual);
@@ -203,10 +206,7 @@
 
                                     //Limpiar LOG y LOGPARTNER
                                     document.getElementById("log").innerHTML="";
-                                    document.getElementById("logpartner").innerHTML="";                                    
-                                    
-                                    setTimeout(function(){  enMascarar("wrapper","Esperando se sincronicen los videos..."); },1800);
-                                    
+                                    document.getElementById("logpartner").innerHTML="";                                                                                                           
                                 }else{
                                     //Ir a Game Over url                                                                                                                                               
                                     window.location.href = "<?php echo url_for('Mesa/gameOver') ?>";

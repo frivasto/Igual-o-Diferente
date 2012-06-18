@@ -189,18 +189,14 @@
                 <div id="videos"><!--display:none ajax videos visto el checked display: block when checked-->
                     <div id="video_1" class="video_with_details" >
                         <h3>T&uacute;</h3>
-                        <iframe width="200" height="131" src="http://www.youtube.com/embed/a_YR4dKArgo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
-                        <div class="video_details">
-                            <p>Tag 1 escrito</p>
-                            <p>Tag 2 escrito</p>
+                        <iframe width="200" height="131" src="http://www.youtube.com/embed/?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
+                        <div class="video_details">                            
                         </div>
                     </div>
                     <div id="video_2" class="video_with_details" >	
                         <h3>Tu compa&ntilde;ero</h3>
-                        <iframe width="200" height="131" src="http://www.youtube.com/embed/_RRyniZG0Jo?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
-                        <div class="video_details">
-                            <p>Tag 1 escrito</p>
-                            <p>Tag 2 escrito</p>
+                        <iframe width="200" height="131" src="http://www.youtube.com/embed/?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
+                        <div class="video_details">                            
                         </div>
                     </div>									
                 </div>
@@ -211,7 +207,7 @@
         <div id="tabs-2">
             <div id="tab2_contenido1">
                 <div id="resultados_juego">
-                    <div class="info_general"><p class="title">El puntaje de este juego:</p><div><p id="puntos_mesa_neto" class="info_resaltada estilo_numerico">80</p></div></div>
+                    <div class="info_general"><p class="title">El puntaje de este juego:</p><div><p id="puntos_mesa_neto" class="info_resaltada estilo_numerico">0</p></div></div>
                     <div class="info_general"><p class="title">Tu CazaNivel es:</p><p id="nivel_adquirido" class="info_nivel estilo_numerico"><span>Nivel 1</span>Novato</p></div>	
                     <div id="clear-fix" style="clear:both; width:100%"></div>
                 </div>							
@@ -220,10 +216,10 @@
                 </div>
             </div>	
             <div id="tab2_contenido2">				
-                <div class="score_info "><p>Tu puntaje:</p><p class="estilo_numerico" id="puntos_mesa">80</p></div>
-                <div class="other_info "><p>Tu puntos extra:</p><p class="estilo_numerico" id="puntos_extra">80</p></div>
-                <div class="score_info "><p>Tu total CazaPuntaje:</p><p class="estilo_numerico" id="puntos_total">80</p></div>
-                <div class="other_info"><p>Puntaje del mejor jugador:</p><p class="estilo_numerico" id="puntos_mejor">80</p></div>
+                <div class="score_info "><p>Tu puntaje:</p><p class="estilo_numerico" id="puntos_mesa">0</p></div>
+                <div class="other_info "><p>Tu puntos extra:</p><p class="estilo_numerico" id="puntos_extra">0</p></div>
+                <div class="score_info "><p>Tu total CazaPuntaje:</p><p class="estilo_numerico" id="puntos_total">0</p></div>
+                <div class="other_info"><p>Puntaje del mejor jugador:</p><p class="estilo_numerico" id="puntos_mejor">0</p></div>
                 <div id="clear-fix" style="clear:both; width:100%"></div>
             </div>	
             <div id="clear-fix" style="clear:both; width:100%"></div>
