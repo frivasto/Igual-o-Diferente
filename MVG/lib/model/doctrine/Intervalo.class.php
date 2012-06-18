@@ -45,7 +45,7 @@ class Intervalo extends BaseIntervalo
                             ->whereNotIn('i.id',$array_excluidos)
                             ->groupBy('i.id')
                             ->orderBy('conteo')
-                            ->limit(15)
+                            ->limit(20)
                             ->fetchArray();          
         return $intervalos_videos; 
     }    

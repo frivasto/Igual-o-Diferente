@@ -132,6 +132,7 @@ body{
 #same_different{
         position: relative;	left: 25%;
         font-size: 12px;
+        padding: 3px;
 }
 #content_side2{
         min-height:200px;
@@ -189,4 +190,22 @@ body{
         position: relative;
         top: 19px;
         left: 20px;
+}
+.mybuttonclass
+{
+    background: #4A0D39 url(custom-theme/images/ui-bg_diagonals-thick_50_4a0d39_40x40.png) 50% 50% repeat !important;
+    margin-left: -4.5px !important;
+    border: 2.5px solid #911660 !important;
+}
+.mybuttonclass_hover
+{
+    background: #911660 url(custom-theme/images/ui-bg_diagonals-thick_45_961660_40x40.png) 50% 50% repeat !important;
+    margin-left: -4.5px !important;
+    border: 2.5px solid #4A0D39 !important;
+    text-decoration: underline !important;
+    font-weight: bold !important;
+}
+.otherbuttonhover
+{    
+    font-weight: bold !important;
 }

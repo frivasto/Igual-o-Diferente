@@ -2,10 +2,42 @@
     ( function($) {
         $(document).ready(function() {
             $("#cmd_enviar").button().click(function(){ send(); });    
-            $("input","#same_different").button();
+            /*$("input","#same_different").button();
             $("#same_different").buttonset();
-            $("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).css({ height:10, width:185}).click(function(){ enviarRespuesta('SAME');});
-            $('#same_different2').button( { text: true, icons: {primary: "ui-icon-bullet"}}).height(20).click(function(){ enviarRespuesta('DIFFERENT');});    
+            $("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).click(function(){ 
+                $(this).attr('disabled','disabled');  
+                $(this).addClass('ui-state-disabled');
+                $(this).addClass('button-state-disabled');                
+                enviarRespuesta('SAME');
+            });
+            $('#same_different2').button( { text: true, icons: {primary: "ui-icon-bullet"}}).click(function(){ 
+                $(this).attr('disabled','disabled'); 
+                $(this).addClass('ui-state-disabled');
+                $(this).addClass('button-state-disabled');
+                enviarRespuesta('DIFFERENT');
+            });*/
+            function desHabilitarSameDifferent(){
+                $("#same_different1").attr('disabled','disabled');
+                $("#same_different1").addClass('ui-state-disabled');
+                $("#same_different2").attr('disabled','disabled');
+                $("#same_different2").addClass('ui-state-disabled');
+            }            
+            $("#same_different1").button( { text: true, icons: {primary: "ui-icon-bullet"}}).removeClass('ui-corner-all').addClass('ui-corner-left').click(function(){ 
+                desHabilitarSameDifferent();
+                enviarRespuesta('SAME');                                              
+            });            
+            $('#same_different1').hover(
+                function(){ $(this).addClass('otherbuttonhover') },
+                function(){ $(this).removeClass('otherbuttonhover') }
+            )
+            $("#same_different2").button( { text: true, icons: {primary: "ui-icon-bullet"}}).removeClass('ui-corner-all').addClass('ui-corner-right').addClass('mybuttonclass').click(function(){ 
+                desHabilitarSameDifferent();
+                enviarRespuesta('DIFFERENT');                                             
+            });
+            $('#same_different2').hover(
+                function(){ $(this).addClass('mybuttonclass_hover') },
+                function(){ $(this).removeClass('mybuttonclass_hover') }
+            )
             $( "#dialog_result" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});
             $( "#dialog_mensaje" ).dialog({autoOpen: false, show: "blind", zIndex: 9999, hide: "explode", modal: true, position: ['center',260], title: 'Respuesta', dialogClass: 'alert', resizable: false});    
             $( "#dialog_bonus" ).dialog({autoOpen: false, show: "blind", zIndex: 99999, hide: "explode", modal: false, position: ['left',130], title: 'Bono', dialogClass: 'bonus_alert', resizable: true, stack: true});            
@@ -15,6 +47,16 @@
             $("#progress_3inrow").progressbar({ value: 0 });
         });
     } ) ( jQuery );
+    
+    
+    function habilitarSameDifferent(){
+        ( function($) {
+            $("#same_different1").removeAttr("disabled");
+            $("#same_different1").removeClass('ui-state-disabled');
+            $("#same_different2").removeAttr("disabled");
+            $("#same_different2").removeClass('ui-state-disabled');
+        } ) ( jQuery );
+    }
     
     /*
      *JQUERY CHRONY 
@@ -272,18 +314,18 @@
                                 mute(false);  
                                 actualizarInfo("sincronizado_msg","sincronizacion-completa "+veces_sincronizado+" veces, en round: "+(round_actual+1));
                                 empezarTimerLocal(); //iniciar AQUI timer de ese round sincronizado                                
+                                //habilitar Botones Same Different
+                                habilitarSameDifferent();
                             //},0.007);
                         }else if(obj.tipo=="same-different-incompleto"){
                             //Open Cuadro de diálogo que indica que respondió su partner en una esquina y por n seconds                            
                             $( "#dialog_mensaje" ).dialog("open");
                             setTimeout(function(){$( "#dialog_mensaje" ).dialog("close")},1000);                            
                         
-                        }else if(obj.tipo=="same-different"){                              
-                            
-                            var keys=Object.keys(value);                            
-                            var puntaje_grupal=value[keys[0]];
-                            var resultado_jug_tu=value[keys[1]];
-                            var resultado_jug_partner=value[keys[2]]; 
+                        }else if(obj.tipo=="same-different"){                                                                                    
+                            var puntaje_grupal=value.puntaje;
+                            var resultado_jug_tu=value.jugtu;
+                            var resultado_jug_partner=value.jugpartner; 
                            
                             var es_acertado=0;
                             if(resultado_jug_tu==resultado_jug_partner && resultado_jug_tu=="ACIERTO") es_acertado=1;
@@ -480,8 +522,10 @@
 		</div>
 		<div id="content1">
 			<div id="same_different">
-				<input type="radio" name="same_different" id="same_different1" checked value="1" /><label for="same_different1" > Igual </label>
-				<input type="radio" name="same_different" id="same_different2" value="2" /><label for="same_different2" > Diferente </label>                               
+				<!--<input type="radio" name="same_different" id="same_different1" checked value="1" /><label for="same_different1" > Igual </label>
+				<input type="radio" name="same_different" id="same_different2" value="2" /><label for="same_different2" > Diferente </label>-->                               
+                                <input type="button" id="same_different1" value="Igual"/>   
+                                <input type="button" id="same_different2" value="Diferente"/>
 			</div>
                         <div id="video_principal">                           
                             <div id="content">

@@ -123,58 +123,41 @@ server.sockets.on("connection", function(client)
 				if(mesas[""+key]!=null){
 					if(mesas[""+key][0]!=null && mesas[""+key][1]!=null){	
 						
-						if(decisionesmesa[""+key]!=null){
-							console.log("Decisionmesa no null "+decisionesmesa[""+key]);
+						if(decisionesmesa[""+key]!=null){							
 							//editar la decision del jug de la mesa
-							if(decisionesmesa[""+key][""+jugid]!=null) {
-								console.log("Decisionmesa JUG decision no null "+decisionesmesa[""+key][""+jugid]);
+							if(decisionesmesa[""+key][""+jugid]!=null) {								
 								decisionesmesa[""+key][""+jugid]["respuesta"] = respuesta;
 								console.log("Su respuesta se cambio a "+decisionesmesa[""+key][""+jugid]["respuesta"]);															
 							}
 							//verificar los estados de videos de esta mesa
 							var keys=Object.keys(decisionesmesa[""+key]); //keys de este obj
-							if(keys!=null){	
-								console.log("Los 2 estan registrados "+decisionesmesa[""+key]);
+							if(keys!=null){
 								var key_jug1=keys[0];
 								var key_jug2=keys[1];
-								if(key_jug1!=null && key_jug2!=null){
-									console.log("Ambos idjugs "+decisionesmesa[""+key]);
-									var decision1=decisionesmesa[""+key][key_jug1]["respuesta"];
-									var decision2=decisionesmesa[""+key][key_jug2]["respuesta"];
-									
+								if(key_jug1!=null && key_jug2!=null){																		
 									/*************************** Posibles Destinatarios ***************************/
-									destinatario1=mesas[""+key][0].socket; 
-									destinatario2=mesas[""+key][1].socket;
+									var usuario1=mesas[""+key][0];
+									var usuario2=mesas[""+key][1];
+									
+									destinatario1=usuario1.getSocket(); 
+									destinatario2=usuario2.getSocket();
+									
+									var decision1=decisionesmesa[""+key][usuario1.getJugId()]["respuesta"];
+									var decision2=decisionesmesa[""+key][usuario2.getJugId()]["respuesta"];									
 									
 									// ya contestaron ambos
-									if(decision1!="" && decision2!=""){	
-									
+									if(decision1!="" && decision2!=""){										
 										/*Envío de mensaje a ambos*/
 										console.log("Ambos tienen respuestas: "+decision1+" - "+decision2);
 										
 										// si ambos iguales y esa respuesta es ACERTO jug1 y ACERTO jug2
 										if(decision1==decision2 && decision1=="ACIERTO") puntaje=100;
 										else puntaje=0;										
+																				
+										destinatario1.emit("sendEvent", '{"tipo":"same-different","objeto":{"'+key+'": {"puntaje":"'+puntaje+'","jugtu":"'+decision1+'","jugpartner":"'+decision2+'"}}}');
+										destinatario2.emit("sendEvent", '{"tipo":"same-different","objeto":{"'+key+'": {"puntaje":"'+puntaje+'","jugtu":"'+decision2+'","jugpartner":"'+decision1+'"}}}');										
 										
-										/*
-										destinatario1=mesas[""+key][0].socket; 
-										destinatario2=mesas[""+key][1].socket;
-										*/
-										
-										//destinatario1.emit("sendEvent", '{"tipo":"same-different","objeto":{"'+key+'": "'+puntaje+'"}}');
-										//destinatario2.emit("sendEvent", '{"tipo":"same-different","objeto":{"'+key+'": "'+puntaje+'"}}');
-										
-										if(destinatario1.id==client.id){
-											//su respuesta es la que está como decision1, la otra es de su partner
-											destinatario1.emit("sendEvent", '{"tipo":"same-different","objeto":{"'+key+'": {"puntaje":"'+puntaje+'","jugtu":"'+decision1+'","jugpartner":"'+decision2+'"}}}');
-											destinatario2.emit("sendEvent", '{"tipo":"same-different","objeto":{"'+key+'": {"puntaje":"'+puntaje+'","jugtu":"'+decision2+'","jugpartner":"'+decision1+'"}}}');
-										}else{
-											//su respuesta es la que está como decision2, la otra es de su partner
-											destinatario1.emit("sendEvent", '{"tipo":"same-different","objeto":{"'+key+'": {"puntaje":"'+puntaje+'","jugtu":"'+decision2+'","jugpartner":"'+decision1+'"}}}');
-											destinatario2.emit("sendEvent", '{"tipo":"same-different","objeto":{"'+key+'": {"puntaje":"'+puntaje+'","jugtu":"'+decision1+'","jugpartner":"'+decision2+'"}}}');
-										}
-										
-										console.log("ya coontestaron, puntaje es: "+puntaje);
+										console.log("Ya contestaron, puntaje es: "+puntaje);
 										
 										//limpiar respuestas de ambos
 										decisionesmesa[""+key][key_jug1]["respuesta"]="";
@@ -226,10 +209,7 @@ server.sockets.on("connection", function(client)
 										destinatario2.emit("sendEvent", '{"tipo":"sincronizacion-completa","objeto":{"'+key+'": "'+estado_video+'"}}');														
 										
 										console.log("LISTO! SINCRONIZADOS: sincronizacion-videos "+estado_video);
-										
-										//limpiar estados de ambos
-										//estadovideos[""+key][key_jug1]["texto"]="";
-										//estadovideos[""+key][key_jug2]["texto"]="";
+										//Indicar se sincronizó 1 vez										
 										estadovideos[""+key]["esta_sincronizado"]="1";
 									}
 								}
