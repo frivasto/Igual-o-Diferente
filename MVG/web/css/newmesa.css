@@ -109,7 +109,7 @@ body{
     position: relative;
 }
 #video_timer{
-    z-index: 999999;
+    z-index: 99;
     position: absolute;
     bottom: 0px;
     right: 0.5px;
@@ -124,7 +124,7 @@ body{
         /*padding-left:18px;*/
         /*padding-left: 50px;*/
         text-align: right;        
-        z-index: 999999;
+        z-index: 99;
         padding: 10px;
 }
 #video_principal{
@@ -142,9 +142,11 @@ body{
         left: 20px;
 }
 #same_different{
-        position: relative;	left: 25%;
+        position: relative;	
+        left: 29.5%;
         font-size: 12px;
-        padding: 3px;
+        /*padding: 3px;*/
+        padding: 10px 0px 3px 0px;
 }
 #content_side2{
         min-height:200px;
@@ -220,4 +222,17 @@ body{
 .otherbuttonhover
 {    
     font-weight: bold !important;
+}
+#progressbar_text {
+    position:absolute;
+    top:0;
+    left:0;
+    color: white;
+    font-size: 10px;
+    padding-right: 10px;    
+}
+#progress_3inrow_container{
+    width: 500px; 
+    position: relative;
+    margin-left: 280px;
 }

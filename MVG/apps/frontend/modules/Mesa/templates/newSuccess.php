@@ -44,7 +44,7 @@
             $('.alert div.ui-dialog-titlebar').hide();//transparent
             $('.alert').css('background','transparent');  
             $('.bonus_alert').css('background','black'); 
-            $("#progress_3inrow").progressbar({ value: 0 });
+            $("#progress_3inrow").progressbar({ value: 10 }).css({ width: 100, height: 10, marginLeft: '80px' });
         });
     } ) ( jQuery );
     
@@ -222,7 +222,7 @@
                                 
                                 //ACTUALIZAR 3INROW //actualizarInfo("progress_3inrow",inrow_count);
                                 inrow_count=parseInt(inrow_count);
-                                $( "#progress_3inrow" ).progressbar( "option", "value", inrow_count*10 );
+                                $( "#progress_3inrow" ).progressbar( "option", "value", 10+inrow_count*30 );
                                 
                                 actualizarInfo("inrow", ""+inrow+" - "+inrow_count);
                                 
@@ -438,6 +438,8 @@
                     enviar_objeto("sincronizacion-videos",jug_id,"COMPLETO");                 
                     cont++;
                     actualizarInfo("loaded", "Estado Video:: "+newState+" se cargo todo el video, lo envío a server sockets "+cont);                                                         
+                }else if(newState==0){
+                    play(minuto_actual);
                 }              
             } 
             
@@ -497,11 +499,11 @@
         </script>
 
 <p style="color:red; text-align: right;" id="inrow">3inRow: </p>        
-<div id="wrapper">        
-        <div id="progress_3inrow"></div>
+<div id="wrapper">                
 	<div id="header">
 		<h1>CazaVideos</h1>
 		<p>Divi&eacute;rtete</p>
+                <div id="progress_3inrow_container"><span id="progressbar_text">Bono 3enRaya:</span><div id="progress_3inrow"></div></div>
 		<div id="timer_content">
                     <h3>Tiempo:</h3>
                     <div id="timeglobal" class="content_text" ></div>
