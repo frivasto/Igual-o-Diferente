@@ -189,7 +189,7 @@
                 <div id="videos"><!--display:none ajax videos visto el checked display: block when checked-->
                     <div id="video_1" class="video_with_details" >
                         <h3>T&uacute;</h3>
-                        <iframe width="200" height="131" src="http://www.youtube.com/embed/?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
+                        <iframe width="200" height="200" src="http://www.youtube.com/embed/?rel=0&controls=0&border=0&egm=0&showinfo=0&showsearch=0" frameborder="0" allowfullscreen></iframe>
                         <div class="video_details">                            
                         </div>
                     </div>

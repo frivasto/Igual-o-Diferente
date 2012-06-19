@@ -75,13 +75,14 @@
     
     function destroyTimerLocal(){
         $('#time').chrony('destroy');
-        $("#time").remove();  
+        $("#time").remove();          
+        $("#video_timer").empty();        
     }
     
     function empezarTimerLocal(){
         ( function($) {   
                       
-            $("#timer_content").append("<div id='time' class='content_text_min' ></div>");    
+            $("#video_timer").append("<div id='time' class='content_text_min' ></div>");    
             $('#time').chrony({hour: 0, minute: 0, second: 35,finish: function() {        
                     //$(this).html('Finished! '+envioDecision);
                     verificarEnvioRespuesta();   //evento same different automatico envíe "" si el usuario no ha contestado     
@@ -504,9 +505,7 @@
 		<div id="timer_content">
                     <h3>Tiempo:</h3>
                     <div id="timeglobal" class="content_text" ></div>
-                    <div id="clear-fix" style="clear:both; width:100%"></div>
-                    <!--Delete and Create again and add plugin-->
-                    <div id="time" class="content_text_min" ></div>                    
+                    <div id="clear-fix" style="clear:both; width:100%"></div>                                        
 		</div>
 		<div id="puntos_content">
 			<h3>Puntos:</h3>
@@ -531,6 +530,10 @@
                             <div id="content">
                                 <div id="ytapiplayer">
                                     You need Flash player 8+ and JavaScript enabled to view this video.
+                                </div>
+                                <div id="video_timer">
+                                    <!--Delete and Create again and add plugin-->
+                                    <div id="time" class="content_text_min" ></div>
                                 </div>
                             </div>
                         </div>

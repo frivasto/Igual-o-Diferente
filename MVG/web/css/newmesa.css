@@ -105,15 +105,27 @@ body{
         font-weight:bold;
         padding-left:18px;
 }
+#content{
+    position: relative;
+}
+#video_timer{
+    z-index: 999999;
+    position: absolute;
+    bottom: 0px;
+    right: 0.5px;
+    background: black;
+}
 .content_text_min{
-        color:white;
-        padding:0px;
+        color:white;        
         /*font-size:40px;*/
         font-size:15px;
         margin:0px;
         font-weight:bold;
         /*padding-left:18px;*/
-        padding-left: 50px;
+        /*padding-left: 50px;*/
+        text-align: right;        
+        z-index: 999999;
+        padding: 10px;
 }
 #video_principal{
         /*resolucion 800x600*/
