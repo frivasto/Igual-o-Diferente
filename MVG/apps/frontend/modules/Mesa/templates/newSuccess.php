@@ -484,9 +484,7 @@
             }
 
             /*Modifica el texto de un elemento HTML*/
-            function actualizarInfo(id_contenedor, info_msg){                
-                //var contenedor= document.getElementById(id_contenedor);                
-                //contenedor.innerHTML=info_msg;
+            function actualizarInfo(id_contenedor, info_msg){                                
                 $("#"+id_contenedor).html(info_msg);
             }
             
