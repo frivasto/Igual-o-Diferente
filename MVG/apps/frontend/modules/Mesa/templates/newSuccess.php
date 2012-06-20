@@ -64,24 +64,33 @@
      *PERMITE REAJUSTAR DATOS TAMBIÉN $('#time').chrony('set', { decrement: 2 }); 
      *re-adjust runtime options.
      */
-    function empezarTimerGlobal(){
+    function empezarTimerGlobal(hora, min, seg){
+        hora=parseInt(hora);
+        min=parseInt(min);
+        seg=parseInt(seg);
         ( function($) {
-            $('#timeglobal').chrony({hour: 0, minute: 5, second: 0,finish: function() {
+            $("#timeglobal_container").append("<div id='timeglobal'></div>");
+            $('#timeglobal').chrony({hour: hora, minute: min, second: seg,finish: function() {
                     $(this).html('Finished!');
                 }, blink: true
             });
         } ) ( jQuery );
     }    
     
-    function destroyTimerLocal(){
-        $('#time').chrony('destroy');
-        $("#time").remove();          
-        $("#video_timer").empty();        
+    function destroyTimer(timer_id, timer_container_id){
+        $('#'+timer_id).chrony('destroy');
+        $("#"+timer_id).remove();          
+        $("#"+timer_container_id).empty();        
+    }
+        
+    function recuperarTime(){
+        hora_timer_global=$("#timeglobal #hour:first").text();
+        min_timer_global=$("#timeglobal #minute:first").text();
+        seg_timer_global=$("#timeglobal #second:first").text();        
     }
     
     function empezarTimerLocal(){
-        ( function($) {   
-                      
+        ( function($) {                         
             $("#video_timer").append("<div id='time' class='content_text_min' ></div>");    
             $('#time').chrony({hour: 0, minute: 0, second: 35,finish: function() {        
                     //$(this).html('Finished! '+envioDecision);
@@ -101,7 +110,9 @@
             var websocket;
             var set_videos=[]; 
             var envioDecision=0;                                 
-            var estan_emparejados=false;            
+            var estan_emparejados=false;   
+            /*Del timer Global*/
+            var hora_timer_global=0; var min_timer_global=5; var seg_timer_global=50;
             <?php 
             $tmp=$sf_user->getAttribute('set_intervalos_videos'); $tam=count($tmp);                               
                 for($i=0;$i<$tam;$i++){                                          
@@ -213,10 +224,7 @@
                                 
                                 //ACTUALIZAR PUNTAJE EN LA INTERFAZ
                                 actualizarInfo("puntajeglobal", ""+puntaje_mesa);
-                                
-                                //DESTROY TIMER
-                                destroyTimerLocal();
-                                
+                                                                
                                 //REINICIAR ESTADO VIDEOS
                                 enviar_objeto("reiniciar_estado_videos",jug_id,"");
                                 
@@ -315,6 +323,7 @@
                                 mute(false);  
                                 actualizarInfo("sincronizado_msg","sincronizacion-completa "+veces_sincronizado+" veces, en round: "+(round_actual+1));
                                 empezarTimerLocal(); //iniciar AQUI timer de ese round sincronizado                                
+                                empezarTimerGlobal(hora_timer_global, min_timer_global, seg_timer_global); //iniciar y reiniciar AQUI timer global
                                 //habilitar Botones Same Different
                                 habilitarSameDifferent();
                             //},0.007);
@@ -324,6 +333,15 @@
                             setTimeout(function(){$( "#dialog_mensaje" ).dialog("close")},1000);                            
                         
                         }else if(obj.tipo=="same-different"){                                                                                    
+                            //-----------------------detener tiempo
+                            //RECUPERAR TIMER GLOBAL
+                            recuperarTime();
+
+                            //DESTROY TIMER
+                            destroyTimer("time","video_timer");
+                            destroyTimer("timeglobal","timeglobal_container");
+                            //-----------------------
+                            
                             var puntaje_grupal=value.puntaje;
                             var resultado_jug_tu=value.jugtu;
                             var resultado_jug_partner=value.jugpartner; 
@@ -489,8 +507,7 @@
             }
             
             function inicializar(){
-                init();
-                empezarTimerGlobal();                
+                init();                
                 enMascarar("wrapper","Esperando se sincronicen los videos...");
             }
             window.onload = inicializar;
@@ -504,7 +521,9 @@
                 <div id="progress_3inrow_container"><span id="progressbar_text">Bono 3enRaya:</span><div id="progress_3inrow"></div></div>
 		<div id="timer_content">
                     <h3>Tiempo:</h3>
-                    <div id="timeglobal" class="content_text" ></div>
+                    <div id="timeglobal_container" class="content_text" >
+                        <div id="timeglobal"></div>
+                    </div>
                     <div id="clear-fix" style="clear:both; width:100%"></div>                                        
 		</div>
 		<div id="puntos_content">
