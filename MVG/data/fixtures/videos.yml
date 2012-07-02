@@ -71,17 +71,17 @@ $coleccion_videos[]=new VideoItem('GH92JwDCnTg', 'Educacion','823');
 $coleccion_videos[]=new VideoItem('bBgZ8WCZsBI', 'Educacion','882');
 $coleccion_videos[]=new VideoItem('SXTNPpP3pQc', 'Educacion','399');
 $coleccion_videos[]=new VideoItem('XHid-q5hQ68', 'Educacion','1734');
-$coleccion_videos[]=new VideoItem('JsQxXrIZpLQ', 'Educacion','574');
+$coleccion_videos[]=new VideoItem('89czORpc8GU', 'Educacion','714');
 $coleccion_videos[]=new VideoItem('Yhq_NhsuyJM', 'Educacion','575');
 $coleccion_videos[]=new VideoItem('EG0TaOgupaE', 'Educacion','600');
 $coleccion_videos[]=new VideoItem('Kg1wow6pgps', 'Educacion','279');
 $coleccion_videos[]=new VideoItem('SEBLt6Kd9EY', 'Blooper','46');
 $coleccion_videos[]=new VideoItem('YnhP3kTdLeo', 'Blooper','49');
-$coleccion_videos[]=new VideoItem('sd0g59X_IRI', 'Blooper','32');
-$coleccion_videos[]=new VideoItem('ctJJrBw7e-c', 'Blooper','199');
-$coleccion_videos[]=new VideoItem('wf_IIbT8HGk', 'Blooper','184');
+$coleccion_videos[]=new VideoItem('OAX7af8CZwQ', 'Blooper','331');
+$coleccion_videos[]=new VideoItem('E6h1KsWNU-A', 'Blooper','99');
+$coleccion_videos[]=new VideoItem('CotYKz0eP4s', 'Blooper','193');
 $coleccion_videos[]=new VideoItem('Hb92wQpPG-s', 'Blooper','90');
-$coleccion_videos[]=new VideoItem('89kKUeT2sxk', 'Blooper','220');
+$coleccion_videos[]=new VideoItem('q1dpQKntj_w', 'Blooper','336');
 $coleccion_videos[]=new VideoItem('u23gEi47_j4', 'Blooper','80');
 $coleccion_videos[]=new VideoItem('i479N2ei8Us', 'Blooper','233');
 $coleccion_videos[]=new VideoItem('eTu6Fq8hC0U', 'Blooper','441');
@@ -91,7 +91,7 @@ $coleccion_videos[]=new VideoItem('cTbu4ZnzNko', 'Blooper','108');
 $coleccion_videos[]=new VideoItem('81NeQJWGYJY', 'Blooper','80');
 $coleccion_videos[]=new VideoItem('oDdI4jsnvyc', 'Blooper','77');
 $coleccion_videos[]=new VideoItem('cXXm696UbKY', 'Blooper','82');
-$coleccion_videos[]=new VideoItem('ZkWkirlQVxg', 'Blooper','29');
+$coleccion_videos[]=new VideoItem('OSJZbj1d69Y', 'Blooper','223');
 $coleccion_videos[]=new VideoItem('lL5Y0ng0uRU', 'Blooper','354');
 $coleccion_videos[]=new VideoItem('CjqvLAs9t1Q', 'Blooper','151');
 $coleccion_videos[]=new VideoItem('sIYzVORJFLI', 'Blooper','53');
@@ -102,20 +102,20 @@ $coleccion_videos[]=new VideoItem('GJ6OG5fZ7M0', 'Blooper','648');
 $coleccion_videos[]=new VideoItem('Q2xzt5_ITtY', 'Blooper','523');
 $coleccion_videos[]=new VideoItem('7PokysnUOo4', 'Blooper','169');
 $coleccion_videos[]=new VideoItem('HsHfV-Ns8Dg', 'Blooper','1597');
-$coleccion_videos[]=new VideoItem('HMPFf66oDFk', 'Blooper','262');
+$coleccion_videos[]=new VideoItem('2oc6nJ8_5pA', 'Blooper','101');
 $coleccion_videos[]=new VideoItem('g8gPicK5Mug', 'Blooper','322');
-$coleccion_videos[]=new VideoItem('qJzREZXiXIw', 'Blooper','513');
-$coleccion_videos[]=new VideoItem('wbqFMgdSeGs', 'Popfail','75');
+$coleccion_videos[]=new VideoItem('kMtjQ94H1lA#!', 'Blooper','113');
+$coleccion_videos[]=new VideoItem('cwYaWFpEgKw', 'Popfail','47');
 $coleccion_videos[]=new VideoItem('lwnoVnaFwxM', 'Popfail','41');
 $coleccion_videos[]=new VideoItem('F-sSooqYisM', 'Popfail','479');
-$coleccion_videos[]=new VideoItem('DNJ6a9Lf_K8', 'Popfail','228');
+$coleccion_videos[]=new VideoItem('cmVAqXB_tWQ', 'Popfail','35');
 $coleccion_videos[]=new VideoItem('T-NviMJMQGQ', 'Popfail','152');
 $coleccion_videos[]=new VideoItem('g-RMityCgyo', 'Popfail','192');
 $coleccion_videos[]=new VideoItem('E_emNxk1CKQ', 'Popfail','51');
 $coleccion_videos[]=new VideoItem('-vgoa0IAOls', 'Popfail','62');
 $coleccion_videos[]=new VideoItem('wpqzukQJ1bU', 'Popfail','247');
-$coleccion_videos[]=new VideoItem('20lgHlQcLs0', 'Popfail','231');
-$coleccion_videos[]=new VideoItem('QBt9E3dZlNw', 'Popfail','626');
+$coleccion_videos[]=new VideoItem('czUmOMhXn6o', 'Popfail','39');
+$coleccion_videos[]=new VideoItem('yt_AZFxBqQ4', 'Popfail','43');
 $coleccion_videos[]=new VideoItem('y4xLM9wIM8A', 'Popfail','548');
 $coleccion_videos[]=new VideoItem('Q31YDyxbS5k', 'Popfail','414');
 $coleccion_videos[]=new VideoItem('Ct-FfReSonw', 'Popfail','237');
@@ -123,7 +123,7 @@ $coleccion_videos[]=new VideoItem('5HyMJpG4hvg', 'Popfail','36');
 $coleccion_videos[]=new VideoItem('QT-rQZ6LmKE', 'Popfail','125');
 $coleccion_videos[]=new VideoItem('jOkH55V6HvY', 'Popfail','156');
 $coleccion_videos[]=new VideoItem('Tby-LnyiZUE', 'Popfail','73');
-$coleccion_videos[]=new VideoItem('3QMXJg04lsY', 'Popfail','597');
+$coleccion_videos[]=new VideoItem('R2Ct6SUeKNg', 'Popfail','1220');
 $coleccion_videos[]=new VideoItem('kfVsfOSbJY0', 'Popfail','228');
 $coleccion_videos[]=new VideoItem('cSfgUQKbl0w', 'Popfail','121');
 $coleccion_videos[]=new VideoItem('thhOrlhst0E', 'Popfail','202');
@@ -132,8 +132,8 @@ $coleccion_videos[]=new VideoItem('0AbQpzn6t4c', 'Popfail','335');
 $coleccion_videos[]=new VideoItem('OtZyj_UHAcw', 'Popfail','139');
 $coleccion_videos[]=new VideoItem('9Sw7z2PWZqU', 'Popfail','109');
 $coleccion_videos[]=new VideoItem('8_lTdVNMbIM', 'Popfail','516');
-$coleccion_videos[]=new VideoItem('OlR_CQ3NPvI', 'Popfail','61');
-$coleccion_videos[]=new VideoItem('SSA3ydf06yg', 'Popfail','384');
+$coleccion_videos[]=new VideoItem('-4wt3YBC4sk', 'Popfail','39');
+$coleccion_videos[]=new VideoItem('J_qKpwS1If0', 'Popfail','42');
 $coleccion_videos[]=new VideoItem('or2GH3CHXqY', 'Popfail','373');?>
 Video:
 <?php for ($i = 0; $i <90; $i++): ?>
@@ -145,14 +145,14 @@ Intervalo:
 <?php $j=0 ?>
 <?php for ($i = 0; $i <90; $i++): ?>
   intervalo<?php echo $j ?>:
-    video_id: <?php echo ($i+1)."\n" ?>
-    inicio: <?php echo date('H:i:s',($coleccion_videos[$i]->getDuracion()/10.0))."\n" ?>
-    fin: <?php echo date('H:i:s',($coleccion_videos[$i]->getDuracion()/10.0+30)).")\n" ?>
+    video_id: <?php echo ($i+1)."\n" ?><?php $duracion=intval($coleccion_videos[$i]->getDuracion()) ?>
+    inicio: <?php echo gmdate('H:i:s',($duracion/10.0))."\n" ?>
+    fin: <?php echo gmdate('H:i:s',($duracion)/10.0+30)."\n" ?>
 <?php $j++ ?>
-<?php if(($coleccion_videos[$i]->getDuracion()/10.0+$coleccion_videos[$i]->getDuracion()/2+30)<$coleccion_videos[$i]->getDuracion()): ?>
+<?php if(($duracion/10.0+$duracion/2+30)<$duracion): ?>
   intervalo<?php echo $j ?>:
     video_id: <?php echo ($i+1)."\n" ?>
-    inicio: <?php echo date('H:i:s',($coleccion_videos[$i]->getDuracion()/10.0+$coleccion_videos[$i]->getDuracion()/2))."\n" ?>
-    fin: <?php echo date('H:i:s',($coleccion_videos[$i]->getDuracion()/10.0+$coleccion_videos[$i]->getDuracion()/2+30))."\n" ?><?php $j++ ?>
+    inicio: <?php echo gmdate('H:i:s',($duracion/10.0+$duracion/2))."\n" ?>
+    fin: <?php echo gmdate('H:i:s',$duracion/10.0+$duracion/2+30)."\n" ?><?php $j++ ?>
 <?php endif ?>
 <?php endfor ?>
