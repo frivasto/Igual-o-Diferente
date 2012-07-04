@@ -19,9 +19,9 @@ class Intervalo extends BaseIntervalo
         return ($hours * 3600 ) + ($mins * 60 ) + $secs;
     }
     
-    public static function obtenerIntervaloAleatorio($array_excluidos){
+    public static function obtenerIntervaloAleatorio($array_excluidos, $categoria=""){
          //intervalos ORDENADADOS por total tags
-         $intervalos_videos=self::getFragmentoVideosOrdenadosXTags($array_excluidos);
+         $intervalos_videos=self::getFragmentoVideosOrdenadosXTags($array_excluidos,$categoria);
          $tam_intervalos_videos = count($intervalos_videos);
          //echo "intervalovideo: ".$tam_intervalos_videos;
          //Obtener aleatorio
@@ -31,22 +31,38 @@ class Intervalo extends BaseIntervalo
          return $intervalo_jug;
      }
      //los 15 primeros
-     public static function getFragmentoVideosOrdenadosXTags($array_excluidos){
+     public static function getFragmentoVideosOrdenadosXTags($array_excluidos, $categoria=""){
         /*$intervalos_videos=Doctrine_Core::getTable('Intervalo')
                             ->createQuery('i')
                             ->whereNotIn('i.id',$array_excluidos)
                             //->orderBy('i.total_tags')                                     
                             ->fetchArray(); */
-        $intervalos_videos = Doctrine_Query::create()
-                            ->select('i.id, COUNT(e.id) AS conteo')
-                            ->from('Intervalo i')
-                            ->leftJoin('i.MesaVideoIntervalo r ON i.id=r.intervalo_id')	
-                            ->leftJoin('r.InstanciaEtiquetaRelacionMesaVideo e ON e.relacionmesavideo_id=r.id')			
-                            ->whereNotIn('i.id',$array_excluidos)
-                            ->groupBy('i.id')
-                            ->orderBy('conteo')
-                            ->limit(20)
-                            ->fetchArray();          
+        if($categoria==""){
+            $intervalos_videos = Doctrine_Query::create()
+                                ->select('i.id, COUNT(e.id) AS conteo')
+                                ->from('Intervalo i')
+                                ->leftJoin('i.MesaVideoIntervalo r ON i.id=r.intervalo_id')	
+                                ->leftJoin('r.InstanciaEtiquetaRelacionMesaVideo e ON e.relacionmesavideo_id=r.id')			
+                                ->whereNotIn('i.id',$array_excluidos)
+                                ->groupBy('i.id')
+                                ->orderBy('conteo')
+                                ->limit(30)
+                                ->fetchArray(); 
+        }else{
+            $intervalos_videos = Doctrine_Query::create()
+                                ->select('i.id, COUNT(e.id) AS conteo')
+                                ->from('Intervalo i')
+                                ->leftJoin('i.MesaVideoIntervalo r ON i.id=r.intervalo_id')	
+                                ->leftJoin('r.InstanciaEtiquetaRelacionMesaVideo e ON e.relacionmesavideo_id=r.id')			
+                                ->innerJoin('i.Video v ON i.video_id=v.id')
+                                ->where('v.categoria = ?',$categoria)
+                                ->whereNotIn('i.id',$array_excluidos)
+                                ->groupBy('i.id')
+                                ->orderBy('conteo')
+                                ->limit(30)
+                                ->fetchArray(); 
+        }
+                     
         return $intervalos_videos; 
     }    
     public static function getIntervaloXId($id_intervalo){

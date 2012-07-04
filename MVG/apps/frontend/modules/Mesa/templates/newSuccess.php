@@ -238,7 +238,7 @@
                                 if(msg_bonos!=""){
                                     actualizarInfo("dialog_bonus_txt",msg_bonos);
                                     $( "#dialog_bonus" ).dialog("open");                                    
-                                    setTimeout(function(){$( "#dialog_bonus" ).dialog("close")},1250);
+                                    setTimeout(function(){$( "#dialog_bonus" ).dialog("close")},2000);
                                 } 
                                 
                                 //incrementar round
@@ -451,7 +451,8 @@
                 //Possible values are unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5).		
                 //if(newState!=-1 && newState!=5) {  
                 //if(estan_emparejados && newState!=-1 && newState!=5) {
-                if(newState!=-1 && newState!=5) {
+                //if(newState!=-1 && newState!=5) {
+                if(newState==1) {
                     //se cargo todo el video, lo envío a server sockets               
                     enviar_objeto("sincronizacion-videos",jug_id,"COMPLETO");                 
                     cont++;

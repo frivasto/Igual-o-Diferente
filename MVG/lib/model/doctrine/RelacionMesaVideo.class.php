@@ -118,7 +118,10 @@ class RelacionMesaVideo extends BaseRelacionMesaVideo
                         $intervalo2 = $intervalo1;
                     } else {
                         //DIFFERENT
-                        $intervalo2 = Intervalo::obtenerIntervaloAleatorio($array_excluidos);
+                        $categoria="";
+                        $intervaloObj=Intervalo::getIntervaloXId($intervalo1);
+                        $categoria=Video::getVideoxId($intervaloObj->getVideoId())->getCategoria();
+                        $intervalo2 = Intervalo::obtenerIntervaloAleatorio($array_excluidos,$categoria);
                         $array_excluidos[] = $intervalo2;
                     }
 
